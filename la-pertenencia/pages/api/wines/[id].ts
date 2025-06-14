@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import path from "path";
@@ -46,6 +47,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
       res.status(200).json(wine);
     } catch (error) {
+      console.error("Error fetching wine:", error);
       res.status(500).json({ error: "Failed to fetch wine" });
     }
   } else if (req.method === "PUT") {
@@ -75,6 +77,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
       res.status(200).json(updatedWine);
     } catch (error) {
+      console.error("Error updating wine:", error);
       res.status(500).json({ error: "Failed to update wine" });
     }
   } else if (req.method === "DELETE") {
@@ -95,6 +98,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         .status(200)
         .json({ message: "Wine deleted successfully", wine: deletedWine });
     } catch (error) {
+      console.error("Error deleting wine:", error);
       res.status(500).json({ error: "Failed to delete wine" });
     }
   } else {
