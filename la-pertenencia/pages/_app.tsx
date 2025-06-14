@@ -25,11 +25,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <HeroUIProvider navigate={router.push}>
-        <NextThemesProvider>
-          <Component {...pageProps} />
-        </NextThemesProvider>
-      </HeroUIProvider>
+    <HeroUIProvider navigate={router.push}>
+      <NextThemesProvider>
+        <Component {...pageProps} />
+      </NextThemesProvider>
+    </HeroUIProvider>
     </QueryClientProvider>
   );
 }
