@@ -12,6 +12,7 @@ interface WineCardProps {
 const WineCard = ({ wine }: WineCardProps) => {
   const { addItem, getItemQuantity } = useCartStore();
   const [isAdding, setIsAdding] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const cartQuantity = getItemQuantity(wine.id);
 
   const calculateFinalPrice = () => {
@@ -46,14 +47,27 @@ const WineCard = ({ wine }: WineCardProps) => {
     }
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <Card className="w-full max-w-sm mx-auto hover:shadow-lg transition-shadow duration-300">
       <CardBody className="p-0">
         {/* Imagen del vino */}
         <div className="relative">
-          <div className="w-full h-64 bg-gradient-to-br from-purple-900 to-purple-600 flex items-center justify-center">
-            <span className="text-6xl opacity-50">🍷</span>
-          </div>
+          {!imageError && wine.image ? (
+            <img
+              alt={wine.name}
+              className="w-full h-64 object-cover"
+              src={wine.image}
+              onError={handleImageError}
+            />
+          ) : (
+            <div className="w-full h-64 bg-gradient-to-br from-purple-900 to-purple-600 flex items-center justify-center">
+              <span className="text-6xl opacity-50">🍷</span>
+            </div>
+          )}
 
           {/* Badge de destacado */}
           {wine.featured && (

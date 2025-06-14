@@ -26,6 +26,22 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+.env.development
+.env.production
+
+# Firebase
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+firebase-debug.*.log
+.firebase/
+.firebaserc
+
+# Service Account Keys (if any)
+*-service-account-key.json
+service-account-*.json
+firebase-adminsdk-*.json
 
 # vercel
 .vercel
@@ -33,3 +49,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
