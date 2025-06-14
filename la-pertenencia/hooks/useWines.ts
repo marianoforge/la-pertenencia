@@ -7,84 +7,158 @@ import {
   WineFilters,
 } from "../types/wine";
 
-const API_BASE = "/api/wines";
+// Importar funciones de Firebase
+import {
+  getAllWines,
+  getWineById,
+  addWine,
+  updateWine as updateWineFirebase,
+  deleteWine as deleteWineFirebase,
+  getWinesByCategory,
+  searchWinesByName,
+} from "@/lib/firestore";
 
-// Función para construir query string desde filtros
-function buildQueryString(filters: WineFilters): string {
-  const params = new URLSearchParams();
+// Función helper para aplicar filtros localmente
+function applyFilters(wines: any[], filters?: WineFilters): any[] {
+  if (!filters) return wines;
 
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== "") {
-      params.append(key, String(value));
+  return wines.filter((wine) => {
+    // Filtro por búsqueda de texto
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      const matchesName = wine.name.toLowerCase().includes(searchLower);
+      const matchesDescription = wine.description
+        .toLowerCase()
+        .includes(searchLower);
+      const matchesRegion = wine.region.toLowerCase().includes(searchLower);
+
+      if (!matchesName && !matchesDescription && !matchesRegion) {
+        return false;
+      }
     }
-  });
 
-  return params.toString();
+    // Filtro por categoría
+    if (filters.category && filters.category !== "all") {
+      if (wine.category !== filters.category) return false;
+    }
+
+    // Filtro por región
+    if (filters.region && filters.region !== "all") {
+      if (wine.region !== filters.region) return false;
+    }
+
+    // Filtro por rango de precios
+    if (filters.minPrice !== undefined && wine.price < filters.minPrice) {
+      return false;
+    }
+    if (filters.maxPrice !== undefined && wine.price > filters.maxPrice) {
+      return false;
+    }
+
+    // Filtro por vinos destacados
+    if (filters.featured && !wine.featured) {
+      return false;
+    }
+
+    return true;
+  });
 }
 
-// Fetch functions
+// Fetch functions using Firebase
 async function fetchWines(filters?: WineFilters): Promise<Wine[]> {
-  const queryString = filters ? buildQueryString(filters) : "";
-  const url = queryString ? `${API_BASE}?${queryString}` : API_BASE;
+  try {
+    let wines: any[];
 
-  const response = await fetch(url);
+    // Si hay filtro de categoría específica, usar función optimizada
+    if (filters?.category && filters.category !== "all") {
+      wines = await getWinesByCategory(filters.category);
+    }
+    // Si hay búsqueda de texto, usar función de búsqueda
+    else if (filters?.search) {
+      wines = await searchWinesByName(filters.search);
+    }
+    // Sino, obtener todos los vinos
+    else {
+      wines = await getAllWines();
+    }
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch wines");
+    // Aplicar filtros adicionales localmente
+    return applyFilters(wines, filters) as Wine[];
+  } catch (error) {
+    console.error("Error fetching wines:", error);
+    throw new Error("Failed to fetch wines from Firebase");
   }
-
-  return response.json();
 }
 
 async function fetchWineById(id: string): Promise<Wine> {
-  const response = await fetch(`${API_BASE}/${id}`);
+  try {
+    const wine = await getWineById(id);
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch wine");
+    if (!wine) {
+      throw new Error("Wine not found");
+    }
+
+    return wine as Wine;
+  } catch (error) {
+    console.error("Error fetching wine by ID:", error);
+    throw new Error("Failed to fetch wine from Firebase");
   }
-
-  return response.json();
 }
 
-async function createWine(wine: CreateWineInput): Promise<Wine> {
-  const response = await fetch(API_BASE, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(wine),
-  });
+async function createWine(wineData: CreateWineInput): Promise<Wine> {
+  try {
+    const wineId = await addWine(wineData);
 
-  if (!response.ok) {
-    throw new Error("Failed to create wine");
+    if (!wineId) {
+      throw new Error("Failed to create wine");
+    }
+
+    // Obtener el vino recién creado
+    const newWine = await getWineById(wineId);
+
+    if (!newWine) {
+      throw new Error("Failed to fetch created wine");
+    }
+
+    return newWine as Wine;
+  } catch (error) {
+    console.error("Error creating wine:", error);
+    throw new Error("Failed to create wine in Firebase");
   }
-
-  return response.json();
 }
 
-async function updateWine(wine: UpdateWineInput): Promise<Wine> {
-  const response = await fetch(`${API_BASE}/${wine.id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(wine),
-  });
+async function updateWine(wineData: UpdateWineInput): Promise<Wine> {
+  try {
+    const success = await updateWineFirebase(wineData.id, wineData);
 
-  if (!response.ok) {
-    throw new Error("Failed to update wine");
+    if (!success) {
+      throw new Error("Failed to update wine");
+    }
+
+    // Obtener el vino actualizado
+    const updatedWine = await getWineById(wineData.id);
+
+    if (!updatedWine) {
+      throw new Error("Failed to fetch updated wine");
+    }
+
+    return updatedWine as Wine;
+  } catch (error) {
+    console.error("Error updating wine:", error);
+    throw new Error("Failed to update wine in Firebase");
   }
-
-  return response.json();
 }
 
 async function deleteWine(id: string): Promise<void> {
-  const response = await fetch(`${API_BASE}/${id}`, {
-    method: "DELETE",
-  });
+  try {
+    const success = await deleteWineFirebase(id);
 
-  if (!response.ok) {
-    throw new Error("Failed to delete wine");
+    if (!success) {
+      throw new Error("Failed to delete wine");
+    }
+  } catch (error) {
+    console.error("Error deleting wine:", error);
+    throw new Error("Failed to delete wine from Firebase");
   }
 }
 
@@ -93,7 +167,9 @@ export function useWines(filters?: WineFilters) {
   return useQuery({
     queryKey: ["wines", filters],
     queryFn: () => fetchWines(filters),
-    staleTime: 5 * 60 * 1000, // 5 minutos
+    staleTime: 2 * 60 * 1000, // 2 minutos (menos tiempo para datos en tiempo real)
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 }
 
@@ -102,6 +178,8 @@ export function useWine(id: string) {
     queryKey: ["wine", id],
     queryFn: () => fetchWineById(id),
     enabled: !!id,
+    staleTime: 5 * 60 * 1000, // 5 minutos para datos individuales
+    retry: 3,
   });
 }
 
@@ -111,8 +189,17 @@ export function useCreateWine() {
 
   return useMutation({
     mutationFn: createWine,
-    onSuccess: () => {
+    onSuccess: (newWine) => {
+      // Invalidar queries de vinos para refrescar la lista
       queryClient.invalidateQueries({ queryKey: ["wines"] });
+
+      // Agregar el nuevo vino al cache
+      queryClient.setQueryData(["wine", newWine.id], newWine);
+
+      console.log("Wine created successfully:", newWine.name);
+    },
+    onError: (error) => {
+      console.error("Error creating wine:", error);
     },
   });
 }
@@ -123,8 +210,16 @@ export function useUpdateWine() {
   return useMutation({
     mutationFn: updateWine,
     onSuccess: (updatedWine) => {
+      // Invalidar queries de vinos para refrescar la lista
       queryClient.invalidateQueries({ queryKey: ["wines"] });
+
+      // Actualizar el vino específico en cache
       queryClient.setQueryData(["wine", updatedWine.id], updatedWine);
+
+      console.log("Wine updated successfully:", updatedWine.name);
+    },
+    onError: (error) => {
+      console.error("Error updating wine:", error);
     },
   });
 }
@@ -135,8 +230,36 @@ export function useDeleteWine() {
   return useMutation({
     mutationFn: deleteWine,
     onSuccess: (_, deletedId) => {
+      // Invalidar queries de vinos para refrescar la lista
       queryClient.invalidateQueries({ queryKey: ["wines"] });
+
+      // Remover el vino eliminado del cache
       queryClient.removeQueries({ queryKey: ["wine", deletedId] });
+
+      console.log("Wine deleted successfully");
     },
+    onError: (error) => {
+      console.error("Error deleting wine:", error);
+    },
+  });
+}
+
+// Hook adicional para obtener vinos por categoría optimizado
+export function useWinesByCategory(category: string) {
+  return useQuery({
+    queryKey: ["wines", "category", category],
+    queryFn: () => getWinesByCategory(category),
+    enabled: !!category && category !== "all",
+    staleTime: 3 * 60 * 1000, // 3 minutos
+  });
+}
+
+// Hook adicional para búsqueda de vinos
+export function useSearchWines(searchTerm: string) {
+  return useQuery({
+    queryKey: ["wines", "search", searchTerm],
+    queryFn: () => searchWinesByName(searchTerm),
+    enabled: !!searchTerm && searchTerm.length >= 2,
+    staleTime: 1 * 60 * 1000, // 1 minuto para búsquedas
   });
 }

@@ -10,6 +10,10 @@
     "migrate": "node scripts/migrate-to-firestore.js",
     "migrate-ts": "tsx scripts/migrate-to-firestore.ts",
     "check-env": "node scripts/check-env.js",
+    "test-indexes": "node scripts/test-indexes.js",
+    "test-security": "node scripts/test-security-rules.js",
+    "check-project": "node scripts/check-firebase-project.js",
+    "get-admin-uid": "tsx scripts/get-admin-uid.ts",
     "firebase:setup": "echo 'Please create .env.local file with Firebase credentials'"
   },
   "dependencies": {
@@ -31,7 +35,8 @@
     "@heroui/table": "^2.2.20",
     "@heroui/theme": "2.4.17",
     "@react-aria/visually-hidden": "3.8.24",
-    "@tanstack/react-query": "^5.80.6",
+    "@tanstack/react-query": "^5.80.7",
+    "@tanstack/react-query-devtools": "^5.80.7",
     "clsx": "2.1.1",
     "firebase": "^11.9.1",
     "firebase-admin": "^13.4.0",

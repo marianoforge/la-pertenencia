@@ -1,0 +1,112 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===========================================
+    // WINES COLLECTION - Lectura pública, escritura autenticada
+    // ===========================================
+    match /wines/{wineId} {
+      // Cualquiera puede leer los vinos (para el catálogo público)
+      allow read: if true;
+      
+      // Solo usuarios autenticados pueden crear/editar/eliminar vinos
+      allow create, update, delete: if request.auth != null;
+      
+      // Validación de datos para escritura
+      allow write: if request.auth != null 
+        && validateWineData(request.resource.data);
+    }
+    
+    // ===========================================
+    // USERS COLLECTION - Privado al dueño
+    // ===========================================
+    match /users/{userId} {
+      // Solo el dueño puede leer/escribir su perfil
+      allow read, write: if request.auth != null 
+        && request.auth.uid == userId;
+    }
+    
+    // ===========================================
+    // ORDERS COLLECTION - Privado al dueño
+    // ===========================================
+    match /orders/{orderId} {
+      // Solo el dueño del pedido puede acceder
+      allow read, write: if request.auth != null 
+        && request.auth.uid == resource.data.userId;
+      
+      // Para crear pedidos, verificar que el userId coincida
+      allow create: if request.auth != null 
+        && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // ===========================================
+    // CATEGORIES COLLECTION - Lectura pública, escritura admin
+    // ===========================================
+    match /categories/{categoryId} {
+      // Cualquiera puede leer categorías
+      allow read: if true;
+      
+      // Solo admins pueden modificar categorías
+      allow write: if request.auth != null 
+        && isAdmin(request.auth.uid);
+    }
+    
+    // ===========================================
+    // ADMIN COLLECTIONS - Solo administradores
+    // ===========================================
+    match /admin/{document=**} {
+      allow read, write: if request.auth != null 
+        && isAdmin(request.auth.uid);
+    }
+    
+    // ===========================================
+    // CHAT/SUPPORT COLLECTIONS
+    // ===========================================
+    match /chat_responses/{responseId} {
+      // Lectura pública para respuestas del chatbot
+      allow read: if true;
+      
+      // Solo admins pueden crear/editar respuestas
+      allow write: if request.auth != null 
+        && isAdmin(request.auth.uid);
+    }
+    
+    match /unanswered_questions/{questionId} {
+      // Los usuarios pueden crear preguntas
+      allow create: if request.auth != null;
+      
+      // Solo admins pueden leer/editar preguntas
+      allow read, update, delete: if request.auth != null 
+        && isAdmin(request.auth.uid);
+    }
+
+    // ===========================================
+    // FUNCIONES DE VALIDACIÓN
+    // ===========================================
+    
+    // Validar datos de vino
+    function validateWineData(data) {
+      return data.keys().hasAll(['name', 'description', 'price', 'category', 'region', 'vintage'])
+        && data.name is string
+        && data.name.size() > 0
+        && data.description is string
+        && data.price is number
+        && data.price > 0
+        && data.category in ['Tintos', 'Blancos', 'Rosados', 'Espumantes']
+        && data.region is string
+        && data.vintage is number
+        && data.vintage >= 1900
+        && data.vintage <= 2030;
+    }
+    
+    // Verificar si es administrador
+    function isAdmin(userId) {
+      // Lista de UIDs de administradores
+      // TODO: Reemplazar con tu UID real cuando tengas usuarios admin
+      return userId in [
+        'ADMIN_UID_1', // Reemplazar con UID real
+        'ADMIN_UID_2'  // Agregar más admins si es necesario
+      ];
+    }
+  }
+} 
