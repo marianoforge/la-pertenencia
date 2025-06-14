@@ -3,5 +3,8 @@
     "pages/api/**/*.js": {
       "runtime": "nodejs20.x"
     }
-  }
+  },
+  "buildCommand": "cd la-pertenencia && npm run build",
+  "installCommand": "cd la-pertenencia && npm install",
+  "framework": "nextjs"
 } 
