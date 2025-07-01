@@ -2,6 +2,7 @@ import { Button } from "@heroui/button";
 import { useState } from "react";
 
 import { useCartStore } from "../stores/useCartStore";
+import { useMercadoPago } from "../hooks/useMercadoPago";
 
 const Cart = () => {
   const {
@@ -15,9 +16,41 @@ const Cart = () => {
     clearCart,
   } = useCartStore();
 
+  const {
+    createPreference,
+    redirectToCheckout,
+    loading: mpLoading,
+    error: mpError,
+  } = useMercadoPago();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  const handleCheckout = async () => {
+  const handleMercadoPagoCheckout = async () => {
+    if (items.length === 0) return;
+
+    setIsCheckingOut(true);
+
+    try {
+      const preference = await createPreference(items);
+
+      if (preference) {
+        // Usar sandbox para pruebas, production para real
+        const checkoutUrl = preference.sandboxInitPoint || preference.initPoint;
+
+        redirectToCheckout(checkoutUrl);
+      } else {
+        alert(
+          "Error al crear la preferencia de pago. Por favor, intenta nuevamente.",
+        );
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      alert("Error al procesar el pago. Por favor, intenta nuevamente.");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
+
+  const handleLegacyCheckout = async () => {
     setIsCheckingOut(true);
     // Simular proceso de checkout
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -158,24 +191,44 @@ const Cart = () => {
               <Button
                 className="w-full"
                 color="primary"
-                disabled={isCheckingOut}
-                isLoading={isCheckingOut}
+                disabled={isCheckingOut || mpLoading}
+                isLoading={isCheckingOut || mpLoading}
                 size="lg"
-                onClick={handleCheckout}
+                onClick={handleMercadoPagoCheckout}
               >
-                {isCheckingOut ? "Procesando..." : "Finalizar Compra"}
+                {isCheckingOut || mpLoading
+                  ? "Procesando..."
+                  : "Pagar con Mercado Pago"}
+              </Button>
+
+              <Button
+                className="w-full"
+                color="secondary"
+                disabled={isCheckingOut}
+                isLoading={isCheckingOut && !mpLoading}
+                variant="bordered"
+                onClick={handleLegacyCheckout}
+              >
+                Pago Tradicional
               </Button>
 
               <Button
                 className="w-full"
                 color="danger"
                 disabled={isCheckingOut}
-                variant="bordered"
+                variant="light"
                 onClick={clearCart}
               >
                 Vaciar Carrito
               </Button>
             </div>
+
+            {/* Error Message */}
+            {mpError && (
+              <div className="mt-2 p-2 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-xs rounded">
+                {mpError}
+              </div>
+            )}
 
             {/* Info */}
             <p className="text-xs text-center text-gray-600 dark:text-gray-400">

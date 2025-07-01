@@ -6,7 +6,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
-import { fontSans, fontMono } from "@/config/fonts";
+import { fontSans, fontMono, fontLora } from "@/config/fonts";
 import "@/styles/globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -24,17 +24,22 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-    <HeroUIProvider navigate={router.push}>
-      <NextThemesProvider>
-        <Component {...pageProps} />
-      </NextThemesProvider>
-    </HeroUIProvider>
-    </QueryClientProvider>
+    <div
+      className={`${fontLora.variable} ${fontSans.variable} ${fontMono.variable}`}
+    >
+      <QueryClientProvider client={queryClient}>
+        <HeroUIProvider navigate={router.push}>
+          <NextThemesProvider>
+            <Component {...pageProps} />
+          </NextThemesProvider>
+        </HeroUIProvider>
+      </QueryClientProvider>
+    </div>
   );
 }
 
 export const fonts = {
+  lora: fontLora.style.fontFamily,
   sans: fontSans.style.fontFamily,
   mono: fontMono.style.fontFamily,
 };
