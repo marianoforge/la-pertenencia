@@ -29,7 +29,7 @@ const ImaginaTuVino = () => {
           <img
             alt="Imagen de vino"
             className="w-[891px] h-[594px] left-0 top-[-140.43px] absolute"
-            src="https://placehold.co/891x594"
+            src="/images/imagina.png"
           />
         </div>
         <div className="flex-1 self-stretch inline-flex flex-col justify-start items-start gap-5">
