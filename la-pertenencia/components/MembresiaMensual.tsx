@@ -1,18 +1,15 @@
 import React from "react";
 
-type Props = {};
+import { Section, SectionHeader, Button } from "./ui";
 
-const MembresiaMensual = (props: Props) => {
+const MembresiaMensual = () => {
   return (
-    <div className="w-full self-stretch px-28 py-24 inline-flex flex-col justify-start items-center gap-2.5">
-      <div className="w-[1300px] flex flex-col justify-start items-center gap-2.5">
-        <div className="self-stretch text-center justify-start text-yellow-700 text-xl font-medium font-['Lora'] uppercase tracking-[10px]">
-          Membresía mensual
-        </div>
-        <div className="self-stretch text-center justify-start text-neutral-900 text-4xl font-medium font-['Lora'] tracking-[10px]">
-          Una caja. Tres vinos. Un ritual.
-        </div>
-      </div>
+    <Section variant="default">
+      <SectionHeader
+        subtitle="Una caja. Tres vinos. Un ritual."
+        title="Membresía mensual"
+      />
+
       <div className="w-[1300px] pt-12 pb-5 inline-flex justify-center items-center gap-10">
         <div className="flex-1 w-[670px] h-[464px] relative overflow-hidden mt-2">
           <img
@@ -44,17 +41,10 @@ const MembresiaMensual = (props: Props) => {
               Comunidad de miembros con acceso exclusivo
             </span>
           </div>
-          <div
-            className="px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 inline-flex justify-center items-center gap-2.5"
-            data-property-1="Default"
-          >
-            <div className="justify-start text-neutral-900 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
-              Quiero ser parte
-            </div>
-          </div>
+          <Button variant="primary">Quiero ser parte</Button>
         </div>
       </div>
-    </div>
+    </Section>
   );
 };
 

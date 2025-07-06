@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { Input, Button } from "./ui";
 
 const NewsLetterForm = () => {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Newsletter signup:", email);
+    // Aquí iría la lógica de suscripción
+  };
+
   return (
     <div className="w-full relative items-center justify-center">
       <img
@@ -17,21 +27,23 @@ const NewsLetterForm = () => {
             Suscríbete a nuestro Newsletter y disfruta de experiencias únicas.
           </div>
         </div>
-        <div className="self-stretch flex flex-col justify-center items-center gap-6">
-          <div className="self-stretch px-5 py-4 bg-white/10 border-b border-neutral-400 inline-flex justify-start items-center gap-16">
-            <div className="justify-start text-white text-base font-normal font-['Lora'] tracking-wide">
-              Email
-            </div>
-          </div>
-          <div
-            className="self-stretch px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 inline-flex justify-center items-center gap-2.5"
-            data-property-1="Default"
-          >
-            <div className="justify-start text-neutral-900 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
-              suscribirse{" "}
-            </div>
-          </div>
-        </div>
+        <form
+          className="self-stretch flex flex-col justify-center items-center gap-6"
+          onSubmit={handleSubmit}
+        >
+          <Input
+            required
+            className="self-stretch"
+            label="Email"
+            type="email"
+            value={email}
+            variant="newsletter"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button className="self-stretch" type="submit" variant="primary">
+            suscribirse
+          </Button>
+        </form>
       </div>
     </div>
   );
