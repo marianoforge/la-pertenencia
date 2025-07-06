@@ -1,57 +1,50 @@
-import { ButtonHTMLAttributes, forwardRef } from "react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "outline" | "ghost";
-  size?: "default" | "sm" | "lg";
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "quantity-plus"
+    | "quantity-minus";
+  size?: "sm" | "md" | "lg";
   children: React.ReactNode;
+  className?: string;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant = "default", size = "default", children, ...props },
+    { variant = "primary", size = "md", children, className, ...props },
     ref,
   ) => {
+    const baseStyles =
+      "inline-flex justify-center items-center gap-2.5 font-['Lora'] font-medium uppercase tracking-[8px] transition-colors duration-200";
+
+    const variants = {
+      primary:
+        "px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 text-neutral-900 text-base hover:bg-amber-400",
+      secondary:
+        "px-12 py-4 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 text-amber-300 text-base hover:bg-neutral-800",
+      outline:
+        "px-12 py-4 bg-white rounded-sm outline outline-1 outline-offset-[-1px] outline-neutral-400 text-neutral-900 text-base hover:bg-neutral-50",
+      "quantity-plus":
+        "w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 text-amber-300 text-base font-bold tracking-normal hover:bg-neutral-800",
+      "quantity-minus":
+        "w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 text-amber-300 text-base font-bold tracking-normal hover:bg-neutral-800",
+    };
+
+    const sizes = {
+      sm: "text-sm",
+      md: "text-base",
+      lg: "text-lg",
+    };
+
     return (
       <button
         ref={ref}
-        className={cn(
-          // Base styles from design spec
-          "inline-flex items-center justify-center",
-          "w-[285px] h-[52px]", // width: 285px, height: 52px
-          "rounded-[2px]", // border-radius: 2px
-          "border-[0.5px]", // border-width: 0.5px
-          "px-12 py-4", // padding: 16px 48px
-          "gap-[10px]", // gap: 10px
-          "text-button", // Typography class we created
-          "transition-all duration-200",
-          "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
-          "disabled:pointer-events-none disabled:opacity-50",
-
-          // Variant styles
-          variant === "default" && [
-            "bg-dorado-light", // background: #FEC85B
-            "border-negro-base", // border: 0.5px solid #111111
-            "text-negro-base",
-            "hover:bg-dorado-dark hover:border-dorado-dark hover:text-blanco-puro",
-            "active:scale-95",
-          ],
-          variant === "outline" && [
-            "bg-transparent",
-            "border-dorado-light",
-            "text-dorado-light",
-            "hover:bg-dorado-light hover:text-negro-base",
-          ],
-          variant === "ghost" && [
-            "bg-transparent",
-            "border-transparent",
-            "text-foreground",
-            "hover:bg-secondary",
-          ],
-
-          className,
-        )}
+        className={cn(baseStyles, variants[variant], sizes[size], className)}
         {...props}
       >
         {children}
@@ -62,4 +55,5 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = "Button";
 
-export { Button, type ButtonProps };
+export { Button };
+export type { ButtonProps };
