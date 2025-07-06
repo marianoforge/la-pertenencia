@@ -98,18 +98,54 @@ export default function DefaultLayout({
                 Seguinos en:
               </div>
               <div className="self-stretch inline-flex justify-between items-center">
-                <div className="w-6 h-6 relative overflow-hidden">
-                  <div className="w-6 h-6 left-0 top-0 absolute bg-neutral-900" />
-                </div>
-                <div className="w-6 h-6 relative overflow-hidden">
-                  <div className="w-6 h-6 left-0 top-0 absolute bg-neutral-900" />
-                </div>
-                <div className="w-6 h-6 relative overflow-hidden">
-                  <div className="w-6 h-6 left-0 top-0 absolute bg-neutral-900" />
-                </div>
-                <div className="w-7 h-6 relative overflow-hidden">
-                  <div className="w-7 h-5 left-[1.21px] top-[1.20px] absolute bg-neutral-900" />
-                </div>
+                <a
+                  className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
+                  href="https://facebook.com/lapertenencia"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="Facebook"
+                    className="w-6 h-6 object-contain"
+                    src="/icons/ICO FB.svg"
+                  />
+                </a>
+                <a
+                  className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
+                  href="https://instagram.com/lapertenencia"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="Instagram"
+                    className="w-6 h-6 object-contain"
+                    src="/icons/ICON IG.svg"
+                  />
+                </a>
+                <a
+                  className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
+                  href="https://x.com/lapertenencia"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="X (Twitter)"
+                    className="w-6 h-6 object-contain"
+                    src="/icons/ICON X.svg"
+                  />
+                </a>
+                <a
+                  className="w-7 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
+                  href="https://youtube.com/@lapertenencia"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="YouTube"
+                    className="w-7 h-6 object-contain"
+                    src="/icons/ICON YT.svg"
+                  />
+                </a>
               </div>
             </div>
           </div>
