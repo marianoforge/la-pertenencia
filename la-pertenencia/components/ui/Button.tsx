@@ -20,7 +20,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseStyles =
-      "inline-flex justify-center items-center gap-2.5 font-['Lora'] font-medium uppercase tracking-[8px] transition-colors duration-200";
+      "max-w-[350px] inline-flex justify-center items-center gap-2.5 font-['Lora'] font-medium uppercase tracking-[7px] transition-colors duration-200 whitespace-nowrap";
 
     const variants = {
       primary:

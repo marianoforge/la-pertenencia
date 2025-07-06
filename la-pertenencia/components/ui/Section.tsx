@@ -14,12 +14,13 @@ const Section: React.FC<SectionProps> = ({
   className,
 }) => {
   const baseStyles =
-    "w-full self-stretch inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden";
+    "w-full inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden";
 
   const variants = {
-    default: "px-28 py-24 bg-white",
-    gray: "px-28 py-24 bg-neutral-100",
-    "full-width": "py-24 bg-white",
+    default:
+      "sm:px-8 md:px-16 lg:px-20 xl:px-28 py-12 sm:py-16 md:py-20 lg:py-24 bg-white",
+    gray: " sm:px-8 md:px-16 lg:px-20 xl:px-28 py-12 sm:py-16 md:py-20 lg:py-24 bg-neutral-100",
+    "full-width": "py-12 sm:py-16 md:py-20 lg:py-24 bg-white",
   };
 
   return (

@@ -9,39 +9,22 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="container 2xl:max-w-[1920px] mx-auto relative flex flex-col h-screen">
+    <div className="container 2xl:max-w-[1920px] xl:max-w-[1536px] lg:max-w-[1280px] md:max-w-[900px] sm:max-w-[600px] xs:max-w-[380px] mx-auto relative flex flex-col min-h-screen">
       <Head />
       <Navbar />
       <main className="flex-grow font-lora">{children}</main>
       <footer className="w-full flex items-center justify-center py-3">
         <div className="w-full self-stretch pt-12 bg-white inline-flex flex-col justify-center items-center gap-10 overflow-hidden">
-          <div className="w-[1536px] px-28 inline-flex justify-between items-start">
-            <div className="w-24 h-36 relative overflow-hidden">
-              <div className="w-24 h-32 left-[2.29px] top-[2.52px] absolute bg-zinc-500 outline outline-1 outline-offset-[-0.50px] outline-white" />
-              <div className="w-8 h-14 left-[13.96px] top-[55.67px] absolute bg-white" />
-              <div className="w-7 h-14 left-[49.94px] top-[60.67px] absolute bg-white" />
-              <div className="w-2.5 h-3 left-[21.98px] top-[65.29px] absolute bg-neutral-900" />
-              <div className="w-2.5 h-3 left-[61.04px] top-[64.46px] absolute bg-neutral-900" />
-              <div className="w-20 h-20 left-[10.40px] top-[21.48px] absolute bg-neutral-900" />
-              <div className="w-3.5 h-5 left-[39.50px] top-[40.42px] absolute bg-white" />
-              <div className="w-px h-px left-[44.27px] top-[43.35px] absolute bg-neutral-900" />
-              <div className="w-1 h-2 left-[8.76px] top-[122.90px] absolute bg-white" />
-              <div className="w-1 h-2 left-[30.59px] top-[122.90px] absolute bg-white" />
-              <div className="w-1 h-2 left-[48.26px] top-[122.90px] absolute bg-white" />
-              <div className="w-1 h-2 left-[60.57px] top-[122.90px] absolute bg-white" />
-              <div className="w-1 h-2 left-[42.33px] top-[122.90px] absolute bg-white" />
-              <div className="w-px h-2 left-[80.06px] top-[122.90px] absolute bg-white" />
-              <div className="w-1.5 h-2 left-[13.69px] top-[122.88px] absolute bg-white" />
-              <div className="w-1.5 h-2 left-[82.96px] top-[122.88px] absolute bg-white" />
-              <div className="w-1 h-2 left-[24.59px] top-[122.90px] absolute bg-white" />
-              <div className="w-1.5 h-2 left-[36.51px] top-[122.90px] absolute bg-white" />
-              <div className="w-[4.87px] h-2 left-[53.99px] top-[122.90px] absolute bg-white" />
-              <div className="w-[4.87px] h-2 left-[66.40px] top-[122.90px] absolute bg-white" />
-              <div className="w-1.5 h-2 left-[72.56px] top-[122.86px] absolute bg-white" />
-              <div className="w-1.5 h-2 left-[13.69px] top-[122.88px] absolute bg-white" />
+          <div className="w-full max-w-[1536px] px-4 xs:px-6 sm:px-8 md:px-16 lg:px-20 xl:px-28 inline-flex flex-col md:flex-row justify-between items-start gap-8 md:gap-0">
+            <div className="w-full flex justify-center items-center">
+              <img
+                alt="La Pertenencia"
+                className="w-24 object-contain"
+                src="/images/logo-pertenencia.png"
+              />
             </div>
-            <div className="inline-flex flex-col justify-start items-start gap-2.5">
-              <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+            <div className="inline-flex flex-col justify-start items-start gap-2.5 w-full md:w-auto">
+              <div className="justify-start text-yellow-700 text-lg md:text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[3px] md:tracking-[5px]">
                 Productos
               </div>
               <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
@@ -52,8 +35,8 @@ export default function DefaultLayout({
                 Membresías
               </div>
             </div>
-            <div className="inline-flex flex-col justify-start items-start gap-2.5">
-              <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+            <div className="inline-flex flex-col justify-start items-start gap-2.5 w-full md:w-auto">
+              <div className="justify-start text-yellow-700 text-lg md:text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[3px] md:tracking-[5px]">
                 experiencias
               </div>
               <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
@@ -62,8 +45,8 @@ export default function DefaultLayout({
                 Catas y Maridajes
               </div>
             </div>
-            <div className="inline-flex flex-col justify-start items-start gap-2.5">
-              <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+            <div className="inline-flex flex-col justify-start items-start gap-2.5 w-full md:w-auto">
+              <div className="justify-start text-yellow-700 text-lg md:text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[3px] md:tracking-[5px]">
                 contactos
               </div>
               <div className="inline-flex justify-start items-center gap-2.5">
@@ -93,11 +76,11 @@ export default function DefaultLayout({
                 </div>
               </div>
             </div>
-            <div className="inline-flex flex-col justify-start items-start gap-5">
-              <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+            <div className="inline-flex flex-col justify-start items-start gap-5 w-full md:w-auto">
+              <div className="justify-start text-yellow-700 text-lg md:text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[3px] md:tracking-[5px]">
                 Seguinos en:
               </div>
-              <div className="self-stretch inline-flex justify-between items-center">
+              <div className="self-stretch inline-flex justify-between md:justify-start items-center gap-4">
                 <a
                   className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
                   href="https://facebook.com/lapertenencia"

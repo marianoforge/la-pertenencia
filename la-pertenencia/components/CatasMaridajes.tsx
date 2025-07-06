@@ -46,8 +46,8 @@ const CatasMaridajes = () => {
         title="Catas y maridajes"
       />
 
-      <div className="w-[1300px] pt-2.5 pb-10 flex flex-col justify-center items-center gap-2.5">
-        <div className="w-[1300px] text-center justify-start text-neutral-900 text-xl font-normal font-['Lora'] leading-loose tracking-wide">
+      <div className="w-full max-w-[1300px] pt-2.5 pb-6 md:pb-10 flex flex-col justify-center items-center gap-2.5 px-4 sm:px-0">
+        <div className="text-center text-neutral-900 text-base sm:text-lg md:text-xl font-normal font-['Lora'] leading-relaxed md:leading-loose tracking-wide">
           Creemos que las degustaciones y catas son más que una prueba de
           productos; son experiencias sensoriales y sociales para disfrutar,
           aprender y compartir, acompañadas de buenos vinos, quesos y valiosos
@@ -55,8 +55,8 @@ const CatasMaridajes = () => {
         </div>
       </div>
 
-      <div className="w-[1300px] px-14 inline-flex justify-start items-center gap-10">
-        <div className="flex-1 self-stretch inline-flex flex-col justify-between items-start">
+      <div className="w-full max-w-[1300px] px-4 sm:px-8 md:px-14 flex flex-col lg:flex-row justify-start items-start gap-8 lg:gap-10">
+        <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-4 md:gap-6">
           {events.map((event) => (
             <EventCard
               key={event.id}
@@ -71,17 +71,19 @@ const CatasMaridajes = () => {
           ))}
         </div>
 
-        <div className="inline-flex flex-col justify-center items-start gap-5">
-          <div className="w-[400px] h-[384px] relative rounded-lg overflow-hidden">
+        <div className="w-full lg:w-auto lg:min-w-[400px] flex flex-col justify-center items-start gap-4 md:gap-5">
+          <div className="w-full h-64 sm:h-80 md:h-96 lg:h-[384px] relative rounded-lg overflow-hidden">
             <img
               alt="Maridaje eventos"
               className="w-full h-full object-cover"
               src="/images/maridajeeventos.png"
             />
           </div>
-          <Button className="w-full self-stretch" variant="primary">
-            todos los eventos
-          </Button>
+          <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0">
+            <Button size="sm" variant="primary">
+              todos los eventos
+            </Button>
+          </div>
         </div>
       </div>
     </Section>

@@ -1,4 +1,4 @@
-import {heroui} from "@heroui/theme"
+import { heroui } from "@heroui/theme";
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -9,6 +9,14 @@ const config = {
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      xs: "380px",
+      sm: "600px",
+      md: "900px",
+      lg: "1280px",
+      xl: "1536px",
+      "2xl": "1920px",
+    },
     extend: {
       fontFamily: {
         lora: ["var(--font-lora)", "serif"],
