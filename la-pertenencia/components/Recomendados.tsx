@@ -1,13 +1,12 @@
 import { useState } from "react";
 
 import WineCard from "./wines/WineCard";
+import { Section, SectionHeader, Button } from "./ui";
 
 import { useWines } from "@/hooks/useWines";
 import { Wine } from "@/types/wine";
 
-type Props = {};
-
-const Recomendados = (props: Props) => {
+const Recomendados = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const { data: wines, isLoading, error } = useWines();
 
@@ -39,32 +38,28 @@ const Recomendados = (props: Props) => {
 
   if (isLoading) {
     return (
-      <div className="w-full bg-white self-stretch py-24 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden">
+      <Section variant="default">
         <div className="text-center">Cargando vinos...</div>
-      </div>
+      </Section>
     );
   }
 
   if (error) {
     return (
-      <div className="w-full bg-white self-stretch py-24 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden">
+      <Section variant="default">
         <div className="text-center text-red-600">
           Error al cargar los vinos
         </div>
-      </div>
+      </Section>
     );
   }
 
   return (
-    <div className="w-full bg-white self-stretch py-24 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden">
-      <div className="w-[1300px] flex flex-col justify-start items-center gap-2.5">
-        <div className="self-stretch text-center justify-start text-yellow-700 text-xl font-medium font-['Lora'] uppercase tracking-[10px]">
-          vinos recomendados
-        </div>
-        <div className="self-stretch text-center justify-start text-neutral-900 text-4xl font-medium font-['Lora'] tracking-[10px]">
-          Elegidos con el Corazón
-        </div>
-      </div>
+    <Section variant="default">
+      <SectionHeader
+        subtitle="Elegidos con el Corazón"
+        title="vinos recomendados"
+      />
 
       <div className="w-[1300px] h-96 relative">
         {currentWines.map((wine, index) => (
@@ -98,16 +93,9 @@ const Recomendados = (props: Props) => {
           Nuestro deseo es simple: que cada vino te sorprenda, te emocione y te
           revele algo distinto. Todo comienza al abrir una botella.
         </div>
-        <button
-          className="px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 inline-flex justify-center items-center gap-2.5 hover:bg-amber-400 transition-colors"
-          data-property-1="Default"
-        >
-          <div className="justify-start text-neutral-900 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
-            catálogo completo
-          </div>
-        </button>
+        <Button variant="primary">catálogo completo</Button>
       </div>
-    </div>
+    </Section>
   );
 };
 
