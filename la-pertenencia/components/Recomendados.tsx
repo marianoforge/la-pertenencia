@@ -71,11 +71,30 @@ const Recomendados = () => {
         </div>
 
         {/* Tablet: 2 wines */}
-        <div className="hidden sm:block lg:hidden px-4 sm:px-8">
+        <div className="hidden sm:block md:hidden lg:hidden px-4 sm:px-8">
           <div className="pt-5 pb-2.5">
             <div className="grid grid-cols-1 gap-6 md:gap-8">
               {displayWines
                 .slice(currentPage * 1, currentPage * 1 + 1)
+                .map((wine, index) => (
+                  <div key={wine.id} className="flex justify-center">
+                    <WineCard
+                      index={currentPage * 2 + index}
+                      wine={wine}
+                      onAddToCart={handleAddToCart}
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Laptop: 3 wines */}
+        <div className="hidden md:block lg:hidden px-4 md:px-0">
+          <div className="pt-5 pb-2.5">
+            <div className="grid grid-cols-2 gap-6 md:gap-8">
+              {displayWines
+                .slice(currentPage * 2, currentPage * 2 + 2)
                 .map((wine, index) => (
                   <div key={wine.id} className="flex justify-center">
                     <WineCard

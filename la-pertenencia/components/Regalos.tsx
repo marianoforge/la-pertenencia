@@ -27,7 +27,7 @@ const Regalos = () => {
         title="Regalos empresariales"
       />
 
-      <div className="w-full max-w-[1300px] pt-6 md:pt-10 flex flex-col gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0">
+      <div className="w-full max-w-[1300px] pt-6 md:pt-10 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0">
         {/* Kit "la pertenencia" - Large Card - Solo */}
         <div className="w-full mx-auto sm:justify-start h-96 relative flex justify-center items-start overflow-hidden">
           <div className="w-full h-96 relative rounded-lg">

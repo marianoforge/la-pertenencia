@@ -55,7 +55,7 @@ const CatasMaridajes = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-[1300px] px-2 md:px-14 flex flex-col lg:flex-row justify-start items-start gap-8 lg:gap-10">
+      <div className="w-full max-w-[1300px] px-2 md:px-14 lg:px-0 flex flex-col lg:flex-row justify-start items-start gap-8 lg:gap-0">
         <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-4 md:gap-6">
           {events.map((event) => (
             <EventCard
@@ -71,8 +71,8 @@ const CatasMaridajes = () => {
           ))}
         </div>
 
-        <div className="w-full lg:w-auto lg:min-w-[400px] flex flex-col justify-center items-start gap-4 md:gap-5">
-          <div className="w-full h-64 sm:h-80 md:h-96 lg:h-[384px] relative rounded-lg overflow-hidden">
+        <div className="w-full lg:w-[450px] lg:min-w-[400px] flex flex-col justify-center items-start gap-4 md:gap-5">
+          <div className="w-full h-64 sm:h-80 md:h-96 lg:h-[384px] relative g overflow-hidden">
             <img
               alt="Maridaje eventos"
               className="w-full h-full object-cover"

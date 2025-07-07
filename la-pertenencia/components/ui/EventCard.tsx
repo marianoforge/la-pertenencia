@@ -28,7 +28,7 @@ const EventCard: React.FC<EventCardProps> = ({
       className={cn(
         "bg-neutral-50 rounded-lg outline outline-1 outline-offset-[-1px] outline-amber-300 overflow-hidden",
         // Mobile: layout vertical, SM+: layout horizontal
-        "flex flex-col sm:flex-row items-start gap-0 sm:h-[140px]",
+        "flex flex-col sm:flex-row items-start gap-0 sm:h-[140px] lg:h-[150px] lg:w-[730px]",
         className,
       )}
     >
