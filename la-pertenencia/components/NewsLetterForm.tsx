@@ -13,11 +13,11 @@ const NewsLetterForm = () => {
     <div className="w-full relative flex items-center justify-center">
       <img
         alt="Newsletter"
-        className="w-full h-80 sm:h-56 md:h-64 lg:h-72 object-cover"
+        className="w-full h-80 sm:h-[262px] md:h-64 lg:h-72 object-cover"
         src="/images/newsletterSectionBG.png"
       />
-      <div className="absolute sm:inset-8 md:inset-12 lg:top-[15%] lg:right-[16%] lg:inset-auto">
-        <div className="w-80 px-5 pt-5 pb-10 bg-neutral-900 rounded outline outline-1 outline-offset-[-1px] outline-neutral-400 inline-flex flex-col justify-center items-center gap-5">
+      <div className="absolute sm:top-10 md:inset-12 lg:top-[15%] lg:right-[16%] lg:inset-auto">
+        <div className="w-80 sm:w-96 px-7 pt-5 pb-10 bg-neutral-900 rounded outline outline-1 outline-offset-[-1px] outline-neutral-400 inline-flex flex-col justify-center items-center gap-5">
           <div className="self-stretch pt-2.5 flex flex-col justify-start items-center gap-1.5">
             <div className="self-stretch text-center justify-start text-amber-300 text-sm font-medium font-['Lora'] uppercase tracking-[7px]">
               newsletter

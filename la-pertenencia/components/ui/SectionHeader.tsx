@@ -34,7 +34,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
       <div
         className={cn(
-          "w-full text-center text-neutral-900 text-2xl sm:text-3xl md:text-4xl font-medium font-['Lora'] tracking-[6px] sm:tracking-[8px] md:tracking-[10px]",
+          "w-full text-center text-neutral-900 text-2xl sm:text-lg md:text-4xl font-medium font-['Lora'] tracking-[6px] sm:tracking-[8px] md:tracking-[10px]",
           subtitleClassName,
         )}
       >

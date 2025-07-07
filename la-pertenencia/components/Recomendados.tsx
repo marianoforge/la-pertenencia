@@ -73,9 +73,9 @@ const Recomendados = () => {
         {/* Tablet: 2 wines */}
         <div className="hidden sm:block lg:hidden px-4 sm:px-8">
           <div className="pt-5 pb-2.5">
-            <div className="grid grid-cols-2 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 gap-6 md:gap-8">
               {displayWines
-                .slice(currentPage * 2, currentPage * 2 + 2)
+                .slice(currentPage * 1, currentPage * 1 + 1)
                 .map((wine, index) => (
                   <div key={wine.id} className="flex justify-center">
                     <WineCard

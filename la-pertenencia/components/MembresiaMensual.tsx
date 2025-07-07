@@ -41,7 +41,11 @@ const MembresiaMensual = () => {
               Comunidad de miembros con acceso exclusivo
             </span>
           </div>
-          <Button variant="primary">Quiero ser parte</Button>
+          <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0">
+            <Button size="sm" variant="primary">
+              Quiero ser parte
+            </Button>
+          </div>
         </div>
       </div>
     </Section>

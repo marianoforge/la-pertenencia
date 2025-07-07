@@ -55,7 +55,7 @@ const CatasMaridajes = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-[1300px] px-4 sm:px-8 md:px-14 flex flex-col lg:flex-row justify-start items-start gap-8 lg:gap-10">
+      <div className="w-full max-w-[1300px] px-2 md:px-14 flex flex-col lg:flex-row justify-start items-start gap-8 lg:gap-10">
         <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-4 md:gap-6">
           {events.map((event) => (
             <EventCard
