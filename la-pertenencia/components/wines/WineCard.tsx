@@ -74,7 +74,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
       </div>
       <div className="w-56 inline-flex flex-col justify-center items-center gap-1">
         <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-1">
-          <div className="self-stretch text-center justify-start text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3.50px]">
+          <div className="min-h-12 self-stretch text-center justify-start text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3.50px]">
             {wine.name}
           </div>
           <div className="self-stretch text-center justify-start text-yellow-700 text-sm font-medium font-['Lora'] tracking-[3.50px]">

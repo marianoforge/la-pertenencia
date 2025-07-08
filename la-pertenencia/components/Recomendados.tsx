@@ -142,7 +142,7 @@ const Recomendados = () => {
         ))}
       </div>
 
-      <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0">
+      <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-3">
         <div className="text-center text-neutral-900 text-sm font-normal font-['Lora'] leading-tight tracking-wide">
           Descubrimos etiquetas únicas que quizás todavía no hayas probado.
           <br />
