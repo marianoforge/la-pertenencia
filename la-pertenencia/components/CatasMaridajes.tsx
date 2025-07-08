@@ -46,8 +46,8 @@ const CatasMaridajes = () => {
         title="Catas y maridajes"
       />
 
-      <div className="w-full max-w-[1300px] pt-2.5 pb-6 md:pb-10 flex flex-col justify-center items-center gap-2.5 px-4 sm:px-0">
-        <div className="text-center text-neutral-900 text-base sm:text-lg md:text-xl font-normal font-['Lora'] leading-relaxed md:leading-loose tracking-wide">
+      <div className="w-full max-w-[1300px] pt-2.5 pb-5 md:pb-7 lg:pb-10 flex flex-col justify-center items-center gap-2.5 px-4 sm:px-0">
+        <div className="text-center text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] leading-tight md:leading-normal lg:leading-loose tracking-wide">
           Creemos que las degustaciones y catas son más que una prueba de
           productos; son experiencias sensoriales y sociales para disfrutar,
           aprender y compartir, acompañadas de buenos vinos, quesos y valiosos
@@ -55,8 +55,8 @@ const CatasMaridajes = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-[1300px] px-2 md:px-14 lg:px-0 flex flex-col lg:flex-row justify-start items-start gap-8 lg:gap-0">
-        <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-4 md:gap-6">
+      <div className="w-full max-w-[1300px] px-0 sm:px-2.5 md:px-5 lg:px-2.5 flex flex-col lg:flex-row justify-start items-start gap-10 lg:gap-10">
+        <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-5 md:gap-12">
           {events.map((event) => (
             <EventCard
               key={event.id}
@@ -71,18 +71,16 @@ const CatasMaridajes = () => {
           ))}
         </div>
 
-        <div className="w-full lg:w-[450px] lg:min-w-[400px] flex flex-col justify-center items-start gap-4 md:gap-5">
-          <div className="w-full h-64 sm:h-80 md:h-96 lg:h-[384px] relative g overflow-hidden">
+        <div className="w-full lg:w-[510px] h-12 lg:h-full flex flex-col justify-between items-start gap-5 lg:gap-0">
+          <div className="w-full hidden lg:flex flex-1 lg:flex-grow relative rounded-lg overflow-hidden">
             <img
               alt="Maridaje eventos"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-lg"
               src="/images/maridajeeventos.png"
             />
           </div>
-          <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0">
-            <Button size="sm" variant="primary">
-              todos los eventos
-            </Button>
+          <div className="w-full flex justify-center items-center lg:items-stretch mt-4">
+            <Button variant="primary">todos los eventos</Button>
           </div>
         </div>
       </div>

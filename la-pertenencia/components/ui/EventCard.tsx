@@ -28,84 +28,62 @@ const EventCard: React.FC<EventCardProps> = ({
       className={cn(
         "bg-neutral-50 rounded-lg outline outline-1 outline-offset-[-1px] outline-amber-300 overflow-hidden",
         // Mobile: layout vertical, SM+: layout horizontal
-        "flex flex-col sm:flex-row items-start gap-0 sm:h-[140px] lg:h-[150px] lg:w-[730px]",
+        "flex flex-col sm:flex-row items-start gap-0 sm:gap-5 md:gap-6 lg:gap-6",
         className,
       )}
     >
       {/* Image */}
       <img
         alt={imageAlt}
-        className="w-full h-40 object-cover sm:w-40 sm:min-h-[160px] lg:w-56 lg:min-h-[180px]"
+        className="w-full h-56 sm:w-28 sm:h-28 md:w-36 md:h-44 object-cover flex-shrink-0"
         src={image}
       />
 
       {/* Content */}
-      <div className="w-full flex flex-col justify-start items-start gap-4 sm:gap-6 p-4 lg:p-5">
+      <div className="w-full flex flex-col justify-start items-start gap-2 p-2.5 sm:p-0 sm:py-4 sm:pr-5 md:pr-7 lg:pr-0">
         {/* Title and Description */}
-        <div className="flex flex-col justify-start items-start gap-1 sm:gap-2">
-          <div className="text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3px] lg:text-base lg:tracking-[4px]">
+        <div className="pt-[5px] pb-3 flex flex-col justify-start items-start gap-4">
+          <div className="text-neutral-900 text-sm md:text-base font-semibold font-['Lora'] uppercase tracking-[3.50px] md:tracking-[4px]">
             {title}
           </div>
-          <div className="text-yellow-700 text-sm font-normal font-['Lora'] tracking-wide lg:text-base">
+          <div className="text-yellow-700 text-sm md:text-base font-normal font-['Lora'] tracking-wide sm:w-full md:w-[515px] lg:w-[515px]">
             {description}
           </div>
         </div>
 
         {/* Metadata */}
-        <div className="flex justify-start items-start gap-1 lg:flex-row lg:gap-5">
-          {/* Date and Time */}
-          <div className="flex justify-start items-center gap-1">
-            <svg
-              className="w-4 h-4 lg:w-5 lg:h-5"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <rect
-                fill="none"
-                height="12"
-                rx="1"
-                stroke="#B45309"
-                strokeWidth="1.5"
-                width="14"
-                x="3"
-                y="4"
-              />
-              <path
-                d="M8 2v4M12 2v4"
-                stroke="#B45309"
-                strokeLinecap="round"
-                strokeWidth="1.5"
-              />
-              <path d="M3 8h14" stroke="#B45309" strokeWidth="1.5" />
-            </svg>
-            <div className="text-neutral-500 text-sm font-normal font-['Lora'] tracking-wide lg:text-base">
-              {date}, {time}
+        <div className="pb-[5px] flex justify-start items-center gap-3 sm:gap-5 flex-wrap">
+          {/* Date */}
+          <div className="flex justify-start items-center gap-[5px]">
+            <div className="w-5 h-5 relative">
+              <div className="w-4 h-4 left-[3px] top-[3.74px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+              <div className="w-4 h-0 left-[3px] top-[8.97px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+              <div className="w-0 h-1 left-[14.33px] top-[2px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+              <div className="w-0 h-1 left-[7.36px] top-[2px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+            </div>
+            <div className="text-neutral-500 text-xs md:text-base font-normal font-['Lora'] tracking-wide">
+              {date}
+            </div>
+          </div>
+
+          {/* Time */}
+          <div className="flex justify-start items-center gap-[5px]">
+            <div className="w-5 h-5 relative">
+              <div className="w-4 h-4 left-[2px] top-[2.31px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+              <div className="w-1 h-2 left-[10.99px] top-[5.90px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+            </div>
+            <div className="text-neutral-500 text-xs md:text-base font-normal font-['Lora'] tracking-wide">
+              {time}
             </div>
           </div>
 
           {/* Location */}
           <div className="flex justify-start items-center gap-1">
-            <svg
-              className="w-4 h-4 lg:w-5 lg:h-5"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M10 2C6.686 2 4 4.686 4 8c0 5.25 6 8 6 8s6-2.75 6-8c0-3.314-2.686-6-6-6z"
-                fill="none"
-                stroke="#B45309"
-                strokeWidth="1.5"
-              />
-              <circle
-                cx="10"
-                cy="8"
-                fill="none"
-                r="2"
-                stroke="#B45309"
-                strokeWidth="1.5"
-              />
-            </svg>
-            <div className="text-neutral-500 text-sm font-normal font-['Lora'] tracking-wide lg:text-base">
+            <div className="w-5 h-5 relative">
+              <div className="w-3.5 h-5 left-[4px] top-[2.31px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+              <div className="w-1.5 h-1.5 left-[8.52px] top-[6.83px] absolute outline outline-[1.65px] outline-offset-[-0.83px] outline-yellow-700" />
+            </div>
+            <div className="text-neutral-500 text-xs md:text-base font-normal font-['Lora'] tracking-wide">
               {location}
             </div>
           </div>

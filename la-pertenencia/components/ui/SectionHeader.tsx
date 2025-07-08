@@ -26,7 +26,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
     >
       <div
         className={cn(
-          "w-full text-center text-yellow-700 text-md sm:text-md font-medium font-['Lora'] uppercase tracking-[6px] sm:tracking-[8px] md:tracking-[10px]",
+          "w-full text-center text-yellow-700 text-sm md:text-base lg:text-xl font-medium font-['Lora'] uppercase tracking-[7px] md:tracking-[8px] lg:tracking-[10px]",
           titleClassName,
         )}
       >
@@ -34,7 +34,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
       <div
         className={cn(
-          "w-full text-center text-neutral-900 text-2xl sm:text-lg md:text-4xl font-medium font-['Lora'] tracking-[6px] sm:tracking-[8px] md:tracking-[10px]",
+          "w-full text-center text-neutral-900 text-2xl md:text-3xl lg:text-4xl font-medium font-['Lora'] tracking-[6px] md:tracking-[8px] lg:tracking-[10px]",
           subtitleClassName,
         )}
       >
