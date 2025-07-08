@@ -4,7 +4,7 @@ import { Section, SectionHeader, Button } from "./ui";
 
 const ImaginaTuVino = () => {
   return (
-    <Section variant="gray">
+    <Section id="imagina-tu-vino" variant="default">
       <SectionHeader
         subtitle="Tu Propio Vino, Tu Propia Historia."
         title="imagina un vino"

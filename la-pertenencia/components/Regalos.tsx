@@ -21,7 +21,7 @@ const Regalos = () => {
   };
 
   return (
-    <Section variant="default">
+    <Section id="regalos" variant="default">
       <SectionHeader
         subtitle="Regalos empresariales"
         title="Regala momentos que se brindan"
@@ -97,11 +97,15 @@ const Regalos = () => {
               <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
                 agregar
               </div>
-              <div className="w-6 h-6 lg:w-8 lg:h-8 relative rounded-sm">
-                <div className="w-0.5 h-0.5 left-[8.97px] top-[15.71px] absolute bg-amber-300" />
-                <div className="w-0.5 h-0.5 left-[14.94px] top-[15.71px] absolute bg-amber-300" />
-                <div className="w-3.5 h-2.5 left-[5.25px] top-[5.62px] absolute bg-amber-300" />
-              </div>
+              <img
+                alt="Carrito"
+                className="w-5 h-5 lg:w-8 lg:h-8 object-contain"
+                src="/icons/Add carrito.svg"
+                style={{
+                  filter:
+                    "brightness(0) saturate(100%) invert(71%) sepia(83%) saturate(1392%) hue-rotate(4deg) brightness(103%) contrast(103%)",
+                }}
+              />
             </button>
           </div>
         </div>
@@ -171,11 +175,15 @@ const Regalos = () => {
                 <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
                   agregar
                 </div>
-                <div className="w-6 h-6 lg:w-8 lg:h-8 relative rounded-sm">
-                  <div className="w-0.5 h-0.5 left-[8.97px] top-[15.71px] absolute bg-amber-300" />
-                  <div className="w-0.5 h-0.5 left-[14.94px] top-[15.71px] absolute bg-amber-300" />
-                  <div className="w-3.5 h-2.5 left-[5.25px] top-[5.62px] absolute bg-amber-300" />
-                </div>
+                <img
+                  alt="Carrito"
+                  className="w-5 h-5 lg:w-8 lg:h-8 object-contain"
+                  src="/icons/Add carrito.svg"
+                  style={{
+                    filter:
+                      "brightness(0) saturate(100%) invert(71%) sepia(83%) saturate(1392%) hue-rotate(4deg) brightness(103%) contrast(103%)",
+                  }}
+                />
               </button>
             </div>
           </div>
@@ -243,11 +251,15 @@ const Regalos = () => {
                 <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
                   agregar
                 </div>
-                <div className="w-6 h-6 lg:w-8 lg:h-8 relative rounded-sm">
-                  <div className="w-0.5 h-0.5 left-[8.97px] top-[15.71px] absolute bg-amber-300" />
-                  <div className="w-0.5 h-0.5 left-[14.94px] top-[15.71px] absolute bg-amber-300" />
-                  <div className="w-3.5 h-2.5 left-[5.25px] top-[5.62px] absolute bg-amber-300" />
-                </div>
+                <img
+                  alt="Carrito"
+                  className="w-5 h-5 lg:w-8 lg:h-8 object-contain"
+                  src="/icons/Add carrito.svg"
+                  style={{
+                    filter:
+                      "brightness(0) saturate(100%) invert(71%) sepia(83%) saturate(1392%) hue-rotate(4deg) brightness(103%) contrast(103%)",
+                  }}
+                />
               </button>
             </div>
           </div>

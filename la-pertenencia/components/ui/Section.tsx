@@ -2,7 +2,7 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 
-interface SectionProps {
+interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   variant?: "default" | "gray" | "full-width";
   className?: string;
@@ -12,8 +12,9 @@ const Section: React.FC<SectionProps> = ({
   children,
   variant = "default",
   className,
+  ...props
 }) => {
-  const baseStyles = "items-center gap-2.5 overflow-hidden";
+  const baseStyles = "flex flex-col items-center gap-2.5 overflow-hidden";
 
   const variants = {
     default:
@@ -23,7 +24,7 @@ const Section: React.FC<SectionProps> = ({
   };
 
   return (
-    <div className={cn(baseStyles, variants[variant], className)}>
+    <div className={cn(baseStyles, variants[variant], className)} {...props}>
       {children}
     </div>
   );

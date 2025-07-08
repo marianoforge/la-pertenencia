@@ -79,7 +79,7 @@ const Recomendados = () => {
   }
 
   return (
-    <Section variant="default">
+    <Section id="recomendados" variant="default">
       <SectionHeader
         subtitle="Elegidos con el Corazón"
         title="vinos recomendados"

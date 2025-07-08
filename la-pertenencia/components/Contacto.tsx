@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Section } from "./ui";
+
 const Contacto = () => {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -45,7 +47,11 @@ const Contacto = () => {
   };
 
   return (
-    <div className="w-full min-h-[787px] relative">
+    <Section
+      className="relative min-h-[787px]"
+      id="contacto"
+      variant="full-width"
+    >
       {/* Background Image */}
       <img
         alt="Contacto"
@@ -183,7 +189,7 @@ const Contacto = () => {
           </form>
         </div>
       </div>
-    </div>
+    </Section>
   );
 };
 

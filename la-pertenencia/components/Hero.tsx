@@ -3,7 +3,10 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div className="w-full px-2.5 pt-10 pb-10 sm:pb-20 lg:pt-20 lg:pb-0 relative bg-white inline-flex flex-col justify-start items-center gap-2.5 lg:overflow-visible overflow-hidden">
+    <div
+      className="w-full px-2.5 pt-10 pb-10 sm:pb-20 lg:pt-20 lg:pb-0 relative bg-white inline-flex flex-col justify-start items-center gap-2.5 lg:overflow-visible overflow-hidden"
+      id="hero"
+    >
       {/* Background Image */}
       <div className="w-full h-full absolute inset-0 overflow-hidden">
         <Image

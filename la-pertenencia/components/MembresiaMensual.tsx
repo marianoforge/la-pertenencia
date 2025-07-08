@@ -4,7 +4,7 @@ import { Section, SectionHeader, Button } from "./ui";
 
 const MembresiaMensual = () => {
   return (
-    <Section variant="default">
+    <Section id="membresia" variant="gray">
       <SectionHeader
         subtitle="Una caja. Tres vinos. Un ritual."
         title="Membresía mensual"
@@ -22,8 +22,8 @@ const MembresiaMensual = () => {
           </div>
           <div className="flex-1 inline-flex flex-col justify-start items-start gap-5">
             <div className="text-neutral-900 text-xl font-normal font-['Lora'] leading-loose tracking-wide">
-              Con nuestra membresía, cada mes recibís una selección de tres vinos
-              especialmente elegidos para vos. Descubrí nuevas etiquetas
+              Con nuestra membresía, cada mes recibís una selección de tres
+              vinos especialmente elegidos para vos. Descubrí nuevas etiquetas
               recomendadas por sommeliers y enólogos que nos acompañan en este
               viaje. Una experiencia pensada para que disfrutes a tu manera:
               relajarte, compartir, regalar o brindar.
@@ -38,14 +38,13 @@ const MembresiaMensual = () => {
                 <br />
                 Envío mensual a domicilio
                 <br />
-                Acceso preferencial a catas, experiencias presenciales y on line.
+                Acceso preferencial a catas, experiencias presenciales y on
+                line.
                 <br />
                 Comunidad de miembros con acceso exclusivo
               </span>
             </div>
-            <Button variant="primary">
-              Quiero ser parte
-            </Button>
+            <Button variant="primary">Quiero ser parte</Button>
           </div>
         </div>
 
@@ -60,8 +59,8 @@ const MembresiaMensual = () => {
           </div>
           <div className="w-full px-0 sm:px-5 md:px-7 flex flex-col justify-start items-center gap-5">
             <div className="w-full text-neutral-900 text-sm md:text-base font-normal font-['Lora'] leading-tight md:leading-normal tracking-wide">
-              Con nuestra membresía, cada mes recibís una selección de tres vinos
-              especialmente elegidos para vos. Descubrí nuevas etiquetas
+              Con nuestra membresía, cada mes recibís una selección de tres
+              vinos especialmente elegidos para vos. Descubrí nuevas etiquetas
               recomendadas por sommeliers y enólogos que nos acompañan en este
               viaje. Una experiencia pensada para que disfrutes a tu manera:
               relajarte, compartir, regalar o brindar.
@@ -76,15 +75,14 @@ const MembresiaMensual = () => {
                 <br />
                 Envío mensual a domicilio
                 <br />
-                Acceso preferencial a catas, experiencias presenciales y on line.
+                Acceso preferencial a catas, experiencias presenciales y on
+                line.
                 <br />
                 Comunidad de miembros con acceso exclusivo
               </span>
             </div>
           </div>
-          <Button variant="primary">
-            Quiero ser parte
-          </Button>
+          <Button variant="primary">Quiero ser parte</Button>
         </div>
       </div>
     </Section>
