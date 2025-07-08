@@ -20,13 +20,13 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   return (
     <div
       className={cn(
-        "w-[1300px] flex flex-col justify-start items-center gap-2.5",
+        "w-full max-w-[1300px] flex flex-col justify-start items-center gap-2.5",
         className,
       )}
     >
       <div
         className={cn(
-          "self-stretch text-center justify-start text-yellow-700 text-xl font-medium font-['Lora'] uppercase tracking-[10px]",
+          "w-full text-center text-yellow-700 text-sm md:text-base lg:text-xl font-medium font-['Lora'] uppercase tracking-[7px] md:tracking-[8px] lg:tracking-[10px]",
           titleClassName,
         )}
       >
@@ -34,7 +34,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       </div>
       <div
         className={cn(
-          "self-stretch text-center justify-start text-neutral-900 text-4xl font-medium font-['Lora'] tracking-[10px]",
+          "w-full text-center text-neutral-900 text-2xl md:text-3xl lg:text-4xl font-medium font-['Lora'] tracking-[6px] md:tracking-[8px] lg:tracking-[10px]",
           subtitleClassName,
         )}
       >

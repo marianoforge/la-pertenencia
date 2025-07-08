@@ -52,14 +52,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
           className,
         )}
       >
-        <div className="w-[640px] relative rounded-lg overflow-hidden">
+        <div className="w-full relative rounded-lg overflow-hidden">
           <img
             alt={imageAlt}
             className="w-800 h-[430px] object-cover rounded-lg"
             src={image}
           />
         </div>
-        <div className="p-5 left-[30px] top-[38.78px] absolute bg-white inline-flex flex-col justify-start items-start gap-1">
+        <div className="py-5 px-4 left-[30px] top-[38.78px] absolute bg-white inline-flex flex-col justify-start items-start gap-1">
           <div className="w-72 flex flex-col justify-start items-start gap-1">
             <div className="justify-start text-neutral-900 text-base font-semibold font-['Lora'] uppercase tracking-[4px]">
               {title}
@@ -118,12 +118,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         className="w-72 h-36 object-cover object-center rounded-tl-lg rounded-tr-lg border-b-[3px] border-neutral-900"
         src={image}
       />
-      <div className="self-stretch p-5 flex flex-col justify-start items-start gap-1">
-        <div className="self-stretch flex flex-col justify-start items-start gap-1">
+      <div className="p-5 flex flex-col justify-start items-start gap-1">
+        <div className="flex flex-col justify-start items-start gap-1">
           <div className="justify-start text-neutral-900 text-base font-semibold font-['Lora'] uppercase tracking-[4px]">
             {title}
           </div>
-          <div className="self-stretch inline-flex justify-center items-center gap-2.5">
+          <div className=" inline-flex justify-center items-center gap-2.5">
             <div className="w-60 justify-start text-yellow-700 text-base font-normal font-['Lora'] tracking-wide">
               {description.map((item, index) => (
                 <React.Fragment key={index}>
