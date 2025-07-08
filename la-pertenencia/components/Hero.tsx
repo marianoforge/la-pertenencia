@@ -26,7 +26,7 @@ const Hero = () => {
             alt="Logo"
             className="object-contain w-full h-full"
             height={192}
-            src="/images/Logo-pertenencia.png"
+            src="/images/logo-pertenencia.png"
             width={128}
           />
         </div>
@@ -95,7 +95,7 @@ const Hero = () => {
               alt="Logo"
               className="object-contain w-full h-full"
               height={600}
-              src="/images/Logo-pertenencia.png"
+              src="/images/logo-pertenencia.png"
               width={384}
             />
           </div>
