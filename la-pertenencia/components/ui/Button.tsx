@@ -20,11 +20,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseStyles =
-      "inline-flex justify-center items-center gap-2.5 font-['Lora'] font-medium uppercase tracking-[8px] transition-colors duration-200";
+      "max-w-[350px] inline-flex justify-center items-center gap-2.5 font-['Lora'] font-medium uppercase transition-colors duration-200 whitespace-nowrap";
 
     const variants = {
       primary:
-        "px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 text-neutral-900 text-base hover:bg-amber-400",
+        "h-9 md:h-auto px-7 py-3 md:px-12 md:py-4 bg-amber-300 rounded-sm outline outline-[0.36px] md:outline-[0.50px] outline-offset-[-0.36px] md:outline-offset-[-0.50px] outline-neutral-900 border border-negro-base text-neutral-900 text-sm md:text-base tracking-[7px] md:tracking-[8px] hover:bg-amber-400",
       secondary:
         "px-12 py-4 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 text-amber-300 text-base hover:bg-neutral-800",
       outline:
