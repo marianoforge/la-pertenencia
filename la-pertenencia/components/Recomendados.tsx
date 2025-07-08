@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import WineCard from "./wines/WineCard";
 import { Section, SectionHeader, Button } from "./ui";
@@ -8,6 +8,7 @@ import { Wine } from "@/types/wine";
 
 const Recomendados = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [winesPerPage, setWinesPerPage] = useState(1);
   const { data: wines, isLoading, error } = useWines();
 
   // Filtrar solo vinos destacados para la sección de recomendados
@@ -16,10 +17,39 @@ const Recomendados = () => {
   // Si no hay vinos destacados, usar todos los vinos
   const displayWines = featuredWines.length > 0 ? featuredWines : wines || [];
 
-  // Responsive wines per page: 1 en mobile, 2 en tablet, 3 en desktop
-  // Para calcular correctamente las páginas, usaremos el breakpoint más pequeño (mobile = 1)
-  const winesPerPageMobile = 1;
-  const totalPages = Math.ceil(displayWines.length / winesPerPageMobile);
+  // Hook para detectar el tamaño de pantalla y calcular vinos por página
+  useEffect(() => {
+    const updateWinesPerPage = () => {
+      if (window.innerWidth >= 1280) {
+        // 1280px+: 3 vinos por página (2 páginas)
+        setWinesPerPage(3);
+      } else if (window.innerWidth >= 900) {
+        // 900-1279px: 2 vinos por página (3 páginas)
+        setWinesPerPage(2);
+      } else if (window.innerWidth >= 600) {
+        // 600-899px: 1 vino por página (6 páginas)
+        setWinesPerPage(1);
+      } else {
+        // 300-599px: 1 vino por página (6 páginas)
+        setWinesPerPage(1);
+      }
+    };
+
+    updateWinesPerPage();
+    window.addEventListener("resize", updateWinesPerPage);
+
+    return () => window.removeEventListener("resize", updateWinesPerPage);
+  }, []);
+
+  // Calcular el total de páginas basado en el tamaño de pantalla actual
+  const totalPages = Math.ceil(displayWines.length / winesPerPage);
+
+  // Resetear página actual si excede el total de páginas
+  useEffect(() => {
+    if (currentPage >= totalPages) {
+      setCurrentPage(Math.max(0, totalPages - 1));
+    }
+  }, [totalPages, currentPage]);
 
   const handleAddToCart = (wine: Wine, quantity: number) => {
     // TODO: Implementar lógica del carrito
@@ -70,7 +100,7 @@ const Recomendados = () => {
           </div>
         </div>
 
-        {/* Tablet: 2 wines */}
+        {/* Tablet: 1 wine */}
         <div className="hidden sm:block md:hidden lg:hidden px-4 sm:px-8">
           <div className="pt-5 pb-2.5">
             <div className="grid grid-cols-1 gap-6 md:gap-8">
@@ -79,7 +109,7 @@ const Recomendados = () => {
                 .map((wine, index) => (
                   <div key={wine.id} className="flex justify-center">
                     <WineCard
-                      index={currentPage * 2 + index}
+                      index={currentPage * 1 + index}
                       wine={wine}
                       onAddToCart={handleAddToCart}
                     />
@@ -89,7 +119,7 @@ const Recomendados = () => {
           </div>
         </div>
 
-        {/* Laptop: 3 wines */}
+        {/* Laptop: 2 wines */}
         <div className="hidden md:block lg:hidden px-4 md:px-0">
           <div className="pt-5 pb-2.5">
             <div className="grid grid-cols-2 gap-6 md:gap-8">
@@ -128,19 +158,21 @@ const Recomendados = () => {
         </div>
       </div>
 
-      {/* Indicadores de página (puntos) */}
-      <div className="flex justify-center items-center gap-3.5 mt-4">
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <button
-            key={index}
-            aria-label={`Go to page ${index + 1}`}
-            className={`w-2.5 h-2.5 rounded-full transition-colors ${
-              index === currentPage ? "bg-neutral-900" : "bg-neutral-400"
-            }`}
-            onClick={() => goToPage(index)}
-          />
-        ))}
-      </div>
+      {/* Indicadores de página (puntos) - Solo mostrar si hay más de 1 página */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-3.5 mt-4">
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <button
+              key={index}
+              aria-label={`Go to page ${index + 1}`}
+              className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                index === currentPage ? "bg-neutral-900" : "bg-neutral-400"
+              }`}
+              onClick={() => goToPage(index)}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-3">
         <div className="text-center text-neutral-900 text-sm font-normal font-['Lora'] leading-tight tracking-wide">

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div className="w-full px-2.5 pt-20 pb-10 sm:pt-24 sm:pb-0 md:pt-28 lg:pt-20 relative bg-white inline-flex flex-col justify-start items-center gap-2.5 lg:overflow-visible overflow-hidden">
+    <div className="w-full px-2.5 pt-10 pb-10 sm:pb-20 lg:pt-20 lg:pb-0 relative bg-white inline-flex flex-col justify-start items-center gap-2.5 lg:overflow-visible overflow-hidden">
       {/* Background Image */}
       <div className="w-full h-full absolute inset-0 overflow-hidden">
         <Image
@@ -55,7 +55,7 @@ const Hero = () => {
       {/* Content - Desktop Layout (lg+) */}
       <div className="relative z-10 w-full max-w-[1300px] h-[550px] hidden lg:flex">
         {/* Text Column */}
-        <div className="w-[780px] h-96 pt-14 flex flex-col justify-start items-start gap-7">
+        <div className="lg:w-[700px] xl:w-[780px] h-[356px] pt-14 pl-12 flex flex-col justify-start items-start gap-7">
           <div className="self-stretch justify-start text-amber-300 text-3xl font-normal font-lora uppercase tracking-[16px]">
             Donde el vino une,
             <br />
@@ -63,20 +63,20 @@ const Hero = () => {
           </div>
           <div className="self-stretch flex flex-col justify-start items-start gap-2.5">
             <div className="self-stretch justify-start">
-              <span className="text-white text-xl font-normal font-lora leading-loose tracking-tight">
+              <span className="text-white text-xl font-normal font-lora xl:leading-loose tracking-tight">
                 &quot;
               </span>
-              <span className="text-white text-xl font-semibold font-lora leading-loose tracking-tight">
+              <span className="text-white text-xl font-semibold font-lora leading-normal xl:leading-loose tracking-tight">
                 La Pertenencia es mucho más que un negocio:
               </span>
-              <span className="text-white text-xl font-normal font-lora leading-loose tracking-wide">
+              <span className="text-white text-xl font-normal font-lora leading-normal xl:leading-loose tracking-wide">
                 {" "}
                 es el reflejo de nuestro proyecto de vida. Un lugar donde nos
                 rodeamos de buena gente, compartimos buena energía y, por
                 supuesto, disfrutamos del buen vino.&quot;
               </span>
             </div>
-            <div className="self-stretch justify-start text-white text-xl font-normal font-lora leading-loose tracking-wide">
+            <div className="self-stretch justify-start text-white text-xl font-normal font-lora leading-normal xl:leading-loose tracking-wide">
               Un proyecto que crece con cada persona que se suma, no es
               solamente vender vinos, es compartir historias, es atesorar
               experiencias que nos conectan con lo que nos gusta y nos hace
@@ -87,7 +87,7 @@ const Hero = () => {
 
         {/* Logo Column */}
         <div className="relative w-96 h-[550px] ml-auto flex items-center justify-center">
-          <div className="w-96 h-[600px] absolute top-2 left-0 z-50 overflow-visible flex items-center justify-center">
+          <div className="w-96 h-[600px] lg:h-[460px] lg:w-[315px] xl:h-[523px] xl:w-[357px] absolute lg:top-32 lg:left-0 xl:top-16   z-50 overflow-visible flex items-center justify-center">
             <Image
               alt="Logo"
               className="object-contain w-full h-full"
