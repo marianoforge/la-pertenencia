@@ -23,55 +23,32 @@ export const Navbar = () => {
       <div className="w-40 h-3.5 relative">
         <NextLink className="flex items-center w-full h-full" href="/">
           <Image
-            alt="Logo"
-            height={18}
+            fill
+            priority
+            alt="La Pertenencia Logo"
+            className="object-contain"
+            sizes="160px"
             src="/images/logo-txt.svg"
-            width={200}
           />
         </NextLink>
       </div>
 
       {/* Right side - Desktop Menu + Icons */}
-      <div className="flex items-center gap-6">
-        {/* Desktop Menu - Hidden on mobile, visible on lg+ */}
-        <div className="hidden lg:flex items-center gap-6">
-          {menuItems.map((item) =>
-            item.href.startsWith("/") ? (
-              <NextLink
-                key={item.name}
-                className="text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-2 relative group font-lora tracking-wide cursor-pointer"
-                href={item.href}
-              >
-                {item.name}
-                {/* Línea dorada en hover para desktop */}
-                <span className="absolute bottom-0 left-1/2 w-full h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
-              </NextLink>
-            ) : (
-              <a
-                key={item.name}
-                className="text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-2 relative group font-lora tracking-wide cursor-pointer"
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const target = document.querySelector(item.href);
-
-                  if (target) {
-                    target.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                  }
-                }}
-              >
-                {item.name}
-                {/* Línea dorada en hover para desktop */}
-                <span className="absolute bottom-0 left-1/2 w-full h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
-              </a>
-            ),
-          )}
+      <div className="flex justify-start items-center gap-6">
+        {/* Desktop Menu - Hidden on smaller screens */}
+        <div className="hidden lg:flex justify-start items-center gap-6">
+          {menuItems.map((item) => (
+            <NextLink
+              key={item.name}
+              className="text-white text-xs font-normal font-['Lora'] tracking-[4px] hover:text-amber-300 transition-colors"
+              href={item.href}
+            >
+              {item.name}
+            </NextLink>
+          ))}
         </div>
 
-        {/* Vertical separator - Only visible on lg+ */}
+        {/* Vertical separator - Hidden on smaller screens */}
         <div className="w-5 h-0 rotate-90 outline outline-[0.81px] outline-offset-[-0.41px] outline-white hidden lg:block" />
 
         {/* Icons */}
@@ -91,10 +68,12 @@ export const Navbar = () => {
               setIsMenuOpen(!isMenuOpen);
             }}
           >
-            <img
+            <Image
               alt="Menu"
-              className="w-6 h-6 object-contain"
+              className="object-contain"
+              height={24}
               src="/icons/majesticons_menu.svg"
+              width={24}
             />
           </button>
         </div>
@@ -102,43 +81,19 @@ export const Navbar = () => {
 
       {/* Mobile Menu - Only visible on smaller screens */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-stone-900 border-t border-stone-700 shadow-lg z-[60] lg:hidden">
-          {menuItems.map((item) =>
-            item.href.startsWith("/") ? (
+        <div className="absolute top-full left-0 right-0 bg-stone-900 border-t border-stone-700 lg:hidden z-40">
+          <div className="flex flex-col py-4">
+            {menuItems.map((item) => (
               <NextLink
                 key={item.name}
-                className="w-full text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-4 px-6 flex items-center justify-center relative group font-lora tracking-wide block cursor-pointer"
+                className="px-4 py-3 text-white text-sm font-normal font-['Lora'] tracking-[2px] hover:bg-stone-800 hover:text-amber-300 transition-colors"
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
-                {/* Línea dorada en hover para móvil */}
-                <span className="absolute bottom-0 left-1/2 w-1/2 h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
               </NextLink>
-            ) : (
-              <a
-                key={item.name}
-                className="w-full text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-4 px-6 flex items-center justify-center relative group font-lora tracking-wide block cursor-pointer"
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsMenuOpen(false);
-                  const target = document.querySelector(item.href);
-
-                  if (target) {
-                    target.scrollIntoView({
-                      behavior: "smooth",
-                      block: "start",
-                    });
-                  }
-                }}
-              >
-                {item.name}
-                {/* Línea dorada en hover para móvil */}
-                <span className="absolute bottom-0 left-1/2 w-1/2 h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
-              </a>
-            ),
-          )}
+            ))}
+          </div>
         </div>
       )}
     </div>
