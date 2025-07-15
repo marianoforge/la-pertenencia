@@ -9,10 +9,10 @@ import { Wine } from "@/types/wine";
 const Recomendados = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [winesPerPage, setWinesPerPage] = useState(1);
-  const { data: wines, isLoading, error } = useWines();
+  const { data: wines = [], isLoading, error } = useWines({ featured: true });
 
   // Filtrar solo vinos destacados para la sección de recomendados
-  const featuredWines = wines?.filter((wine) => wine.featured) || [];
+  const featuredWines = wines.filter((wine) => wine.featured);
 
   // Si no hay vinos destacados, usar todos los vinos
   const displayWines = featuredWines.length > 0 ? featuredWines : wines || [];
@@ -52,8 +52,14 @@ const Recomendados = () => {
   }, [totalPages, currentPage]);
 
   const handleAddToCart = (wine: Wine, quantity: number) => {
-    // TODO: Implementar lógica del carrito
-    console.log(`Adding ${quantity} of ${wine.name} to cart`);
+    // Los componentes WineCard ya manejan esto internamente,
+    // pero mantenemos esta función por si acaso
+    console.log(
+      "Vino agregado al carrito desde Recomendados:",
+      wine.name,
+      "Cantidad:",
+      quantity,
+    );
   };
 
   const goToPage = (page: number) => {
