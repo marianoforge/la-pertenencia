@@ -2,6 +2,7 @@ import { Head } from "./head";
 
 import { Navbar } from "@/components/navbar";
 import Cart from "@/components/Cart";
+import CartNotification from "@/components/CartNotification";
 
 export default function DefaultLayout({
   children,
@@ -325,6 +326,7 @@ export default function DefaultLayout({
         </div>
       </footer>
       <Cart />
+      <CartNotification />
     </div>
   );
 }
