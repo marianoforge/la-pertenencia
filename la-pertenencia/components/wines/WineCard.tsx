@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 
 import { Wine } from "@/types/wine";
 import { useCartStore } from "@/stores/useCartStore";
@@ -38,31 +39,6 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
     }
   };
 
-  // Configurar imagen según índice (matching Figma)
-  const getImageConfig = (index: number) => {
-    if (index === 0) {
-      return {
-        containerClass: "w-24 h-72 relative",
-        imageClass: "w-24 h-72 left-0 top-0 absolute object-cover",
-        placeholder: "https://placehold.co/90x304",
-      };
-    } else {
-      const leftOffset = index === 1 ? "left-[-17px]" : "left-[-17.10px]";
-      const topOffset = index === 1 ? "top-[-2px]" : "top-[-5px]";
-
-      return {
-        containerClass: "w-24 h-72 relative",
-        imageClass: `w-32 h-80 ${leftOffset} ${topOffset} absolute object-cover`,
-        placeholder:
-          index === 1
-            ? "https://placehold.co/124x310"
-            : "https://placehold.co/125x313",
-      };
-    }
-  };
-
-  const imageConfig = getImageConfig(index);
-
   // Usar placeholder si no hay imagen en la DB o es inválida
   const isValidImage =
     wine.image &&
@@ -70,15 +46,18 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
     wine.image !== "/images/wine-placeholder.jpg" &&
     !wine.image.includes("placehold.co");
 
-  const imageUrl = isValidImage ? wine.image : imageConfig.placeholder;
+  const imageUrl = isValidImage ? wine.image : "/images/wine-placeholder.svg";
 
   return (
     <div className=" pr-5 py-10 bg-gradient-to-l from-white/0 to-gray-200 inline-flex justify-center items-center gap-6">
       <div className="w-24 h-72 relative">
-        <img
-          alt={wine.name}
-          className="w-24 h-72 left-2 top-0 absolute object-cover"
+        <Image
+          alt={`${wine.name} - ${wine.winery} ${wine.vintage}`}
+          className="max-w-full max-h-full object-contain"
+          height={288}
+          priority={index === 0}
           src={imageUrl}
+          width={96}
         />
       </div>
       <div className="w-56 inline-flex flex-col justify-center items-center gap-1">
@@ -142,14 +121,16 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
           <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
             {wine.stock === 0 ? "agotado" : "agregar"}
           </div>
-          <img
-            alt="Carrito"
-            className="w-5 h-5 object-contain"
+          <Image
+            alt="Agregar al carrito"
+            className="object-contain"
+            height={20}
             src="/icons/Add carrito.svg"
             style={{
               filter:
                 "brightness(0) saturate(100%) invert(71%) sepia(83%) saturate(1392%) hue-rotate(4deg) brightness(103%) contrast(103%)",
             }}
+            width={20}
           />
         </button>
       </div>

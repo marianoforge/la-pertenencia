@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 
 import { Wine } from "@/types/wine";
 import { useCartStore } from "@/stores/useCartStore";
@@ -44,16 +45,19 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
     wine.image !== "/images/wine-placeholder.jpg" &&
     !wine.image.includes("placehold.co");
 
-  const imageUrl = isValidImage ? wine.image : "https://placehold.co/200x400";
+  const imageUrl = isValidImage ? wine.image : "/images/wine-placeholder.svg";
 
   return (
     <div className="w-full max-w-[280px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       {/* Wine Image */}
-      <div className="w-full h-48 md:h-56 lg:h-64 bg-gradient-to-l from-white to-zinc-100/50 flex items-center justify-center">
-        <img
-          alt={wine.name}
-          className="w-24 h-40 md:w-28 md:h-48 lg:w-32 lg:h-56 object-cover"
+      <div className="w-full h-48 md:h-56 lg:h-64 bg-gradient-to-l from-white to-zinc-100/50 flex items-center justify-center relative">
+        <Image
+          alt={`${wine.name} - ${wine.winery} ${wine.vintage}`}
+          className="max-w-full max-h-full object-contain"
+          height={200}
+          priority={false}
           src={imageUrl}
+          width={200}
         />
       </div>
 
@@ -133,14 +137,16 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
           <span className="text-amber-300 text-xs md:text-base font-medium font-['Lora'] uppercase tracking-[4px] md:tracking-[8px]">
             {wine.stock === 0 ? "agotado" : "agregar"}
           </span>
-          <img
-            alt="Carrito"
-            className="w-4 h-4 md:w-5 md:h-5 object-contain"
+          <Image
+            alt="Agregar al carrito"
+            className="object-contain"
+            height={20}
             src="/icons/Add carrito.svg"
             style={{
               filter:
                 "brightness(0) saturate(100%) invert(71%) sepia(83%) saturate(1392%) hue-rotate(4deg) brightness(103%) contrast(103%)",
             }}
+            width={20}
           />
         </button>
       </div>

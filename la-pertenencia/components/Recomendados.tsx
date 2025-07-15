@@ -5,11 +5,12 @@ import { Section, SectionHeader, Button } from "./ui";
 
 import { useWines } from "@/hooks/useWines";
 import { Wine } from "@/types/wine";
+import { useResponsiveLayout } from "@/hooks/useWindowSize";
 
 const Recomendados = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [winesPerPage, setWinesPerPage] = useState(1);
   const { data: wines = [], isLoading, error } = useWines({ featured: true });
+  const { getItemsPerPage } = useResponsiveLayout();
 
   // Filtrar solo vinos destacados para la sección de recomendados
   const featuredWines = wines.filter((wine) => wine.featured);
@@ -17,36 +18,15 @@ const Recomendados = () => {
   // Si no hay vinos destacados, usar todos los vinos
   const displayWines = featuredWines.length > 0 ? featuredWines : wines || [];
 
-  // Hook para detectar el tamaño de pantalla y calcular vinos por página
-  useEffect(() => {
-    const updateWinesPerPage = () => {
-      if (window.innerWidth >= 1280) {
-        // 1280px+: 3 vinos por página (2 páginas)
-        setWinesPerPage(3);
-      } else if (window.innerWidth >= 900) {
-        // 900-1279px: 2 vinos por página (3 páginas)
-        setWinesPerPage(2);
-      } else if (window.innerWidth >= 600) {
-        // 600-899px: 1 vino por página (6 páginas)
-        setWinesPerPage(1);
-      } else {
-        // 300-599px: 1 vino por página (6 páginas)
-        setWinesPerPage(1);
-      }
-    };
-
-    updateWinesPerPage();
-    window.addEventListener("resize", updateWinesPerPage);
-
-    return () => window.removeEventListener("resize", updateWinesPerPage);
-  }, []);
+  // Calcular vinos por página basado en el tamaño de pantalla
+  const winesPerPage = getItemsPerPage(1, 1, 2, 3);
 
   // Calcular el total de páginas basado en el tamaño de pantalla actual
   const totalPages = Math.ceil(displayWines.length / winesPerPage);
 
   // Resetear página actual si excede el total de páginas
   useEffect(() => {
-    if (currentPage >= totalPages) {
+    if (currentPage >= totalPages && totalPages > 0) {
       setCurrentPage(Math.max(0, totalPages - 1));
     }
   }, [totalPages, currentPage]);
