@@ -48,7 +48,7 @@ const Contacto = () => {
 
   return (
     <Section
-      className="relative min-h-[787px]"
+      className="relative md:min-h-[800px] min-h-[630px]"
       id="contacto"
       variant="full-width"
     >
@@ -60,11 +60,11 @@ const Contacto = () => {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-l from-neutral-900 via-neutral-900/85 to-neutral-900" />
+      <div className="md:h-[800px] absolute inset-0 bg-gradient-to-l from-neutral-900 via-neutral-900/85 to-neutral-900" />
 
       {/* Form Container */}
-      <div className="relative z-10 w-full px-4 py-14 md:py-20 lg:px-28 flex justify-center items-center min-h-[787px]">
-        <div className="w-full max-w-96 sm:max-w-2xl px-4 sm:px-8 py-14 md:py-20 flex flex-col justify-start items-center gap-7 overflow-hidden rounded-lg">
+      <div className="relative z-10 w-full px-4 flex justify-center items-center">
+        <div className="w-full max-w-96 sm:max-w-2xl px-4 sm:px-8 flex flex-col justify-start items-center gap-7 overflow-hidden rounded-lg">
           {/* Header */}
           <div className="self-stretch py-5 flex flex-col justify-start items-center gap-2.5">
             <div className=" text-center justify-start text-amber-300 text-sm md:text-base lg:text-xl font-medium font-['Lora'] uppercase tracking-[7px] md:tracking-[8px] lg:tracking-[10px]">

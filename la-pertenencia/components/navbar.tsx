@@ -5,8 +5,8 @@ import Image from "next/image";
 import CartButton from "@/components/CartButton";
 
 const menuItems = [
-  { name: "INICIO", href: "#hero" },
-  { name: "VINOS", href: "#recomendados" },
+  { name: "INICIO", href: "/" },
+  { name: "VINOS", href: "/vinos" },
   { name: "CREA TU VINO", href: "#imagina-tu-vino" },
   { name: "REGALOS", href: "#regalos" },
   { name: "CATAS", href: "#catas-maridajes" },
@@ -35,28 +35,40 @@ export const Navbar = () => {
       <div className="flex items-center gap-6">
         {/* Desktop Menu - Hidden on mobile, visible on lg+ */}
         <div className="hidden lg:flex items-center gap-6">
-          {menuItems.map((item) => (
-            <a
-              key={item.name}
-              className="text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-2 relative group font-lora tracking-wide cursor-pointer"
-              href={item.href}
-              onClick={(e) => {
-                e.preventDefault();
-                const target = document.querySelector(item.href);
+          {menuItems.map((item) =>
+            item.href.startsWith("/") ? (
+              <NextLink
+                key={item.name}
+                className="text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-2 relative group font-lora tracking-wide cursor-pointer"
+                href={item.href}
+              >
+                {item.name}
+                {/* Línea dorada en hover para desktop */}
+                <span className="absolute bottom-0 left-1/2 w-full h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
+              </NextLink>
+            ) : (
+              <a
+                key={item.name}
+                className="text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-2 relative group font-lora tracking-wide cursor-pointer"
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.querySelector(item.href);
 
-                if (target) {
-                  target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                }
-              }}
-            >
-              {item.name}
-              {/* Línea dorada en hover para desktop */}
-              <span className="absolute bottom-0 left-1/2 w-full h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
-            </a>
-          ))}
+                  if (target) {
+                    target.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }
+                }}
+              >
+                {item.name}
+                {/* Línea dorada en hover para desktop */}
+                <span className="absolute bottom-0 left-1/2 w-full h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
+              </a>
+            ),
+          )}
         </div>
 
         {/* Vertical separator - Only visible on lg+ */}
@@ -91,29 +103,42 @@ export const Navbar = () => {
       {/* Mobile Menu - Only visible on smaller screens */}
       {isMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-stone-900 border-t border-stone-700 shadow-lg z-[60] lg:hidden">
-          {menuItems.map((item) => (
-            <a
-              key={item.name}
-              className="w-full text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-4 px-6 flex items-center justify-center relative group font-lora tracking-wide block cursor-pointer"
-              href={item.href}
-              onClick={(e) => {
-                e.preventDefault();
-                setIsMenuOpen(false);
-                const target = document.querySelector(item.href);
+          {menuItems.map((item) =>
+            item.href.startsWith("/") ? (
+              <NextLink
+                key={item.name}
+                className="w-full text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-4 px-6 flex items-center justify-center relative group font-lora tracking-wide block cursor-pointer"
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+                {/* Línea dorada en hover para móvil */}
+                <span className="absolute bottom-0 left-1/2 w-1/2 h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
+              </NextLink>
+            ) : (
+              <a
+                key={item.name}
+                className="w-full text-sm text-blanco-puro hover:text-dorado-light transition-colors duration-200 py-4 px-6 flex items-center justify-center relative group font-lora tracking-wide block cursor-pointer"
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(false);
+                  const target = document.querySelector(item.href);
 
-                if (target) {
-                  target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                }
-              }}
-            >
-              {item.name}
-              {/* Línea dorada en hover para móvil */}
-              <span className="absolute bottom-0 left-1/2 w-1/2 h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
-            </a>
-          ))}
+                  if (target) {
+                    target.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }
+                }}
+              >
+                {item.name}
+                {/* Línea dorada en hover para móvil */}
+                <span className="absolute bottom-0 left-1/2 w-1/2 h-0.5 bg-dorado-light transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-center -translate-x-1/2" />
+              </a>
+            ),
+          )}
         </div>
       )}
     </div>

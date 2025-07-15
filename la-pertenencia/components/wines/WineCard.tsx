@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Wine } from "@/types/wine";
+import { useCartStore } from "@/stores/useCartStore";
 
 interface WineCardProps {
   wine: Wine;
@@ -10,8 +11,16 @@ interface WineCardProps {
 
 const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
   const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCartStore();
 
   const handleAddToCart = () => {
+    // Add to cart store
+    addItem(wine, quantity);
+
+    // Reset quantity to 1 for next add
+    setQuantity(1);
+
+    // Call parent callback if provided
     if (onAddToCart) {
       onAddToCart(wine, quantity);
     }

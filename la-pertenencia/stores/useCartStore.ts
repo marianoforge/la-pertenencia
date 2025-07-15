@@ -4,7 +4,13 @@ import { persist } from "zustand/middleware";
 import { Wine } from "../types/wine";
 import { CartItem, CartState, CartActions } from "../types/cart";
 
-interface CartStore extends CartState, CartActions {}
+interface CartStore extends CartState, CartActions {
+  // Notification state
+  showNotification: boolean;
+  notificationMessage: string;
+  setNotification: (message: string) => void;
+  hideNotification: () => void;
+}
 
 const calculateFinalPrice = (wine: Wine) => {
   return wine.price + (wine.price * wine.iva) / 100;
@@ -18,6 +24,8 @@ export const useCartStore = create<CartStore>()(
       isOpen: false,
       totalItems: 0,
       totalAmount: 0,
+      showNotification: false,
+      notificationMessage: "",
 
       // Acciones
       addItem: (wine: Wine, quantity = 1) => {
@@ -57,11 +65,21 @@ export const useCartStore = create<CartStore>()(
           0
         );
 
+        // Mostrar notificación
+        const message = `✅ ${wine.name} agregado al carrito (${quantity})`;
+
         set({
           items: newItems,
           totalItems,
           totalAmount,
+          showNotification: true,
+          notificationMessage: message,
         });
+
+        // Auto-hide notification after 3 seconds
+        setTimeout(() => {
+          get().hideNotification();
+        }, 3000);
       },
 
       removeItem: (wineId: string) => {
@@ -130,6 +148,14 @@ export const useCartStore = create<CartStore>()(
         const item = get().items.find((item) => item.wine.id === wineId);
 
         return item ? item.quantity : 0;
+      },
+
+      setNotification: (message: string) => {
+        set({ showNotification: true, notificationMessage: message });
+      },
+
+      hideNotification: () => {
+        set({ showNotification: false, notificationMessage: "" });
       },
     }),
     {
