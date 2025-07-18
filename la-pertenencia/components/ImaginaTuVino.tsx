@@ -19,11 +19,11 @@ const ImaginaTuVino = () => {
           />
         </div>
         <div className="flex-1 w-full lg:w-auto inline-flex flex-col justify-start items-start lg:items-start gap-4 md:gap-5">
-          <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-semibold font-['Lora'] leading-tight md:leading-normal lg:leading-loose tracking-tight">
+          <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-semibold font-['Lora'] italic leading-tight md:leading-normal lg:leading-normal tracking-tight">
             ¿Alguna vez soñaste con tener tu propio vino, con tu sello personal?
           </div>
           <div className="flex-1 flex flex-col justify-start items-start gap-2 md:gap-2.5">
-            <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] leading-tight md:leading-normal lg:leading-loose tracking-tight">
+            <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] italic leading-tight md:leading-normal lg:leading-normal tracking-tight">
               <span className="font-semibold">
                 &quot;Crea tu vino, viví tu experiencia&quot;
               </span>
@@ -34,7 +34,7 @@ const ImaginaTuVino = () => {
                 propia creación.
               </span>
             </div>
-            <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] leading-tight md:leading-normal lg:leading-loose tracking-tight">
+            <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] italic leading-tight md:leading-normal lg:leading-normal tracking-tight">
               <span className="font-semibold">En La Pertenencia </span>
               <span>
                 te abrimos las puertas a un viaje sensorial inolvidable para
@@ -43,7 +43,7 @@ const ImaginaTuVino = () => {
                 que se cultivan las uvas.
               </span>
             </div>
-            <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] leading-tight md:leading-normal lg:leading-loose tracking-tight">
+            <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] italic leading-tight md:leading-normal lg:leading-loose tracking-tight">
               <span className="font-semibold">
                 De la mano de Lucas Moschetti,{" "}
               </span>
@@ -53,7 +53,7 @@ const ImaginaTuVino = () => {
               </span>
             </div>
           </div>
-          <div className="w-full pt-2.5 lg:pt-0 flex flex-col justify-center items-center">
+          <div className="w-full pt-2.5 lg:pt-0 flex flex-col lg:mt-8">
             <Button size="sm" variant="primary">
               Quiero saber más
             </Button>

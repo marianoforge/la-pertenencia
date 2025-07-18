@@ -46,6 +46,14 @@ const Recomendados = () => {
     setCurrentPage(page);
   };
 
+  const goToPreviousPage = () => {
+    setCurrentPage(prev => Math.max(0, prev - 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages - 1, prev + 1));
+  };
+
   if (isLoading) {
     return (
       <Section variant="default">
@@ -125,9 +133,9 @@ const Recomendados = () => {
         </div>
 
         {/* Desktop: 3 wines */}
-        <div className="hidden lg:block px-4 lg:px-0">
+        <div className=" w-full hidden lg:block px-4 lg:px-0">
           <div className="pt-5 pb-2.5">
-            <div className="grid grid-cols-3 gap-12 xl:gap-16">
+            <div className="grid grid-cols-3 gap-12 xl:gap-2">
               {displayWines
                 .slice(currentPage * 3, currentPage * 3 + 3)
                 .map((wine, index) => (
@@ -144,19 +152,51 @@ const Recomendados = () => {
         </div>
       </div>
 
-      {/* Indicadores de página (puntos) - Solo mostrar si hay más de 1 página */}
+      {/* Controles de navegación - Solo mostrar si hay más de 1 página */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-3.5 mt-4">
-          {Array.from({ length: totalPages }).map((_, index) => (
+        <div className="flex flex-col items-center gap-4 mt-4">
+          {/* Navegación con flechas y números */}
+          <div className="flex justify-center items-center gap-4">
             <button
-              key={index}
-              aria-label={`Go to page ${index + 1}`}
-              className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                index === currentPage ? "bg-neutral-900" : "bg-neutral-400"
-              }`}
-              onClick={() => goToPage(index)}
-            />
-          ))}
+              aria-label="Previous page"
+              className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
+              onClick={goToPreviousPage}
+              disabled={currentPage === 0}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            
+            <div className="text-neutral-900 text-sm font-medium font-['Lora'] min-w-[40px] text-center">
+              {currentPage + 1} / {totalPages}
+            </div>
+            
+            <button
+              aria-label="Next page"
+              className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages - 1}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
+
+          {/* Indicadores de página (puntos) */}
+          <div className="flex justify-center items-center gap-3.5">
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <button
+                key={index}
+                aria-label={`Go to page ${index + 1}`}
+                className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                  index === currentPage ? "bg-neutral-900" : "bg-neutral-400"
+                }`}
+                onClick={() => goToPage(index)}
+              />
+            ))}
+          </div>
         </div>
       )}
 
