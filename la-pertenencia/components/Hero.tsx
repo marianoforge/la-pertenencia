@@ -66,20 +66,20 @@ const Hero = () => {
           </div>
           <div className="self-stretch flex flex-col justify-start items-start gap-2.5">
             <div className="self-stretch justify-start">
-              <span className="text-white text-xl font-normal font-lora xl:leading-loose tracking-tight">
+              <span className="text-white text-xl font-normal italic font-lora xl:leading-normal tracking-tight">
                 &quot;
               </span>
-              <span className="text-white text-xl font-semibold font-lora leading-normal xl:leading-loose tracking-tight">
+              <span className="text-white text-xl font-normal font-lora leading-normal xl:leading-normal tracking-tight">
                 La Pertenencia es mucho más que un negocio:
               </span>
-              <span className="text-white text-xl font-normal font-lora leading-normal xl:leading-loose tracking-wide">
+              <span className="text-white text-xl font-normal font-lora italic leading-normal xl:leading-normal tracking-wide">
                 {" "}
                 es el reflejo de nuestro proyecto de vida. Un lugar donde nos
                 rodeamos de buena gente, compartimos buena energía y, por
                 supuesto, disfrutamos del buen vino.&quot;
               </span>
             </div>
-            <div className="self-stretch justify-start text-white text-xl font-normal font-lora leading-normal xl:leading-loose tracking-wide">
+            <div className="self-stretch justify-start text-white text-xl font-normal italic font-lora leading-normal xl:leading-loose tracking-wide">
               Un proyecto que crece con cada persona que se suma, no es
               solamente vender vinos, es compartir historias, es atesorar
               experiencias que nos conectan con lo que nos gusta y nos hace

@@ -49,39 +49,39 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
   const imageUrl = isValidImage ? wine.image : "/images/wine-placeholder.svg";
 
   return (
-    <div className=" pr-5 py-10 bg-gradient-to-l from-white/0 to-gray-200 inline-flex justify-center items-center gap-6">
-      <div className="w-24 h-72 relative">
+    <div className="w-[400px] h-[380px] bg-gradient-to-l from-gray-200 to-white/0 inline-flex justify-center items-center">
+      <div className="w-[130px] h-[313px] relative">
         <Image
           alt={`${wine.name} - ${wine.winery} ${wine.vintage}`}
-          className="max-w-full max-h-full object-contain"
-          height={288}
+          className="object-contain mt-16"
+          height={313}
           priority={index === 0}
           src={imageUrl}
-          width={96}
+          width={130}
         />
       </div>
       <div className="w-56 inline-flex flex-col justify-center items-center gap-1">
         <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-1">
-          <div className="min-h-12 self-stretch text-center justify-start text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3.50px]">
+          <div className="min-h-8 w-full self-stretch text-center justify-start text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3.50px]">
             {wine.name}
           </div>
           <div className="self-stretch text-center justify-start text-yellow-700 text-sm font-medium font-['Lora'] tracking-[3.50px]">
             {wine.category}
           </div>
         </div>
-        <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
+        <div className="self-stretch h-0 outline outline-[0.50px]  outline-[#A6A6A6]" />
         <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5">
           <div className="w-64 text-center justify-start text-neutral-900 text-3xl font-medium font-['Lora'] tracking-wider">
             $ {wine.price.toLocaleString()}
           </div>
         </div>
-        <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
+        <div className="self-stretch h-0 outline outline-[0.50px] outline-[#A6A6A6]" />
         <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5">
-          <div className="w-64 text-center justify-start text-neutral-900 text-sm font-normal font-['Lora'] tracking-wide">
+          <div className="text-center justify-start text-neutral-900 text-sm font-normal font-['Lora'] tracking-wide px-2 line-clamp-2">
             {wine.description}
           </div>
         </div>
-        <div className="self-stretch pt-4 pb-2 inline-flex justify-center items-center gap-4">
+        <div className="self-stretch pb-2 inline-flex justify-center items-center gap-4">
           <div className="flex-1 h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
           <div className="flex justify-center items-center gap-2.5">
             <button

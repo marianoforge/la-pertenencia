@@ -18,7 +18,7 @@ const Section: React.FC<SectionProps> = ({
 
   const variants = {
     default:
-      "max-w-[1300px] mx-auto sm:px-8 md:px-16 lg:px-8 xl:px-[118px] py-12 sm:py-16 md:py-20 lg:py-24 bg-white",
+      "max-w-[1300px] mx-auto sm:px-8 md:px-16 lg:px-4  py-12 sm:py-16 md:py-20 lg:py-24 bg-white",
     gray: " sm:px-8 md:px-16 lg:px-8 xl:px-28 py-12 sm:py-16 md:py-20 lg:py-24 bg-neutral-100",
     "full-width": "py-12 sm:py-16 md:py-20 lg:py-24 bg-white",
   };
