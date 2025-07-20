@@ -10,14 +10,21 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="container 2xl:max-w-[1920px] xl:max-w-[1536px] lg:max-w-[1280px] md:max-w-[900px] sm:max-w-[600px] xs:max-w-[380px] mx-auto relative flex flex-col min-h-screen">
+    <div className="fluid-width mx-auto relative flex flex-col min-h-screen">
       <Head />
       <Navbar />
       <main className="flex-grow font-lora">{children}</main>
       <footer className="w-full flex items-center justify-center py-3">
         <div className="w-full self-stretch pt-12 bg-white inline-flex flex-col justify-center items-center gap-10 overflow-hidden">
           {/* Desktop LG+ Layout */}
-          <div className="hidden lg:block w-full max-w-[1536px] px-28">
+          <div 
+            className="fluid-menu-hide w-full"
+            style={{
+              maxWidth: "min(100%, 1920px)",
+              paddingLeft: "clamp(2rem, 7vw, 7rem)",
+              paddingRight: "clamp(2rem, 7vw, 7rem)"
+            }}
+          >
             <div className="w-full inline-flex justify-between items-start">
               {/* Logo */}
               <div className="flex items-start">
@@ -146,8 +153,16 @@ export default function DefaultLayout({
             </div>
           </div>
 
-          {/* Mobile/Tablet Layout (hidden on lg+) */}
-          <div className="lg:hidden w-full max-w-[1536px] px-4 xs:px-6 sm:px-8 md:px-16 flex flex-col gap-6">
+          {/* Mobile/Tablet Layout */}
+          <div 
+            className="fluid-menu-show w-full flex flex-col"
+            style={{
+              maxWidth: "min(100%, 1920px)",
+              paddingLeft: "clamp(1rem, 4vw, 4rem)",
+              paddingRight: "clamp(1rem, 4vw, 4rem)",
+              gap: "clamp(1.5rem, 4vw, 2rem)"
+            }}
+          >
             {/* Primera fila: Logo | Productos | Experiencias */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
               {/* Logo */}
