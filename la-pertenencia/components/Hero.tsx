@@ -4,7 +4,13 @@ import Image from "next/image";
 const Hero = () => {
   return (
     <div
-      className="w-full px-2.5 pt-10 pb-10 sm:pb-20 lg:pt-20 lg:pb-0 relative bg-white inline-flex flex-col justify-start items-center gap-2.5 lg:overflow-visible overflow-hidden"
+      className="w-full relative bg-white inline-flex flex-col justify-start items-center gap-2.5 fluid-hero-container"
+      style={{
+        paddingLeft: "clamp(0.625rem, 2.5vw, 2.5rem)",
+        paddingRight: "clamp(0.625rem, 2.5vw, 2.5rem)",
+        paddingTop: "clamp(2.5rem, 8vw, 5rem)",
+        paddingBottom: "clamp(2.5rem, 8vw, 0rem)"
+      }}
       id="hero"
     >
       {/* Background Image */}
@@ -12,40 +18,81 @@ const Hero = () => {
         <Image
           fill
           alt="Hero"
-          className="object-cover"
+          className="object-bottom object-cover "
           src="/images/bg-hero.jpg"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent lg:bg-gradient-to-l lg:from-black/90 lg:via-black/60 lg:to-transparent" />
       </div>
 
       {/* Content - Mobile/Tablet Layout */}
-      <div className="relative z-10 w-full px-3 flex flex-col justify-start items-center gap-5 lg:hidden">
+      <div 
+        className="relative z-10 w-full flex-col justify-start items-center fluid-hero-mobile"
+        style={{
+          paddingLeft: "clamp(0.75rem, 3vw, 1.5rem)",
+          paddingRight: "clamp(0.75rem, 3vw, 1.5rem)",
+          gap: "clamp(1.25rem, 4vw, 2rem)"
+        }}
+      >
         {/* Logo */}
-        <div className="w-32 h-48 md:w-40 md:h-60 relative overflow-hidden flex items-center justify-center">
+        <div 
+          className="relative overflow-hidden flex items-center justify-center"
+          style={{
+            width: "clamp(8rem, 25vw, 10rem)",
+            height: "clamp(12rem, 35vw, 15rem)"
+          }}
+        >
           <Image
             alt="Logo"
             className="object-contain w-full h-full"
-            height={192}
+            height={240}
             src="/images/logo-pertenencia.png"
-            width={128}
+            width={160}
           />
         </div>
 
         {/* Text Content */}
-        <div className="w-full pt-2.5 md:pt-5 flex flex-col justify-start items-center gap-7">
-          <div className="w-full text-center text-amber-300 text-xl md:text-2xl font-normal font-lora uppercase tracking-[10px] md:tracking-[12px]">
+        <div 
+          className="w-full flex flex-col justify-start items-center"
+          style={{
+            paddingTop: "clamp(0.625rem, 2vw, 1.25rem)",
+            gap: "clamp(1.25rem, 4vw, 1.75rem)"
+          }}
+        >
+          <div 
+            className="w-full text-center text-amber-300 font-normal font-lora uppercase"
+            style={{
+              fontSize: "clamp(1.125rem, 4vw, 1.75rem)",
+              letterSpacing: "clamp(0.25rem, 1vw, 0.75rem)",
+              lineHeight: "1.2"
+            }}
+          >
             Donde el vino une,
             <br />
             nace la pertenencia.
           </div>
-          <div className="w-full flex flex-col justify-start items-start gap-2.5">
-            <div className="w-full text-center text-white text-sm md:text-base font-normal font-lora leading-tight md:leading-normal tracking-wide">
+          <div 
+            className="w-full flex flex-col justify-start items-start"
+            style={{ gap: "clamp(0.625rem, 2vw, 1rem)" }}
+          >
+            <div 
+              className="w-full text-center text-white font-normal font-lora tracking-wide"
+              style={{
+                fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+                lineHeight: "clamp(1.25, 1.5, 1.5)"
+              }}
+            >
               &quot;La Pertenencia es mucho más que un negocio: es el reflejo de
               nuestro proyecto de vida. Un lugar donde nos rodeamos de buena
               gente, compartimos buena energía y, por supuesto, disfrutamos del
               buen vino.&quot;
             </div>
-            <div className="w-full text-center text-white text-sm md:text-base font-normal font-lora leading-tight md:leading-normal tracking-wide">
+            <div 
+              className="w-full text-center text-white font-normal font-lora tracking-wide"
+              style={{
+                fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
+                lineHeight: "clamp(1.25, 1.5, 1.5)"
+              }}
+            >
               Un proyecto que crece con cada persona que se suma, no es
               solamente vender vinos, es compartir historias, es atesorar
               experiencias que nos conectan con lo que nos gusta y nos hace
@@ -55,31 +102,79 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Content - Desktop Layout (lg+) */}
-      <div className="relative z-10 w-full max-w-[1300px] h-[550px] hidden lg:flex">
+      {/* Content - Desktop Layout */}
+      <div 
+        className="relative z-10 w-full max-w-[1300px] fluid-hero-desktop"
+        style={{
+          height: "clamp(25rem, 40vw, 35rem)"
+        }}
+      >
         {/* Text Column */}
-        <div className="lg:w-[700px] xl:w-[780px] h-[356px] pt-14 pl-12 flex flex-col justify-start items-start gap-7">
-          <div className="self-stretch justify-start text-amber-300 text-3xl font-normal font-lora uppercase tracking-[16px]">
+        <div 
+          className="flex flex-col justify-start items-start"
+          style={{
+            width: "clamp(35rem, 50vw, 45rem)",
+            height: "clamp(20rem, 30vw, 22.25rem)",
+            paddingTop: "clamp(2rem, 4vw, 3.5rem)",
+            paddingLeft: "clamp(1.5rem, 4vw, 3rem)",
+            gap: "clamp(1.25rem, 2.5vw, 1.75rem)"
+          }}
+        >
+          <div 
+            className="self-stretch justify-start text-amber-300 font-normal font-lora uppercase"
+            style={{
+              fontSize: "clamp(1.5rem, 3vw, 2rem)",
+              letterSpacing: "clamp(0.5rem, 1.2vw, 1rem)",
+              lineHeight: "1.2"
+            }}
+          >
             Donde el vino une,
             <br />
             nace la pertenencia.
           </div>
-          <div className="self-stretch flex flex-col justify-start items-start gap-2.5">
+          <div 
+            className="self-stretch flex flex-col justify-start items-start"
+            style={{ gap: "clamp(0.625rem, 1.5vw, 1rem)" }}
+          >
             <div className="self-stretch justify-start">
-              <span className="text-white text-xl font-normal italic font-lora xl:leading-normal tracking-tight">
+              <span 
+                className="text-white font-normal italic font-lora tracking-tight"
+                style={{
+                  fontSize: "clamp(1rem, 2vw, 1.25rem)",
+                  lineHeight: "clamp(1.4, 1.6, 1.6)"
+                }}
+              >
                 &quot;
               </span>
-              <span className="text-white text-xl font-normal font-lora leading-normal xl:leading-normal tracking-tight">
+              <span 
+                className="text-white font-normal font-lora tracking-tight"
+                style={{
+                  fontSize: "clamp(1rem, 2vw, 1.25rem)",
+                  lineHeight: "clamp(1.4, 1.6, 1.6)"
+                }}
+              >
                 La Pertenencia es mucho más que un negocio:
               </span>
-              <span className="text-white text-xl font-normal font-lora italic leading-normal xl:leading-normal tracking-wide">
+              <span 
+                className="text-white font-normal font-lora italic tracking-wide"
+                style={{
+                  fontSize: "clamp(1rem, 2vw, 1.25rem)",
+                  lineHeight: "clamp(1.4, 1.6, 1.6)"
+                }}
+              >
                 {" "}
                 es el reflejo de nuestro proyecto de vida. Un lugar donde nos
                 rodeamos de buena gente, compartimos buena energía y, por
                 supuesto, disfrutamos del buen vino.&quot;
               </span>
             </div>
-            <div className="self-stretch justify-start text-white text-xl font-normal italic font-lora leading-normal xl:leading-loose tracking-wide">
+            <div 
+              className="self-stretch justify-start text-white font-normal italic font-lora tracking-wide"
+              style={{
+                fontSize: "clamp(1rem, 2vw, 1.25rem)",
+                lineHeight: "clamp(1.4, 1.7, 1.7)"
+              }}
+            >
               Un proyecto que crece con cada persona que se suma, no es
               solamente vender vinos, es compartir historias, es atesorar
               experiencias que nos conectan con lo que nos gusta y nos hace
@@ -89,14 +184,29 @@ const Hero = () => {
         </div>
 
         {/* Logo Column */}
-        <div className="relative w-96 h-[550px] ml-auto flex items-center justify-center">
-          <div className="w-96 h-[600px] lg:h-[460px] lg:w-[315px] xl:h-[523px] xl:w-[357px] absolute lg:top-32 lg:left-0 xl:top-16   z-50 overflow-visible flex items-center justify-center">
+        <div 
+          className="relative ml-auto flex items-center justify-center"
+          style={{
+            width: "clamp(20rem, 30vw, 24rem)",
+            height: "clamp(25rem, 40vw, 35rem)"
+          }}
+        >
+          <div 
+            className="absolute overflow-visible flex items-center justify-center"
+            style={{
+              width: "clamp(18rem, 25vw, 22rem)",
+              height: "clamp(28rem, 45vw, 40rem)",
+              top: "clamp(2rem, 4vw, 4rem)",
+              left: "0",
+              zIndex: 50
+            }}
+          >
             <Image
               alt="Logo"
               className="object-contain w-full h-full"
-              height={600}
+              height={640}
               src="/images/logo-pertenencia.png"
-              width={384}
+              width={440}
             />
           </div>
         </div>
