@@ -18,7 +18,7 @@ const Hero = () => {
         <Image
           fill
           alt="Hero"
-          className="object-bottom object-cover "
+          className="object-bottom object-cover"
           src="/images/bg-hero.jpg"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent lg:bg-gradient-to-l lg:from-black/90 lg:via-black/60 lg:to-transparent" />

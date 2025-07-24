@@ -16,14 +16,17 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
   // Usar vino por defecto si no se proporciona uno
   const defaultWine: Wine = {
     id: "hero-wine",
-    name: "La Pertenencia",
+    marca: "La Pertenencia",
+    bodega: "Bodega La Pertenencia",
+    tipo: "Tinto",
+    varietal: "Malbec",
+    maridaje: "Armoniza con todo tipo de carnes en diferentes cocciones, bondiola braseada, diversos tipos de risottos.",
     description:
       "Un Malbec que equilibra fruta, elegancia y un legado único...",
     price: 15300,
     cost: 7500,
     iva: 21,
     stock: 25,
-    category: "Tintos",
     region: "Mendoza",
     vintage: 2021,
     alcohol: 14.5,
@@ -87,10 +90,10 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
         <div className="absolute top-8 left-[280px] z-20 px-7 py-5 inline-flex flex-col justify-center items-center gap-1 bg-opacity-95 rounded-lg">
           <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-1">
             <div className="self-stretch text-center justify-start text-black text-base font-semibold font-['Lora'] uppercase tracking-[4px]">
-              {wine.name}
+              {wine.marca}
             </div>
             <div className="self-stretch text-center justify-start text-yellow-700 text-base font-medium font-['Lora'] tracking-[4px]">
-              {wine.category}
+              {wine.tipo}
             </div>
           </div>
           <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-yellow-700" />
