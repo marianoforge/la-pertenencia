@@ -43,20 +43,29 @@ const migrateWinesToFirestore = async () => {
         // Create a document reference with the wine ID
         const docRef = db.collection("wines").doc(wine.id);
 
-        // Remove the id field from the data since it's used as document ID
-        const { id, ...wineData } = wine;
+        // Map old schema to new schema
+        const { id, name, category, ...restData } = wine;
+
+        // Create mapped wine data with new schema
+        const mappedWineData = {
+          ...restData,
+          marca: name, // name → marca
+          bodega: wine.winery || "La Pertenencia", // Default bodega
+          tipo: category === "Tintos" ? "Tinto" : 
+                category === "Blancos" ? "Blanco" : 
+                category as any, // Map category → tipo
+          varietal: "Malbec", // Default varietal (can be updated later)
+          migratedAt: new Date().toISOString(),
+        };
 
         // Add to batch
-        batch.set(docRef, {
-          ...wineData,
-          migratedAt: new Date().toISOString(),
-        });
+        batch.set(docRef, mappedWineData);
 
         successCount++;
-        console.log(`✅ Prepared wine: ${wine.marca} (${wine.id})`);
+        console.log(`✅ Prepared wine: ${wine.name} (${wine.id})`);
       } catch (error) {
         errorCount++;
-        console.error(`❌ Error preparing wine ${wine.marca}:`, error);
+        console.error(`❌ Error preparing wine ${wine.name}:`, error);
       }
     }
 
