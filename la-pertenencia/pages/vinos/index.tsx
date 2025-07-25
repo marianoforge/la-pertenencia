@@ -62,7 +62,7 @@ export default function VinosPage() {
       case "price-desc":
         return winesCopy.sort((a, b) => b.price - a.price);
       case "name":
-        return winesCopy.sort((a, b) => a.name.localeCompare(b.name));
+        return winesCopy.sort((a, b) => a.marca.localeCompare(b.marca));
       case "newest":
         return winesCopy.sort(
           (a, b) =>
