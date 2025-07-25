@@ -64,8 +64,8 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
         bodega: wine.bodega,
         tipo: wine.tipo,
         varietal: wine.varietal,
-        maridaje: wine.maridaje,
-        description: wine.description,
+        maridaje: wine.maridaje || "",
+        description: wine.description || "",
         price: wine.price,
         cost: wine.cost,
         iva: wine.iva,
@@ -98,9 +98,7 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
       newErrors.varietal = "El varietal es requerido";
     }
 
-    if (!formData.description.trim()) {
-      newErrors.description = "La descripción es requerida";
-    }
+
 
     if (formData.price <= 0) {
       newErrors.price = "El precio debe ser mayor a 0";
@@ -145,10 +143,16 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
       return;
     }
 
+    const processedData = {
+      ...formData,
+      maridaje: formData.maridaje.trim() || undefined,
+      description: formData.description.trim() || undefined,
+    };
+
     if (wine) {
       // Actualizar vino existente
       updateWineMutation.mutate(
-        { ...formData, id: wine.id },
+        { ...processedData, id: wine.id },
         {
           onSuccess: () => {
             onSuccess();
@@ -160,7 +164,7 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
       );
     } else {
       // Crear nuevo vino
-      createWineMutation.mutate(formData, {
+      createWineMutation.mutate(processedData, {
         onSuccess: () => {
           onSuccess();
         },
@@ -303,7 +307,6 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
           Descripción
         </label>
         <textarea
-          required
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="description"
           placeholder="Describe las características del vino..."
