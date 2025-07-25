@@ -14,7 +14,7 @@ import {
   useDeleteWine,
 } from "@/hooks/useWines";
 import { uploadWineImage, validateImageFile } from "@/lib/storage";
-import { Wine, CreateWineInput } from "@/types/wine";
+import { Wine } from "@/types/wine";
 
 interface WineForm {
   marca: string;
@@ -299,7 +299,8 @@ export default function WineAdminPanel() {
         imageUrl = editingWine.image;
       }
 
-      const wineData: CreateWineInput = {
+      // Crear objeto con campos opcionales solo si tienen contenido
+      const wineData: any = {
         marca: wineForm.marca,
         bodega: wineForm.bodega,
         tipo: wineForm.tipo,
@@ -316,10 +317,10 @@ export default function WineAdminPanel() {
       };
 
       // Solo agregar maridaje y description si tienen contenido
-      if (wineForm.maridaje.trim()) {
+      if (wineForm.maridaje && wineForm.maridaje.trim()) {
         wineData.maridaje = wineForm.maridaje.trim();
       }
-      if (wineForm.description.trim()) {
+      if (wineForm.description && wineForm.description.trim()) {
         wineData.description = wineForm.description.trim();
       }
 
@@ -925,4 +926,3 @@ export default function WineAdminPanel() {
       </div>
     </div>
   );
-}
