@@ -1,16 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MercadoPagoConfig, Preference } from "mercadopago";
-
-// Configurar Mercado Pago
-const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
-  options: {
-    timeout: 5000,
-    idempotencyKey: "abc",
-  },
-});
-
-const preference = new Preference(client);
+import { getReturnUrls } from "../../../lib/mercadopago";
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,6 +12,21 @@ export default async function handler(
 
   try {
     const { items, payer } = req.body;
+
+    // Configurar Mercado Pago con un idempotencyKey único para cada request
+    const client = new MercadoPagoConfig({
+      accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
+      options: {
+        timeout: 5000,
+        idempotencyKey: `preference-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      },
+    });
+
+    const preference = new Preference(client);
+
+    // Obtener URLs dinámicas
+    const returnUrls = getReturnUrls();
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
     // Crear la preferencia de pago
     const preferenceData = {
@@ -52,16 +57,16 @@ export default async function handler(
         },
       },
       back_urls: {
-        success: "http://localhost:3000/payment/success",
-        failure: "http://localhost:3000/payment/failure",
-        pending: "http://localhost:3000/payment/pending",
+        success: returnUrls.success,
+        failure: returnUrls.failure,
+        pending: returnUrls.pending,
       },
       payment_methods: {
         excluded_payment_methods: [],
         excluded_payment_types: [],
         installments: 12,
       },
-      notification_url: "http://localhost:3000/api/mercadopago/webhook",
+      notification_url: `${baseUrl}/api/mercadopago/webhook`,
       statement_descriptor: "La Pertenencia Vinos",
       external_reference: `ORDER-${Date.now()}`,
       metadata: {
