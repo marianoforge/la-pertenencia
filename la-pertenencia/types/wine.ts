@@ -2,10 +2,17 @@ export interface Wine {
   id: string;
   marca: string;
   bodega: string;
-  tipo: "Tinto" | "Blanco" | "Red" | "Blend" | "Rosado" | "Espumante" | "Naranjo";
+  tipo:
+    | "Tinto"
+    | "Blanco"
+    | "Red"
+    | "Blend"
+    | "Rosado"
+    | "Espumante"
+    | "Naranjo";
   varietal: string;
-  maridaje: string;
-  description: string;
+  maridaje?: string;
+  description?: string;
   price: number;
   cost: number;
   iva: number;
@@ -25,8 +32,8 @@ export interface CreateWineInput {
   bodega: string;
   tipo: "Tinto" | "Blanco" | "Red" | "Blend" | "Rosado" | "Espumante" | "Naranjo";
   varietal: string;
-  maridaje: string;
-  description: string;
+  maridaje?: string;
+  description?: string;
   price: number;
   cost: number;
   iva: number;

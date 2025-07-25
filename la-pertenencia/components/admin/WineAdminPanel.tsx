@@ -128,14 +128,6 @@ export default function WineAdminPanel() {
       newErrors.varietal = "El varietal es requerido";
     }
 
-    if (!wineForm.description.trim()) {
-      newErrors.description = "La descripción es requerida";
-    }
-
-    if (!wineForm.description.trim()) {
-      newErrors.description = "La descripción es requerida";
-    }
-
     if (wineForm.price <= 0) {
       newErrors.price = "El precio debe ser mayor a 0";
     }
@@ -312,8 +304,8 @@ export default function WineAdminPanel() {
         bodega: wineForm.bodega,
         tipo: wineForm.tipo,
         varietal: wineForm.varietal,
-        maridaje: wineForm.maridaje,
-        description: wineForm.description,
+        maridaje: wineForm.maridaje.trim() || undefined,
+        description: wineForm.description.trim() || undefined,
         price: wineForm.price,
         cost: wineForm.cost,
         iva: wineForm.iva,
@@ -352,10 +344,10 @@ export default function WineAdminPanel() {
     setWineForm({
       marca: wine.marca,
       bodega: wine.bodega,
-      tipo: wine.tipo || "Tinto", // Valor por defecto si es undefined  
+      tipo: wine.tipo || "Tinto", // Valor por defecto si es undefined
       varietal: wine.varietal || "Malbec", // Valor por defecto si es undefined
       maridaje: wine.maridaje || "", // Valor por defecto si es undefined
-      description: wine.description,
+      description: wine.description || "",
       price: wine.price,
       cost: wine.cost,
       iva: wine.iva || 21,
@@ -531,7 +523,7 @@ export default function WineAdminPanel() {
                           | "Blend"
                           | "Rosado"
                           | "Espumante"
-                          | "Naranjo"
+                          | "Naranjo",
                       )
                     }
                   >
@@ -568,8 +560,6 @@ export default function WineAdminPanel() {
                     </p>
                   )}
                 </div>
-
-               
               </div>
 
               <div>
