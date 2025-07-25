@@ -304,8 +304,6 @@ export default function WineAdminPanel() {
         bodega: wineForm.bodega,
         tipo: wineForm.tipo,
         varietal: wineForm.varietal,
-        maridaje: wineForm.maridaje.trim() || undefined,
-        description: wineForm.description.trim() || undefined,
         price: wineForm.price,
         cost: wineForm.cost,
         iva: wineForm.iva,
@@ -316,6 +314,14 @@ export default function WineAdminPanel() {
         image: imageUrl,
         featured: wineForm.featured,
       };
+
+      // Solo agregar maridaje y description si tienen contenido
+      if (wineForm.maridaje.trim()) {
+        wineData.maridaje = wineForm.maridaje.trim();
+      }
+      if (wineForm.description.trim()) {
+        wineData.description = wineForm.description.trim();
+      }
 
       if (editingWine) {
         // Actualizar vino existente

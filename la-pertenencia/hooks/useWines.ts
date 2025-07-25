@@ -26,20 +26,26 @@ function applyFilters(wines: any[], filters?: WineFilters): any[] {
     // Filtro por búsqueda de texto
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
-      const matchesName = wine.name.toLowerCase().includes(searchLower);
+      const matchesMarca = wine.marca?.toLowerCase().includes(searchLower);
+      const matchesBodega = wine.bodega?.toLowerCase().includes(searchLower);
       const matchesDescription = wine.description
-        .toLowerCase()
+        ?.toLowerCase()
         .includes(searchLower);
-      const matchesRegion = wine.region.toLowerCase().includes(searchLower);
+      const matchesRegion = wine.region?.toLowerCase().includes(searchLower);
 
-      if (!matchesName && !matchesDescription && !matchesRegion) {
+      if (
+        !matchesMarca &&
+        !matchesBodega &&
+        !matchesDescription &&
+        !matchesRegion
+      ) {
         return false;
       }
     }
 
-    // Filtro por categoría
+    // Filtro por categoría (usando tipo)
     if (filters.category && filters.category !== "all") {
-      if (wine.category !== filters.category) return false;
+      if (wine.tipo !== filters.category) return false;
     }
 
     // Filtro por región

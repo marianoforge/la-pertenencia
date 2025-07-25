@@ -2,6 +2,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MercadoPagoConfig, Payment } from "mercadopago";
 
+import { reduceWineStock } from "@/lib/firestore";
+
 // Configurar Mercado Pago
 const client = new MercadoPagoConfig({
   accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
@@ -41,7 +43,48 @@ export default async function handler(
       switch (paymentInfo.status) {
         case "approved":
           console.log("Payment approved:", paymentInfo.external_reference);
-          // Lógica para pago aprobado
+
+          // Reducir stock de los vinos comprados
+          if (paymentInfo.metadata && paymentInfo.metadata.items) {
+            console.log("Processing stock reduction for approved payment");
+
+            try {
+              const items = paymentInfo.metadata.items as Array<{
+                wine_id: string;
+                quantity: number;
+              }>;
+
+              // Procesar cada item para reducir stock
+              for (const item of items) {
+                const result = await reduceWineStock(
+                  item.wine_id,
+                  item.quantity
+                );
+
+                if (result.success) {
+                  console.log(
+                    `✅ Stock reduced for wine ${item.wine_id}: ${item.quantity} units. New stock: ${result.newStock}`
+                  );
+                } else {
+                  console.error(
+                    `❌ Failed to reduce stock for wine ${item.wine_id}: ${result.error}`
+                  );
+
+                  // En un caso real, aquí podrías implementar lógica adicional como:
+                  // - Enviar notificación al administrador
+                  // - Registrar el error en un sistema de logs
+                  // - Intentar la operación nuevamente más tarde
+                }
+              }
+            } catch (error) {
+              console.error("Error processing stock reduction:", error);
+            }
+          } else {
+            console.warn(
+              "No metadata.items found in payment, cannot reduce stock"
+            );
+          }
+
           break;
         case "pending":
           console.log("Payment pending:", paymentInfo.external_reference);

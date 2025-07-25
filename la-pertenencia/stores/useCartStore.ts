@@ -66,7 +66,7 @@ export const useCartStore = create<CartStore>()(
         );
 
         // Mostrar notificación
-        const message = `✅ ${wine.name} agregado al carrito (${quantity})`;
+        const message = `✅ ${wine.marca} agregado al carrito (${quantity})`;
 
         set({
           items: newItems,

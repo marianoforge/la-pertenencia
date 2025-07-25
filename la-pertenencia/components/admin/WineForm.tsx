@@ -145,9 +145,20 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
 
     const processedData = {
       ...formData,
-      maridaje: formData.maridaje.trim() || undefined,
-      description: formData.description.trim() || undefined,
     };
+
+    // Solo agregar maridaje y description si tienen contenido
+    if (formData.maridaje.trim()) {
+      processedData.maridaje = formData.maridaje.trim();
+    } else {
+      delete processedData.maridaje;
+    }
+    
+    if (formData.description.trim()) {
+      processedData.description = formData.description.trim();
+    } else {
+      delete processedData.description;
+    }
 
     if (wine) {
       // Actualizar vino existente

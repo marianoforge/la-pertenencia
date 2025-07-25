@@ -50,8 +50,8 @@ export const useMercadoPago = () => {
       // Transformar items del carrito a formato Mercado Pago
       const items: MercadoPagoItem[] = cartItems.map((item) => ({
         id: item.wine.id,
-        title: `${item.wine.name} - ${item.wine.winery}`,
-        description: `${item.wine.category} ${item.wine.vintage} - ${item.wine.region}`,
+        title: `${item.wine.marca} - ${item.wine.bodega}`,
+        description: `${item.wine.tipo} ${item.wine.vintage} - ${item.wine.region}`,
         quantity: item.quantity,
         unit_price: item.priceAtTimeOfAdd,
       }));
