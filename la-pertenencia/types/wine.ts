@@ -43,6 +43,7 @@ export interface CreateWineInput {
   alcohol: number;
   image: string;
   featured: boolean;
+  winery: string;
 }
 
 export interface UpdateWineInput extends Partial<CreateWineInput> {

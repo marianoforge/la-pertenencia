@@ -53,10 +53,10 @@ const migrateWinesToFirestore = async () => {
         });
 
         successCount++;
-        console.log(`✅ Prepared wine: ${wine.name} (${wine.id})`);
+        console.log(`✅ Prepared wine: ${wine.marca} (${wine.id})`);
       } catch (error) {
         errorCount++;
-        console.error(`❌ Error preparing wine ${wine.name}:`, error);
+        console.error(`❌ Error preparing wine ${wine.marca}:`, error);
       }
     }
 

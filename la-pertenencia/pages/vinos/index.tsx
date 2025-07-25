@@ -151,7 +151,7 @@ export default function VinosPage() {
             // Los componentes ya manejan la funcionalidad del carrito
             console.log(
               "Vino agregado al carrito:",
-              wine.name,
+              wine.marca,
               "Cantidad:",
               quantity,
             );
@@ -213,7 +213,7 @@ export default function VinosPage() {
                       // Los componentes ya manejan la funcionalidad del carrito
                       console.log(
                         "Vino agregado al carrito:",
-                        wine.name,
+                        wine.marca,
                         "Cantidad:",
                         quantity,
                       );
