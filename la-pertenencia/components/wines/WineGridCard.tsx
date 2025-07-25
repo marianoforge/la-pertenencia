@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { Wine } from "@/types/wine";
 import { useCartStore } from "@/stores/useCartStore";
@@ -12,8 +13,11 @@ interface WineGridCardProps {
 const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCartStore();
+  const router = useRouter();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click navigation
+    
     // Add to cart store
     addItem(wine, quantity);
 
@@ -26,13 +30,19 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
     }
   };
 
-  const increaseQuantity = () => {
+  const handleCardClick = () => {
+    router.push(`/vinos/${wine.id}`);
+  };
+
+  const increaseQuantity = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click navigation
     if (quantity < wine.stock) {
       setQuantity((prev) => prev + 1);
     }
   };
 
-  const decreaseQuantity = () => {
+  const decreaseQuantity = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click navigation
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
     }
@@ -48,11 +58,22 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
   const imageUrl = isValidImage ? wine.image : "/images/wine-placeholder.svg";
 
   return (
-    <div className="w-full max-w-[280px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+    <div 
+      className="w-full max-w-[280px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+      onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+    >
       {/* Wine Image */}
       <div className="w-full h-48 md:h-56 lg:h-64 bg-gradient-to-l from-white to-zinc-100/50 flex items-center justify-center relative">
         <Image
-          alt={`${wine.name} - ${wine.winery} ${wine.vintage}`}
+          alt={`${wine.marca} - ${wine.winery} ${wine.vintage}`}
           className="max-w-full max-h-full object-contain"
           height={200}
           priority={false}
@@ -66,14 +87,14 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
         {/* Wine Name */}
         <div className="text-center mb-2">
           <h3 className="text-xs md:text-sm font-semibold font-['Lora'] uppercase tracking-[2px] md:tracking-[3.50px] text-neutral-900 min-h-[36px] md:min-h-[48px] flex items-center justify-center leading-tight">
-            {wine.name}
+            {wine.marca}
           </h3>
         </div>
 
         {/* Wine Category */}
         <div className="text-center mb-3 md:mb-4">
           <p className="text-xs md:text-sm font-medium font-['Lora'] tracking-[2px] md:tracking-[3.50px] text-yellow-700">
-            {wine.category}
+            {wine.tipo}
           </p>
         </div>
 

@@ -93,7 +93,7 @@ export default function WineList() {
               className="block text-sm font-medium mb-1"
               htmlFor="category-select"
             >
-              Categoría
+              Tipo
             </label>
             <select
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -101,11 +101,14 @@ export default function WineList() {
               value={filters.category || ""}
               onChange={(e) => handleFilterChange("category", e.target.value)}
             >
-              <option value="">Todas</option>
-              <option value="Tintos">Tintos</option>
-              <option value="Blancos">Blancos</option>
-              <option value="Rosados">Rosados</option>
-              <option value="Espumantes">Espumantes</option>
+              <option value="">Todos</option>
+              <option value="Tinto">Tinto</option>
+              <option value="Blanco">Blanco</option>
+              <option value="Red">Red</option>
+              <option value="Blend">Blend</option>
+              <option value="Rosado">Rosado</option>
+              <option value="Espumante">Espumante</option>
+              <option value="Naranjo">Naranjo</option>
             </select>
           </div>
 
@@ -212,7 +215,7 @@ export default function WineList() {
             <Card key={wine.id} className="overflow-hidden">
               <div className="aspect-square">
                 <img
-                  alt={wine.name}
+                  alt={wine.marca}
                   className="w-full h-full object-cover"
                   src={wine.image}
                 />
@@ -221,7 +224,7 @@ export default function WineList() {
               <div className="p-4">
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-lg font-semibold text-gray-900">
-                    {wine.name}
+                    {wine.marca}
                   </h3>
                   {wine.featured && (
                     <span className="text-yellow-500 text-lg">⭐</span>
@@ -229,7 +232,7 @@ export default function WineList() {
                 </div>
 
                 <p className="text-sm text-gray-600 mb-2">
-                  {wine.category} • {wine.region} • {wine.vintage}
+                  {wine.tipo} • {wine.region} • {wine.vintage}
                 </p>
 
                 <p className="text-sm text-gray-700 mb-3 line-clamp-2">

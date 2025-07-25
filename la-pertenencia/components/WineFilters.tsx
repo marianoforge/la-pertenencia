@@ -29,11 +29,14 @@ const WineFilters = ({
   const [maxPrice, setMaxPrice] = useState(priceRange.max.toString());
 
   const categories = [
-    { value: "", label: "Todas las categorías" },
-    { value: "Tintos", label: "Tintos" },
-    { value: "Blancos", label: "Blancos" },
-    { value: "Rosados", label: "Rosados" },
-    { value: "Espumantes", label: "Espumantes" },
+    { value: "", label: "Todos los tipos" },
+    { value: "Tinto", label: "Tinto" },
+    { value: "Blanco", label: "Blanco" },
+    { value: "Red", label: "Red" },
+    { value: "Blend", label: "Blend" },
+    { value: "Rosado", label: "Rosado" },
+    { value: "Espumante", label: "Espumante" },
+    { value: "Naranjo", label: "Naranjo" },
   ];
 
   const regions = [
