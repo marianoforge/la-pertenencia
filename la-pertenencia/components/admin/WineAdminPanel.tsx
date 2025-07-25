@@ -17,12 +17,22 @@ import { uploadWineImage, validateImageFile } from "@/lib/storage";
 import { Wine, CreateWineInput } from "@/types/wine";
 
 interface WineForm {
-  name: string;
+  marca: string;
+  bodega: string;
+  tipo:
+    | "Tinto"
+    | "Blanco"
+    | "Red"
+    | "Blend"
+    | "Rosado"
+    | "Espumante"
+    | "Naranjo";
+  varietal: string;
+  maridaje: string;
   description: string;
   price: number;
   cost: number;
   iva: number;
-  category: string;
   region: string;
   vintage: number;
   alcohol: number;
@@ -32,7 +42,34 @@ interface WineForm {
   winery: string;
 }
 
-const WINE_CATEGORIES = ["Tintos", "Blancos", "Rosados", "Espumantes"] as const;
+const WINE_TYPES = [
+  "Tinto",
+  "Blanco",
+  "Red",
+  "Blend",
+  "Rosado",
+  "Espumante",
+  "Naranjo",
+] as const;
+
+const WINE_VARIETALS = [
+  "Malbec",
+  "Cabernet Sauvignon",
+  "Merlot",
+  "Pinot Noir",
+  "Cabernet Franc",
+  "Syrah",
+  "Chardonnay",
+  "Sauvignon Blanc",
+  "Petit Verdot",
+  "Pinot Gris",
+  "Bonarda",
+  "Criolla",
+  "Moscatel",
+  "Sangiovese",
+  "Torrontés",
+  "Otros...",
+] as const;
 
 export default function WineAdminPanel() {
   const { user, logout, loading } = useAuth();
@@ -53,12 +90,15 @@ export default function WineAdminPanel() {
   const deleteWineMutation = useDeleteWine();
 
   const [wineForm, setWineForm] = useState<WineForm>({
-    name: "",
+    marca: "",
+    bodega: "",
+    tipo: "Tinto",
+    varietal: "Malbec",
+    maridaje: "",
     description: "",
     price: 0,
     cost: 0,
     iva: 21,
-    category: "Tintos",
     region: "Mendoza",
     vintage: new Date().getFullYear(),
     alcohol: 14.0,
@@ -72,12 +112,20 @@ export default function WineAdminPanel() {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!wineForm.name.trim()) {
-      newErrors.name = "El nombre es requerido";
+    if (!wineForm.marca.trim()) {
+      newErrors.marca = "La marca es requerida";
     }
 
-    if (!wineForm.description.trim()) {
-      newErrors.description = "La descripción es requerida";
+    if (!wineForm.bodega.trim()) {
+      newErrors.bodega = "La bodega es requerida";
+    }
+
+    if (!wineForm.tipo) {
+      newErrors.tipo = "El tipo es requerido";
+    }
+
+    if (!wineForm.varietal) {
+      newErrors.varietal = "El varietal es requerido";
     }
 
     if (wineForm.price <= 0) {
@@ -186,12 +234,15 @@ export default function WineAdminPanel() {
   // Resetear formulario
   const resetForm = () => {
     setWineForm({
-      name: "",
+      marca: "",
+      bodega: "",
+      tipo: "Tinto",
+      varietal: "Malbec",
+      maridaje: "",
       description: "",
       price: 0,
       cost: 0,
       iva: 21,
-      category: "Tintos",
       region: "Mendoza",
       vintage: new Date().getFullYear(),
       alcohol: 14.0,
@@ -249,12 +300,15 @@ export default function WineAdminPanel() {
       }
 
       const wineData: CreateWineInput = {
-        name: wineForm.name,
-        description: wineForm.description,
+        marca: wineForm.marca,
+        bodega: wineForm.bodega,
+        tipo: wineForm.tipo,
+        varietal: wineForm.varietal,
+        maridaje: wineForm.maridaje.trim() || undefined,
+        description: wineForm.description.trim() || undefined,
         price: wineForm.price,
         cost: wineForm.cost,
         iva: wineForm.iva,
-        category: wineForm.category as any,
         region: wineForm.region,
         vintage: wineForm.vintage,
         alcohol: wineForm.alcohol,
@@ -288,12 +342,15 @@ export default function WineAdminPanel() {
   // Editar vino
   const handleEdit = (wine: Wine) => {
     setWineForm({
-      name: wine.name,
-      description: wine.description,
+      marca: wine.marca,
+      bodega: wine.bodega,
+      tipo: wine.tipo || "Tinto", // Valor por defecto si es undefined
+      varietal: wine.varietal || "Malbec", // Valor por defecto si es undefined
+      maridaje: wine.maridaje || "", // Valor por defecto si es undefined
+      description: wine.description || "", // Valor por defecto si es undefined
       price: wine.price,
       cost: wine.cost,
       iva: wine.iva || 21,
-      category: wine.category,
       region: wine.region,
       vintage: wine.vintage,
       alcohol: wine.alcohol,
@@ -308,7 +365,7 @@ export default function WineAdminPanel() {
 
   // Eliminar vino
   const handleDelete = async (wine: Wine) => {
-    if (confirm(`¿Estás seguro de eliminar "${wine.name}"?`)) {
+    if (confirm(`¿Estás seguro de eliminar "${wine.marca}"?`)) {
       try {
         await deleteWineMutation.mutateAsync(wine.id);
         alert("Vino eliminado exitosamente");
@@ -397,35 +454,111 @@ export default function WineAdminPanel() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input
                   isRequired
-                  errorMessage={errors.name}
-                  isInvalid={!!errors.name}
-                  label="Nombre del Vino"
-                  placeholder="Ej: Malbec Reserva"
-                  value={wineForm.name}
-                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  errorMessage={errors.marca}
+                  isInvalid={!!errors.marca}
+                  label="Marca"
+                  placeholder="Ej: Casa de Toro"
+                  value={wineForm.marca}
+                  onChange={(e) => handleInputChange("marca", e.target.value)}
                 />
 
+                <Input
+                  isRequired
+                  errorMessage={errors.bodega}
+                  isInvalid={!!errors.bodega}
+                  label="Bodega"
+                  placeholder="Ej: Bodega Finca Los Andes"
+                  value={wineForm.bodega}
+                  onChange={(e) => handleInputChange("bodega", e.target.value)}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label
                     className="block text-sm font-medium mb-1"
-                    htmlFor="category"
+                    htmlFor="varietal"
                   >
-                    Categoría
+                    Varietal
                   </label>
                   <select
+                    required
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="category"
-                    value={wineForm.category}
+                    id="varietal"
+                    value={wineForm.varietal}
                     onChange={(e) =>
-                      handleInputChange("category", e.target.value)
+                      handleInputChange("varietal", e.target.value)
                     }
                   >
-                    {WINE_CATEGORIES.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
+                    {WINE_VARIETALS.map((varietal) => (
+                      <option key={varietal} value={varietal}>
+                        {varietal}
                       </option>
                     ))}
                   </select>
+                  {errors.varietal && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.varietal}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="tipo"
+                  >
+                    Tipo
+                  </label>
+                  <select
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="tipo"
+                    value={wineForm.tipo}
+                    onChange={(e) =>
+                      handleInputChange(
+                        "tipo",
+                        e.target.value as
+                          | "Tinto"
+                          | "Blanco"
+                          | "Red"
+                          | "Blend"
+                          | "Rosado"
+                          | "Espumante"
+                          | "Naranjo",
+                      )
+                    }
+                  >
+                    {WINE_TYPES.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    htmlFor="maridaje"
+                  >
+                    Maridaje
+                  </label>
+                  <textarea
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="maridaje"
+                    placeholder="Ej: Ideal para carnes rojas, quesos curados..."
+                    rows={3}
+                    value={wineForm.maridaje}
+                    onChange={(e) =>
+                      handleInputChange("maridaje", e.target.value)
+                    }
+                  />
+                  {errors.maridaje && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.maridaje}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -710,13 +843,13 @@ export default function WineAdminPanel() {
                       <td className="px-6 py-4">
                         <div className="flex items-center">
                           <img
-                            alt={wine.name}
+                            alt={wine.marca}
                             className="h-12 w-12 rounded object-cover mr-4"
                             src={wine.image}
                           />
                           <div>
                             <div className="text-sm font-medium text-gray-900">
-                              {wine.name}
+                              {wine.marca}
                             </div>
                             <div className="text-sm text-gray-500">
                               {wine.region} {wine.vintage}
@@ -725,7 +858,7 @@ export default function WineAdminPanel() {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
-                        {wine.category}
+                        {wine.tipo}
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-900">
                         ${wine.price}

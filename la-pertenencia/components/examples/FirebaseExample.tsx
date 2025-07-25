@@ -251,9 +251,13 @@ export default function FirebaseExample() {
                   setNewWine({ ...newWine, category: e.target.value })
                 }
               >
-                <option value="Tintos">Tintos</option>
-                <option value="Blancos">Blancos</option>
-                <option value="Rosados">Rosados</option>
+                <option value="Tinto">Tinto</option>
+                <option value="Blanco">Blanco</option>
+                <option value="Red">Red</option>
+                <option value="Blend">Blend</option>
+                <option value="Rosado">Rosado</option>
+                <option value="Espumante">Espumante</option>
+                <option value="Naranjo">Naranjo</option>
               </select>
             </div>
 

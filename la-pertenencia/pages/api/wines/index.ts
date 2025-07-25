@@ -88,8 +88,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       const newWineData: CreateWineInput = req.body;
 
       // Validación básica
-      if (!newWineData.name || !newWineData.description || !newWineData.price) {
-        return res.status(400).json({ error: "Missing required fields" });
+      if (!newWineData.marca || !newWineData.bodega || !newWineData.price || newWineData.price <= 0) {
+        return res.status(400).json({ error: "Missing required fields: marca, bodega, and valid price are required" });
       }
 
       // Crear nuevo vino

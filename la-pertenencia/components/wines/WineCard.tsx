@@ -52,7 +52,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
     <div className="w-[400px] h-[380px] bg-gradient-to-l from-gray-200 to-white/0 inline-flex justify-center items-center">
       <div className="w-[130px] h-[313px] relative">
         <Image
-          alt={`${wine.name} - ${wine.winery} ${wine.vintage}`}
+          alt={`${wine.marca} - ${wine.winery} ${wine.vintage}`}
           className="object-contain mt-16"
           height={313}
           priority={index === 0}
@@ -63,10 +63,10 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
       <div className="w-56 inline-flex flex-col justify-center items-center gap-1">
         <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-1">
           <div className="min-h-8 w-full self-stretch text-center justify-start text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3.50px]">
-            {wine.name}
+            {wine.marca}
           </div>
           <div className="self-stretch text-center justify-start text-yellow-700 text-sm font-medium font-['Lora'] tracking-[3.50px]">
-            {wine.category}
+            {wine.tipo}
           </div>
         </div>
         <div className="self-stretch h-0 outline outline-[0.50px]  outline-[#A6A6A6]" />

@@ -115,7 +115,7 @@ const Cart = () => {
                   {/* Wine Info */}
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-sm mb-1 truncate">
-                      {item.wine.name}
+                      {item.wine.marca}
                     </h4>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
                       {item.wine.winery} • {item.wine.vintage}

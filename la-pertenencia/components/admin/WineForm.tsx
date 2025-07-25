@@ -12,17 +12,39 @@ interface WineFormProps {
   onSuccess: () => void;
 }
 
-const WINE_CATEGORIES = ["Tintos", "Blancos", "Rosados", "Espumantes"] as const;
+const WINE_TYPES = ["Tinto", "Blanco", "Red", "Blend", "Rosado", "Espumante", "Naranjo"] as const;
+
+const WINE_VARIETALS = [
+  "Malbec",
+  "Cabernet Sauvignon", 
+  "Merlot",
+  "Pinot Noir",
+  "Cabernet Franc",
+  "Syrah",
+  "Chardonnay",
+  "Sauvignon Blanc",
+  "Petit Verdot",
+  "Pinot Gris",
+  "Bonarda",
+  "Criolla",
+  "Moscatel",
+  "Sangiovese",
+  "Torrontés",
+  "Otros..."
+] as const;
 
 export default function WineForm({ wine, onSuccess }: WineFormProps) {
   const [formData, setFormData] = useState<CreateWineInput>({
-    name: "",
+    marca: "",
+    bodega: "",
+    tipo: "Tinto",
+    varietal: "Malbec",
+    maridaje: "",
     description: "",
     price: 0,
     cost: 0,
     iva: 21,
     stock: 0,
-    category: "Tintos",
     region: "",
     vintage: new Date().getFullYear(),
     alcohol: 0,
@@ -38,13 +60,16 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
   useEffect(() => {
     if (wine) {
       setFormData({
-        name: wine.name,
-        description: wine.description,
+        marca: wine.marca,
+        bodega: wine.bodega,
+        tipo: wine.tipo,
+        varietal: wine.varietal,
+        maridaje: wine.maridaje || "",
+        description: wine.description || "",
         price: wine.price,
         cost: wine.cost,
         iva: wine.iva,
         stock: wine.stock,
-        category: wine.category,
         region: wine.region,
         vintage: wine.vintage,
         alcohol: wine.alcohol,
@@ -57,13 +82,23 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = "El nombre es requerido";
+    if (!formData.marca.trim()) {
+      newErrors.marca = "La marca es requerida";
     }
 
-    if (!formData.description.trim()) {
-      newErrors.description = "La descripción es requerida";
+    if (!formData.bodega.trim()) {
+      newErrors.bodega = "La bodega es requerida";
     }
+
+    if (!formData.tipo.trim()) {
+      newErrors.tipo = "El tipo es requerido";
+    }
+
+    if (!formData.varietal.trim()) {
+      newErrors.varietal = "El varietal es requerido";
+    }
+
+
 
     if (formData.price <= 0) {
       newErrors.price = "El precio debe ser mayor a 0";
@@ -108,10 +143,16 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
       return;
     }
 
+    const processedData = {
+      ...formData,
+      maridaje: formData.maridaje.trim() || undefined,
+      description: formData.description.trim() || undefined,
+    };
+
     if (wine) {
       // Actualizar vino existente
       updateWineMutation.mutate(
-        { ...formData, id: wine.id },
+        { ...processedData, id: wine.id },
         {
           onSuccess: () => {
             onSuccess();
@@ -123,7 +164,7 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
       );
     } else {
       // Crear nuevo vino
-      createWineMutation.mutate(formData, {
+      createWineMutation.mutate(processedData, {
         onSuccess: () => {
           onSuccess();
         },
@@ -180,28 +221,81 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           isRequired
-          errorMessage={errors.name}
-          isInvalid={!!errors.name}
-          label="Nombre del Vino"
-          placeholder="Ej: Malbec Reserva"
-          value={formData.name}
-          onChange={handleInputChange("name")}
+          errorMessage={errors.marca}
+          isInvalid={!!errors.marca}
+          label="Marca"
+          placeholder="Ej: Casa de Toro"
+          value={formData.marca}
+          onChange={handleInputChange("marca")}
         />
 
+        <Input
+          isRequired
+          errorMessage={errors.bodega}
+          isInvalid={!!errors.bodega}
+          label="Bodega"
+          placeholder="Ej: Bodega Finca Los Andes"
+          value={formData.bodega}
+          onChange={handleInputChange("bodega")}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-1" htmlFor="category">
-            Categoría
+          <label className="block text-sm font-medium mb-1" htmlFor="varietal">
+            Varietal
           </label>
           <select
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            id="category"
-            value={formData.category}
-            onChange={handleInputChange("category")}
+            id="varietal"
+            value={formData.varietal}
+            onChange={handleInputChange("varietal")}
           >
-            {WINE_CATEGORIES.map((category) => (
-              <option key={category} value={category}>
-                {category}
+            {WINE_VARIETALS.map((varietal) => (
+              <option key={varietal} value={varietal}>
+                {varietal}
+              </option>
+            ))}
+          </select>
+          {errors.varietal && (
+            <p className="text-red-500 text-xs mt-1">{errors.varietal}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="maridaje">
+            Maridaje
+          </label>
+          <textarea
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            id="maridaje"
+            placeholder="Ej: Ideal para carnes rojas, quesos curados..."
+            rows={3}
+            value={formData.maridaje}
+            onChange={handleInputChange("maridaje")}
+          />
+          {errors.maridaje && (
+            <p className="text-red-500 text-xs mt-1">{errors.maridaje}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1" htmlFor="tipo">
+            Tipo
+          </label>
+          <select
+            required
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            id="tipo"
+            value={formData.tipo}
+            onChange={handleInputChange("tipo")}
+          >
+            {WINE_TYPES.map((tipo) => (
+              <option key={tipo} value={tipo}>
+                {tipo}
               </option>
             ))}
           </select>
@@ -213,7 +307,6 @@ export default function WineForm({ wine, onSuccess }: WineFormProps) {
           Descripción
         </label>
         <textarea
-          required
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="description"
           placeholder="Describe las características del vino..."

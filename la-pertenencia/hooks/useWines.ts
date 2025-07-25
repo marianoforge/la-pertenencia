@@ -173,15 +173,20 @@ export function useWines(filters?: WineFilters) {
   });
 }
 
-export function useWine(id: string) {
+// Agregar nuevo hook para obtener un vino individual
+export const useWine = (id: string) => {
   return useQuery({
     queryKey: ["wine", id],
-    queryFn: () => fetchWineById(id),
+    queryFn: async (): Promise<Wine> => {
+      const response = await fetch(`/api/wines/${id}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch wine");
+      }
+      return response.json();
+    },
     enabled: !!id,
-    staleTime: 5 * 60 * 1000, // 5 minutos para datos individuales
-    retry: 3,
   });
-}
+};
 
 // Mutation hooks
 export function useCreateWine() {

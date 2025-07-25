@@ -32,19 +32,33 @@ const marcas = [
 
 const tipos = [
   { value: "", label: "Todos los tipos" },
-  { value: "Tintos", label: "Tintos" },
-  { value: "Blancos", label: "Blancos" },
-  { value: "Rosados", label: "Rosados" },
-  { value: "Espumantes", label: "Espumantes" },
+  { value: "Tinto", label: "Tinto" },
+  { value: "Blanco", label: "Blanco" },
+  { value: "Red", label: "Red" },
+  { value: "Blend", label: "Blend" },
+  { value: "Rosado", label: "Rosado" },
+  { value: "Espumante", label: "Espumante" },
+  { value: "Naranjo", label: "Naranjo" },
 ];
 
 const varietales = [
   { value: "", label: "Todos los varietales" },
-  { value: "malbec", label: "Malbec" },
-  { value: "cabernet-sauvignon", label: "Cabernet Sauvignon" },
-  { value: "chardonnay", label: "Chardonnay" },
-  { value: "merlot", label: "Merlot" },
-  { value: "syrah", label: "Syrah" },
+  { value: "Malbec", label: "Malbec" },
+  { value: "Cabernet Sauvignon", label: "Cabernet Sauvignon" },
+  { value: "Merlot", label: "Merlot" },
+  { value: "Pinot Noir", label: "Pinot Noir" },
+  { value: "Cabernet Franc", label: "Cabernet Franc" },
+  { value: "Syrah", label: "Syrah" },
+  { value: "Chardonnay", label: "Chardonnay" },
+  { value: "Sauvignon Blanc", label: "Sauvignon Blanc" },
+  { value: "Petit Verdot", label: "Petit Verdot" },
+  { value: "Pinot Gris", label: "Pinot Gris" },
+  { value: "Bonarda", label: "Bonarda" },
+  { value: "Criolla", label: "Criolla" },
+  { value: "Moscatel", label: "Moscatel" },
+  { value: "Sangiovese", label: "Sangiovese" },
+  { value: "Torrontés", label: "Torrontés" },
+  { value: "Otros...", label: "Otros..." },
 ];
 
 const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
