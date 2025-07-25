@@ -10,6 +10,7 @@ import {
   where,
   orderBy,
   limit,
+  runTransaction,
   DocumentData,
   QuerySnapshot,
   DocumentSnapshot,
@@ -17,25 +18,8 @@ import {
 
 import { db } from "@/lib/firebase";
 
-// Type definitions
-export interface Wine extends DocumentData {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  cost: number;
-  iva: number;
-  stock: number;
-  category: string;
-  region: string;
-  vintage: number;
-  alcohol: number;
-  image: string;
-  featured: boolean;
-  winery: string;
-  createdAt: string;
-  updatedAt: string;
-}
+// Importar el tipo Wine desde types/wine.ts para mantener consistencia
+import { Wine } from "@/types/wine";
 
 // Collection names
 const COLLECTIONS = {
@@ -87,14 +71,14 @@ export const getWineById = async (id: string): Promise<Wine | null> => {
   }
 };
 
-// Get wines by category
+// Get wines by category (using tipo field)
 export const getWinesByCategory = async (category: string): Promise<Wine[]> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
     const q = query(
       winesCollection,
-      where("category", "==", category),
-      orderBy("name")
+      where("tipo", "==", category),
+      orderBy("marca")
     );
     const snapshot = await getDocs(q);
 
@@ -116,7 +100,7 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
     const q = query(
       winesCollection,
       where("featured", "==", true),
-      orderBy("name"),
+      orderBy("marca"),
       limit(6)
     );
     const snapshot = await getDocs(q);
@@ -196,6 +180,55 @@ export const deleteWine = async (id: string): Promise<boolean> => {
   }
 };
 
+// Reduce wine stock (transactional to prevent race conditions)
+export const reduceWineStock = async (
+  wineId: string,
+  quantity: number
+): Promise<{ success: boolean; newStock?: number; error?: string }> => {
+  try {
+    const wineDoc = doc(db, COLLECTIONS.WINES, wineId);
+
+    const result = await runTransaction(db, async (transaction) => {
+      const wineSnapshot = await transaction.get(wineDoc);
+
+      if (!wineSnapshot.exists()) {
+        throw new Error(`Wine with ID ${wineId} not found`);
+      }
+
+      const wineData = wineSnapshot.data() as Wine;
+      const currentStock = wineData.stock || 0;
+
+      if (currentStock < quantity) {
+        throw new Error(
+          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`
+        );
+      }
+
+      const newStock = currentStock - quantity;
+
+      // Update the wine document with new stock
+      transaction.update(wineDoc, {
+        stock: newStock,
+        updatedAt: new Date().toISOString(),
+      });
+
+      return newStock;
+    });
+
+    console.log(
+      `✅ Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`
+    );
+
+    return { success: true, newStock: result };
+  } catch (error) {
+    console.error("❌ Error reducing wine stock:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+
+    return { success: false, error: errorMessage };
+  }
+};
+
 // Search wines by name
 export const searchWinesByName = async (
   searchTerm: string
@@ -212,8 +245,9 @@ export const searchWinesByName = async (
     // Client-side filtering for name search (Firestore doesn't support full-text search)
     return allWines.filter(
       (wine) =>
-        wine.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        wine.description.toLowerCase().includes(searchTerm.toLowerCase())
+        wine.marca?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        wine.bodega?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        wine.description?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   } catch (error) {
     console.error("Error searching wines:", error);

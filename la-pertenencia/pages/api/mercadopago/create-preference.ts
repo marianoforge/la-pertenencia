@@ -64,6 +64,12 @@ export default async function handler(
       notification_url: "http://localhost:3000/api/mercadopago/webhook",
       statement_descriptor: "La Pertenencia Vinos",
       external_reference: `ORDER-${Date.now()}`,
+      metadata: {
+        items: items.map((item: any) => ({
+          wine_id: item.id,
+          quantity: item.quantity,
+        })),
+      },
     };
 
     const result = await preference.create({ body: preferenceData });

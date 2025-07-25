@@ -36,7 +36,7 @@ const Recomendados = () => {
     // pero mantenemos esta función por si acaso
     console.log(
       "Vino agregado al carrito desde Recomendados:",
-      wine.name,
+      wine.marca,
       "Cantidad:",
       quantity,
     );
@@ -47,11 +47,11 @@ const Recomendados = () => {
   };
 
   const goToPreviousPage = () => {
-    setCurrentPage(prev => Math.max(0, prev - 1));
+    setCurrentPage((prev) => Math.max(0, prev - 1));
   };
 
   const goToNextPage = () => {
-    setCurrentPage(prev => Math.min(totalPages - 1, prev + 1));
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
   };
 
   if (isLoading) {
@@ -160,26 +160,50 @@ const Recomendados = () => {
             <button
               aria-label="Previous page"
               className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
-              onClick={goToPreviousPage}
               disabled={currentPage === 0}
+              onClick={goToPreviousPage}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg
+                fill="none"
+                height="20"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
               </svg>
             </button>
-            
+
             <div className="text-neutral-900 text-sm font-medium font-['Lora'] min-w-[40px] text-center">
               {currentPage + 1} / {totalPages}
             </div>
-            
+
             <button
               aria-label="Next page"
               className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
-              onClick={goToNextPage}
               disabled={currentPage === totalPages - 1}
+              onClick={goToNextPage}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg
+                fill="none"
+                height="20"
+                viewBox="0 0 24 24"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
               </svg>
             </button>
           </div>

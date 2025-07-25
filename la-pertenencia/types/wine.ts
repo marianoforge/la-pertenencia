@@ -2,7 +2,14 @@ export interface Wine {
   id: string;
   marca: string;
   bodega: string;
-  tipo: "Tinto" | "Blanco" | "Red" | "Blend" | "Rosado" | "Espumante" | "Naranjo";
+  tipo:
+    | "Tinto"
+    | "Blanco"
+    | "Red"
+    | "Blend"
+    | "Rosado"
+    | "Espumante"
+    | "Naranjo";
   varietal: string;
   maridaje?: string;
   description?: string;

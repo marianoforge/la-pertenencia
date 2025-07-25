@@ -14,7 +14,7 @@ import {
   useDeleteWine,
 } from "@/hooks/useWines";
 import { uploadWineImage, validateImageFile } from "@/lib/storage";
-import { Wine, CreateWineInput } from "@/types/wine";
+import { Wine } from "@/types/wine";
 
 interface WineForm {
   marca: string;
@@ -299,13 +299,12 @@ export default function WineAdminPanel() {
         imageUrl = editingWine.image;
       }
 
-      const wineData: CreateWineInput = {
+      // Crear objeto con campos opcionales solo si tienen contenido
+      const wineData: any = {
         marca: wineForm.marca,
         bodega: wineForm.bodega,
         tipo: wineForm.tipo,
         varietal: wineForm.varietal,
-        maridaje: wineForm.maridaje.trim() || undefined,
-        description: wineForm.description.trim() || undefined,
         price: wineForm.price,
         cost: wineForm.cost,
         iva: wineForm.iva,
@@ -316,6 +315,14 @@ export default function WineAdminPanel() {
         image: imageUrl,
         featured: wineForm.featured,
       };
+
+      // Solo agregar maridaje y description si tienen contenido
+      if (wineForm.maridaje && wineForm.maridaje.trim()) {
+        wineData.maridaje = wineForm.maridaje.trim();
+      }
+      if (wineForm.description && wineForm.description.trim()) {
+        wineData.description = wineForm.description.trim();
+      }
 
       if (editingWine) {
         // Actualizar vino existente
@@ -347,7 +354,7 @@ export default function WineAdminPanel() {
       tipo: wine.tipo || "Tinto", // Valor por defecto si es undefined
       varietal: wine.varietal || "Malbec", // Valor por defecto si es undefined
       maridaje: wine.maridaje || "", // Valor por defecto si es undefined
-      description: wine.description || "", // Valor por defecto si es undefined
+      description: wine.description || "",
       price: wine.price,
       cost: wine.cost,
       iva: wine.iva || 21,
@@ -919,4 +926,3 @@ export default function WineAdminPanel() {
       </div>
     </div>
   );
-}
