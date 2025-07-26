@@ -1,5 +1,6 @@
 // Configuración de Mercado Pago para el cliente
-export const MERCADOPAGO_PUBLIC_KEY =
+export const MERCADOPAGO_PUBLIC_KEY = 
+  process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY_TEST || 
   process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY;
 
 // URLs de retorno
