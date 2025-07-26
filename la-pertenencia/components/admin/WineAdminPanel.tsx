@@ -926,3 +926,4 @@ export default function WineAdminPanel() {
       </div>
     </div>
   );
+}

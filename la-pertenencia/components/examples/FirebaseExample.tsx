@@ -8,18 +8,21 @@
 import { useState, useEffect } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
-import { getAllWines, addWine, getFeaturedWines, Wine } from "@/lib/firestore";
+import { getAllWines, addWine, getFeaturedWines } from "@/lib/firestore";
 import { uploadWineImage, validateImageFile } from "@/lib/storage";
+import { Wine } from "@/types/wine";
 
 export default function FirebaseExample() {
   const { user, signIn, signInWithGoogle, signUp, logout, loading } = useAuth();
   const [wines, setWines] = useState<Wine[]>([]);
   const [featuredWines, setFeaturedWines] = useState<Wine[]>([]);
   const [newWine, setNewWine] = useState({
-    name: "",
+    marca: "",
+    bodega: "",
     description: "",
     price: 0,
-    category: "Tintos",
+    tipo: "Tinto" as const,
+    varietal: "Malbec",
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -109,7 +112,12 @@ export default function FirebaseExample() {
 
     // Crear el vino en Firestore
     const wineData = {
-      ...newWine,
+      marca: newWine.marca,
+      bodega: newWine.bodega,
+      tipo: newWine.tipo,
+      varietal: newWine.varietal,
+      description: newWine.description,
+      price: newWine.price,
       image: imageUrl,
       cost: Math.round(newWine.price * 0.6), // 60% del precio como costo
       iva: 21,
@@ -125,7 +133,14 @@ export default function FirebaseExample() {
 
     if (wineId) {
       console.log("✅ Vino agregado:", wineId);
-      setNewWine({ name: "", description: "", price: 0, category: "Tintos" });
+      setNewWine({
+        marca: "",
+        bodega: "",
+        description: "",
+        price: 0,
+        tipo: "Tinto" as const,
+        varietal: "Malbec",
+      });
       setSelectedFile(null);
       loadWines(); // Recargar lista
     }
@@ -237,18 +252,30 @@ export default function FirebaseExample() {
               <input
                 required
                 className="p-2 border rounded"
-                placeholder="Nombre del vino"
+                placeholder="Marca del vino"
                 type="text"
-                value={newWine.name}
+                value={newWine.marca}
                 onChange={(e) =>
-                  setNewWine({ ...newWine, name: e.target.value })
+                  setNewWine({ ...newWine, marca: e.target.value })
                 }
               />
+              <input
+                required
+                className="p-2 border rounded"
+                placeholder="Bodega"
+                type="text"
+                value={newWine.bodega}
+                onChange={(e) =>
+                  setNewWine({ ...newWine, bodega: e.target.value })
+                }
+              />
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
               <select
                 className="p-2 border rounded"
-                value={newWine.category}
+                value={newWine.tipo}
                 onChange={(e) =>
-                  setNewWine({ ...newWine, category: e.target.value })
+                  setNewWine({ ...newWine, tipo: e.target.value as any })
                 }
               >
                 <option value="Tinto">Tinto</option>
@@ -259,6 +286,16 @@ export default function FirebaseExample() {
                 <option value="Espumante">Espumante</option>
                 <option value="Naranjo">Naranjo</option>
               </select>
+              <input
+                required
+                className="p-2 border rounded"
+                placeholder="Varietal"
+                type="text"
+                value={newWine.varietal}
+                onChange={(e) =>
+                  setNewWine({ ...newWine, varietal: e.target.value })
+                }
+              />
             </div>
 
             <textarea
@@ -318,15 +355,15 @@ export default function FirebaseExample() {
           {featuredWines.map((wine) => (
             <div key={wine.id} className="border rounded-lg p-4">
               <img
-                alt={wine.name}
+                alt={wine.marca}
                 className="w-full h-48 object-cover rounded mb-2"
                 src={wine.image}
               />
-              <h3 className="font-semibold">{wine.name}</h3>
+              <h3 className="font-semibold">{wine.marca}</h3>
               <p className="text-sm text-gray-600 mb-2">{wine.description}</p>
               <p className="font-bold text-lg">${wine.price}</p>
               <p className="text-sm text-gray-500">
-                {wine.category} - {wine.region} {wine.vintage}
+                {wine.tipo} - {wine.region} {wine.vintage}
               </p>
             </div>
           ))}
@@ -350,13 +387,13 @@ export default function FirebaseExample() {
           </div>
           <div className="bg-purple-100 p-4 rounded">
             <p className="text-2xl font-bold text-purple-600">
-              {wines.filter((w) => w.category === "Tintos").length}
+              {wines.filter((w) => w.tipo === "Tinto").length}
             </p>
             <p className="text-sm text-gray-600">Tintos</p>
           </div>
           <div className="bg-yellow-100 p-4 rounded">
             <p className="text-2xl font-bold text-yellow-600">
-              {wines.filter((w) => w.category === "Blancos").length}
+              {wines.filter((w) => w.tipo === "Blanco").length}
             </p>
             <p className="text-sm text-gray-600">Blancos</p>
           </div>

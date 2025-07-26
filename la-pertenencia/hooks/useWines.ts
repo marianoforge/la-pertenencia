@@ -185,9 +185,11 @@ export const useWine = (id: string) => {
     queryKey: ["wine", id],
     queryFn: async (): Promise<Wine> => {
       const response = await fetch(`/api/wines/${id}`);
+
       if (!response.ok) {
         throw new Error("Failed to fetch wine");
       }
+
       return response.json();
     },
     enabled: !!id,
@@ -207,7 +209,7 @@ export function useCreateWine() {
       // Agregar el nuevo vino al cache
       queryClient.setQueryData(["wine", newWine.id], newWine);
 
-      console.log("Wine created successfully:", newWine.name);
+      console.log("Wine created successfully:", newWine.marca);
     },
     onError: (error) => {
       console.error("Error creating wine:", error);
@@ -227,7 +229,7 @@ export function useUpdateWine() {
       // Actualizar el vino específico en cache
       queryClient.setQueryData(["wine", updatedWine.id], updatedWine);
 
-      console.log("Wine updated successfully:", updatedWine.name);
+      console.log("Wine updated successfully:", updatedWine.marca);
     },
     onError: (error) => {
       console.error("Error updating wine:", error);

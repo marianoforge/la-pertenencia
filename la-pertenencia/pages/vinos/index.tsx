@@ -62,7 +62,7 @@ export default function VinosPage() {
       case "price-desc":
         return winesCopy.sort((a, b) => b.price - a.price);
       case "name":
-        return winesCopy.sort((a, b) => a.name.localeCompare(b.name));
+        return winesCopy.sort((a, b) => a.marca.localeCompare(b.marca));
       case "newest":
         return winesCopy.sort(
           (a, b) =>
@@ -151,7 +151,7 @@ export default function VinosPage() {
             // Los componentes ya manejan la funcionalidad del carrito
             console.log(
               "Vino agregado al carrito:",
-              wine.name,
+              wine.marca,
               "Cantidad:",
               quantity,
             );
@@ -213,7 +213,7 @@ export default function VinosPage() {
                       // Los componentes ya manejan la funcionalidad del carrito
                       console.log(
                         "Vino agregado al carrito:",
-                        wine.name,
+                        wine.marca,
                         "Cantidad:",
                         quantity,
                       );

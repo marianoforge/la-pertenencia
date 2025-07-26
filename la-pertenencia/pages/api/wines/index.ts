@@ -41,7 +41,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       // Aplicar filtros
       if (category) {
         filteredWines = filteredWines.filter(
-          (wine) => wine.category === category
+          (wine) => wine.tipo === category
         );
       }
 
@@ -72,8 +72,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
         filteredWines = filteredWines.filter(
           (wine) =>
-            wine.name.toLowerCase().includes(searchTerm) ||
-            wine.description.toLowerCase().includes(searchTerm) ||
+            wine.marca.toLowerCase().includes(searchTerm) ||
+            wine.bodega.toLowerCase().includes(searchTerm) ||
+            (wine.description && wine.description.toLowerCase().includes(searchTerm)) ||
             wine.winery.toLowerCase().includes(searchTerm)
         );
       }
