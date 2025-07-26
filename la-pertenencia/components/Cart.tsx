@@ -33,10 +33,8 @@ const Cart = () => {
       const preference = await createPreference(items);
 
       if (preference) {
-        // Usar sandbox para pruebas, production para real
-        const checkoutUrl = preference.sandboxInitPoint || preference.initPoint;
-
-        redirectToCheckout(checkoutUrl);
+        // El endpoint ya devuelve el initPoint correcto según las credenciales
+        redirectToCheckout(preference.initPoint);
       } else {
         alert(
           "Error al crear la preferencia de pago. Por favor, intenta nuevamente.",
