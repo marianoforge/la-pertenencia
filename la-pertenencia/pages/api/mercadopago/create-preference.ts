@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MercadoPagoConfig, Preference } from "mercadopago";
+
 import { getReturnUrls } from "../../../lib/mercadopago";
 
 export default async function handler(
@@ -79,10 +80,22 @@ export default async function handler(
 
     const result = await preference.create({ body: preferenceData });
 
+    // Detectar si estamos usando credenciales de producción o test
+    const isProduction =
+      !process.env.MERCADOPAGO_ACCESS_TOKEN?.startsWith("TEST-");
+
+    // Usar el init_point correcto según el tipo de credenciales
+    const initPoint = isProduction
+      ? result.init_point
+      : result.sandbox_init_point;
+
     res.status(200).json({
       preferenceId: result.id,
-      initPoint: result.init_point,
-      sandboxInitPoint: result.sandbox_init_point,
+      initPoint: initPoint,
+      isProduction: isProduction,
+      // Mantener ambos por compatibilidad (opcional)
+      init_point: result.init_point,
+      sandbox_init_point: result.sandbox_init_point,
     });
   } catch (error) {
     console.error("Error creating preference:", error);

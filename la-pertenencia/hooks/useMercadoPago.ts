@@ -32,7 +32,10 @@ interface PayerInfo {
 interface CreatePreferenceResponse {
   preferenceId: string;
   initPoint: string;
-  sandboxInitPoint: string;
+  isProduction: boolean;
+  // Mantener por compatibilidad
+  init_point: string;
+  sandbox_init_point: string;
 }
 
 export const useMercadoPago = () => {
