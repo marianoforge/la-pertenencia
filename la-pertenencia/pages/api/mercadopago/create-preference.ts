@@ -3,7 +3,10 @@ import { MercadoPagoConfig, Preference } from "mercadopago";
 
 import { getReturnUrls } from "../../../lib/mercadopago";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Método no permitido" });
   }
@@ -53,6 +56,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         currency_id: "ARS",
       })),
       back_urls: validReturnUrls,
+      // Solo agregar notification_url si no es localhost
+      ...(isLocalhost
+        ? {}
+        : { notification_url: `${baseUrl}/api/mercadopago/webhook` }),
+      metadata: {
+        items: items.map((item: any) => ({
+          wine_id: item.id,
+          quantity: item.quantity,
+        })),
+      },
     };
 
     const result = await preference.create({ body: preferenceData });
