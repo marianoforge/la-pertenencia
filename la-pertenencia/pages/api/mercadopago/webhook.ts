@@ -2,19 +2,22 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MercadoPagoConfig, Payment } from "mercadopago";
 
-import { reduceWineStock } from "@/lib/firestore";
+import { reduceWineStockServerSide } from "@/lib/firestore-server";
+
+// Detectar y configurar credenciales correctas
+const useTestCredentials = !!process.env.MERCADOPAGO_ACCESS_TOKEN_TEST;
+const accessToken = useTestCredentials
+  ? process.env.MERCADOPAGO_ACCESS_TOKEN_TEST!
+  : process.env.MERCADOPAGO_ACCESS_TOKEN!;
 
 // Configurar Mercado Pago
 const client = new MercadoPagoConfig({
-  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
+  accessToken: accessToken,
 });
 
 const payment = new Payment(client);
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Método no permitido" });
   }
@@ -56,7 +59,7 @@ export default async function handler(
 
               // Procesar cada item para reducir stock
               for (const item of items) {
-                const result = await reduceWineStock(
+                const result = await reduceWineStockServerSide(
                   item.wine_id,
                   item.quantity
                 );

@@ -62,7 +62,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
       </div>
       <div className="w-56 inline-flex flex-col justify-center items-center gap-1">
         <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-1">
-          <div className="min-h-8 w-full self-stretch text-center justify-start text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3.50px]">
+          <div className="min-h-10 w-full self-stretch flex text-center items-center justify-center text-neutral-900 text-sm font-semibold font-['Lora'] uppercase tracking-[3.50px]">
             {wine.marca}
           </div>
           <div className="self-stretch text-center justify-start text-yellow-700 text-sm font-medium font-['Lora'] tracking-[3.50px]">
@@ -76,7 +76,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
           </div>
         </div>
         <div className="self-stretch h-0 outline outline-[0.50px] outline-[#A6A6A6]" />
-        <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5">
+        <div className="self-stretch min-h-[50px] py-[5px] inline-flex justify-center items-center gap-2.5">
           <div className="text-center justify-start text-neutral-900 text-sm font-normal font-['Lora'] tracking-wide px-2 line-clamp-2">
             {wine.description}
           </div>

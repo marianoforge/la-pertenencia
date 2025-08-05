@@ -14,9 +14,15 @@ export default async function handler(
   try {
     const { items, payer } = req.body;
 
+    // Detectar si usar credenciales de TEST o producción
+    const useTestCredentials = !!process.env.MERCADOPAGO_ACCESS_TOKEN_TEST;
+    const accessToken = useTestCredentials
+      ? process.env.MERCADOPAGO_ACCESS_TOKEN_TEST!
+      : process.env.MERCADOPAGO_ACCESS_TOKEN!;
+
     // Configurar Mercado Pago con un idempotencyKey único para cada request
     const client = new MercadoPagoConfig({
-      accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
+      accessToken: accessToken,
       options: {
         timeout: 5000,
         idempotencyKey: `preference-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -29,6 +35,16 @@ export default async function handler(
     const returnUrls = getReturnUrls();
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
+    // Para testing con localhost, usar URLs de ejemplo válidas
+    const isLocalhost = baseUrl.includes("localhost");
+    const validReturnUrls = isLocalhost
+      ? {
+          success: "https://www.lapertenencia.com/payment/success",
+          failure: "https://www.lapertenencia.com/payment/failure",
+          pending: "https://www.lapertenencia.com/payment/pending",
+        }
+      : returnUrls;
+
     // Crear la preferencia de pago
     const preferenceData = {
       items: items.map((item: any) => ({
@@ -39,37 +55,11 @@ export default async function handler(
         unit_price: item.unit_price,
         currency_id: "ARS",
       })),
-      payer: {
-        name: payer?.name || "",
-        surname: payer?.surname || "",
-        email: payer?.email || "",
-        phone: {
-          area_code: payer?.phone?.area_code || "",
-          number: payer?.phone?.number || "",
-        },
-        identification: {
-          type: payer?.identification?.type || "DNI",
-          number: payer?.identification?.number || "",
-        },
-        address: {
-          street_name: payer?.address?.street_name || "",
-          street_number: payer?.address?.street_number || "",
-          zip_code: payer?.address?.zip_code || "",
-        },
-      },
-      back_urls: {
-        success: returnUrls.success,
-        failure: returnUrls.failure,
-        pending: returnUrls.pending,
-      },
-      payment_methods: {
-        excluded_payment_methods: [],
-        excluded_payment_types: [],
-        installments: 12,
-      },
-      notification_url: `${baseUrl}/api/mercadopago/webhook`,
-      statement_descriptor: "La Pertenencia Vinos",
-      external_reference: `ORDER-${Date.now()}`,
+      back_urls: validReturnUrls,
+      // Solo agregar notification_url si no es localhost
+      ...(isLocalhost
+        ? {}
+        : { notification_url: `${baseUrl}/api/mercadopago/webhook` }),
       metadata: {
         items: items.map((item: any) => ({
           wine_id: item.id,
@@ -81,8 +71,7 @@ export default async function handler(
     const result = await preference.create({ body: preferenceData });
 
     // Detectar si estamos usando credenciales de producción o test
-    const isProduction =
-      !process.env.MERCADOPAGO_ACCESS_TOKEN?.startsWith("TEST-");
+    const isProduction = !useTestCredentials;
 
     // Usar el init_point correcto según el tipo de credenciales
     const initPoint = isProduction
