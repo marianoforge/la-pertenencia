@@ -26,6 +26,7 @@ Configurar sistema de autenticación completo para administradores de vinos de "
 3. **Project public-facing name**: "La Pertenencia"
 4. **Project support email**: tu email
 5. Haz clic en **"Save"**
+6. Prueb
 
 ### 3. Configurar Dominios Autorizados
 
