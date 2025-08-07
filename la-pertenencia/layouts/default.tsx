@@ -17,12 +17,12 @@ export default function DefaultLayout({
       <footer className="w-full flex items-center justify-center py-3">
         <div className="w-full self-stretch pt-12 bg-white inline-flex flex-col justify-center items-center gap-10 overflow-hidden">
           {/* Desktop LG+ Layout */}
-          <div 
+          <div
             className="fluid-menu-hide w-full"
             style={{
               maxWidth: "min(100%, 1920px)",
               paddingLeft: "clamp(2rem, 7vw, 7rem)",
-              paddingRight: "clamp(2rem, 7vw, 7rem)"
+              paddingRight: "clamp(2rem, 7vw, 7rem)",
             }}
           >
             <div className="w-full inline-flex justify-between items-start">
@@ -153,20 +153,20 @@ export default function DefaultLayout({
             </div>
           </div>
 
-          {/* Mobile/Tablet Layout */}
-          <div 
-            className="fluid-menu-show w-full flex flex-col"
+          {/* Footer Layout - 1000px down to mobile */}
+          <div
+            className="fluid-menu-show w-full flex flex-col lg:hidden"
             style={{
               maxWidth: "min(100%, 1920px)",
               paddingLeft: "clamp(1rem, 4vw, 4rem)",
               paddingRight: "clamp(1rem, 4vw, 4rem)",
-              gap: "clamp(1.5rem, 4vw, 2rem)"
+              gap: "clamp(1.5rem, 4vw, 2rem)",
             }}
           >
             {/* Primera fila: Logo | Productos | Experiencias */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
               {/* Logo */}
-              <div className="flex justify-center sm:justify-start items-start">
+              <div className="flex justify-start sm:justify-start items-start">
                 <img
                   alt="La Pertenencia"
                   className="w-24 sm:w-20 md:w-24 object-contain"

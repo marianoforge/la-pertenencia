@@ -4,13 +4,13 @@ import { Section, SectionHeader, Button } from "./ui";
 
 const ImaginaTuVino = () => {
   return (
-    <Section id="imagina-tu-vino" variant="default">
+    <Section id="imagina-tu-vino" variant="gray">
       <SectionHeader
         subtitle="Tu Propio Vino, Tu Propia Historia."
         title="imagina un vino"
       />
 
-      <div className="w-full max-w-[1300px] pt-8 md:pt-12 pb-5 flex flex-col lg:flex-row justify-center items-start gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0">
+      <div className="w-full max-w-[1300px] pt-8 md:pt-12 pb-5 flex flex-col lg:flex-row justify-center items-start gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0 ">
         <div className="w-full lg:w-[580px] h-48 sm:h-48 md:h-96 lg:h-[470px] relative rounded-lg overflow-hidden flex-shrink-0">
           <img
             alt="Imagen de vino"

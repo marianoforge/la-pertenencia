@@ -207,25 +207,11 @@ const Recomendados = () => {
               </svg>
             </button>
           </div>
-
-          {/* Indicadores de página (puntos) */}
-          <div className="flex justify-center items-center gap-3.5">
-            {Array.from({ length: totalPages }).map((_, index) => (
-              <button
-                key={index}
-                aria-label={`Go to page ${index + 1}`}
-                className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                  index === currentPage ? "bg-neutral-900" : "bg-neutral-400"
-                }`}
-                onClick={() => goToPage(index)}
-              />
-            ))}
-          </div>
         </div>
       )}
 
-      <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-3">
-        <div className="text-center text-neutral-900 text-sm font-normal font-['Lora'] leading-tight tracking-wide">
+      <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-2">
+        <div className="text-center text-neutral-900 text-lg font-normal font-['Lora'] italic leading-tight tracking-wide">
           Descubrimos etiquetas únicas que quizás todavía no hayas probado.
           <br />
           Nuestro deseo es simple: que cada vino te sorprenda, te emocione y te
