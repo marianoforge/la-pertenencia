@@ -4,24 +4,24 @@ import { Section, SectionHeader, Button } from "./ui";
 
 const MembresiaMensual = () => {
   return (
-    <Section id="membresia" variant="gray">
+    <Section id="membresia" variant="default">
       <SectionHeader
         subtitle="Una caja. Tres vinos. Un ritual."
         title="Membresía mensual"
       />
 
-      <div className="w-full max-w-[1300px] pt-5 md:pt-12 pb-5 flex flex-col justify-center items-center gap-7 md:gap-10 lg:gap-10 sm:px-0">
+      <div className="w-full max-w-[1300px] pt-5 md:pt-12 pb-5 flex flex-col justify-center items-center md:gap-10 lg:gap-10 sm:px-0">
         {/* Desktop Layout (LG+) */}
         <div className="hidden lg:flex w-full justify-center items-center gap-10">
-          <div className="w-[550px] h-96 relative overflow-hidden flex-shrink-0">
+          <div className="w-[550px] h-[460px] relative overflow-hidden flex-shrink-0">
             <img
               alt="Membresía mensual"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-lg"
               src="/images/membresia.png"
             />
           </div>
-          <div className="flex-1 inline-flex flex-col justify-start items-start gap-5">
-            <div className="text-neutral-900 text-xl font-normal font-['Lora'] leading-loose tracking-wide">
+          <div className="flex-1 inline-flex flex-col justify-start items-start gap-10">
+            <div className="text-neutral-900 text-xl font-normal font-['Lora'] italic leading-normal tracking-wide">
               Con nuestra membresía, cada mes recibís una selección de tres
               vinos especialmente elegidos para vos. Descubrí nuevas etiquetas
               recomendadas por sommeliers y enólogos que nos acompañan en este
@@ -29,20 +29,18 @@ const MembresiaMensual = () => {
               relajarte, compartir, regalar o brindar.
             </div>
             <div className="flex-1 text-neutral-900 font-normal font-['Lora'] tracking-tight">
-              <span className="text-xl font-semibold leading-loose">
+              <span className="text-xl font-semibold italic">
                 Beneficios destacados:
-                <br />
               </span>
-              <span className="text-base leading-loose">
-                Curaduría personalizada de vinos únicos
-                <br />
-                Envío mensual a domicilio
-                <br />
-                Acceso preferencial a catas, experiencias presenciales y on
-                line.
-                <br />
-                Comunidad de miembros con acceso exclusivo
-              </span>
+              <ul className="text-base italic leading-normal mt-2 space-y-1 list-disc list-inside">
+                <li>Curaduría personalizada de vinos únicos</li>
+                <li>Envío mensual a domicilio</li>
+                <li>
+                  Acceso preferencial a catas, experiencias presenciales y
+                  online
+                </li>
+                <li>Comunidad de miembros con acceso exclusivo</li>
+              </ul>
             </div>
             <Button variant="primary">Quiero ser parte</Button>
           </div>

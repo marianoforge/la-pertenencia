@@ -49,7 +49,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
   const imageUrl = isValidImage ? wine.image : "/images/wine-placeholder.svg";
 
   return (
-    <div className="w-[400px] h-[380px] bg-gradient-to-l from-gray-200 to-white/0 inline-flex justify-center items-center">
+    <div className="w-[400px] h-[380px] bg-gradient-to-l from-gray-100 to-white/0 inline-flex justify-center items-center">
       <div className="w-[130px] h-[313px] relative">
         <Image
           alt={`${wine.marca} - ${wine.winery} ${wine.vintage}`}
