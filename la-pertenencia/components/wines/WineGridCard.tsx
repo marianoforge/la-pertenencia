@@ -17,7 +17,7 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click navigation
-    
+
     // Add to cart store
     addItem(wine, quantity);
 
@@ -58,17 +58,17 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
   const imageUrl = isValidImage ? wine.image : "/images/wine-placeholder.svg";
 
   return (
-    <div 
+    <div
       className="w-full max-w-[280px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+      role="button"
+      tabIndex={0}
       onClick={handleCardClick}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           handleCardClick();
         }
       }}
-      role="button"
-      tabIndex={0}
     >
       {/* Wine Image */}
       <div className="w-full h-48 md:h-56 lg:h-64 bg-gradient-to-l from-white to-zinc-100/50 flex items-center justify-center relative">

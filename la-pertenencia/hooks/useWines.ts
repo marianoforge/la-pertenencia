@@ -183,16 +183,11 @@ export function useWines(filters?: WineFilters) {
 export const useWine = (id: string) => {
   return useQuery({
     queryKey: ["wine", id],
-    queryFn: async (): Promise<Wine> => {
-      const response = await fetch(`/api/wines/${id}`);
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch wine");
-      }
-
-      return response.json();
-    },
+    queryFn: () => fetchWineById(id),
     enabled: !!id,
+    staleTime: 2 * 60 * 1000, // 2 minutos
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 };
 

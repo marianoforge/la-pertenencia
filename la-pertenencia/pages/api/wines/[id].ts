@@ -1,33 +1,8 @@
 /* eslint-disable no-console */
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import path from "path";
-import fs from "fs";
-
 import { Wine, UpdateWineInput } from "../../../types/wine";
-
-const winesFilePath = path.join(process.cwd(), "data", "wines.json");
-
-function readWines(): Wine[] {
-  try {
-    const fileContent = fs.readFileSync(winesFilePath, "utf-8");
-
-    return JSON.parse(fileContent);
-  } catch (error) {
-    console.error("Error reading wines file:", error);
-
-    return [];
-  }
-}
-
-function writeWines(wines: Wine[]): void {
-  try {
-    fs.writeFileSync(winesFilePath, JSON.stringify(wines, null, 2));
-  } catch (error) {
-    console.error("Error writing wines file:", error);
-    throw new Error("Failed to save wines");
-  }
-}
+import { getWineById, updateWine, deleteWine } from "../../../lib/firestore";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
@@ -38,8 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === "GET") {
     try {
-      const wines = readWines();
-      const wine = wines.find((w) => w.id === id);
+      const wine = await getWineById(id);
 
       if (!wine) {
         return res.status(404).json({ error: "Wine not found" });
@@ -52,28 +26,23 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   } else if (req.method === "PUT") {
     try {
-      const wines = readWines();
-      const wineIndex = wines.findIndex((w) => w.id === id);
+      const updateData: UpdateWineInput = req.body;
 
-      if (wineIndex === -1) {
+      // Verificar que el vino existe antes de actualizar
+      const existingWine = await getWineById(id);
+      if (!existingWine) {
         return res.status(404).json({ error: "Wine not found" });
       }
 
-      const updateData: UpdateWineInput = req.body;
-      const existingWine = wines[wineIndex];
+      // Actualizar el vino en Firebase
+      const success = await updateWine(id, updateData);
 
-      // Actualizar el vino
-      const updatedWine: Wine = {
-        ...existingWine,
-        ...updateData,
-        id: existingWine.id, // Mantener el ID original
-        winery: existingWine.winery, // Mantener la bodega
-        createdAt: existingWine.createdAt, // Mantener fecha de creación
-        updatedAt: new Date().toISOString(), // Actualizar fecha de modificación
-      };
+      if (!success) {
+        return res.status(500).json({ error: "Failed to update wine" });
+      }
 
-      wines[wineIndex] = updatedWine;
-      writeWines(wines);
+      // Obtener el vino actualizado
+      const updatedWine = await getWineById(id);
 
       res.status(200).json(updatedWine);
     } catch (error) {
@@ -82,21 +51,22 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   } else if (req.method === "DELETE") {
     try {
-      const wines = readWines();
-      const wineIndex = wines.findIndex((w) => w.id === id);
-
-      if (wineIndex === -1) {
+      // Verificar que el vino existe antes de eliminar
+      const existingWine = await getWineById(id);
+      if (!existingWine) {
         return res.status(404).json({ error: "Wine not found" });
       }
 
-      const deletedWine = wines[wineIndex];
+      // Eliminar el vino de Firebase
+      const success = await deleteWine(id);
 
-      wines.splice(wineIndex, 1);
-      writeWines(wines);
+      if (!success) {
+        return res.status(500).json({ error: "Failed to delete wine" });
+      }
 
       res
         .status(200)
-        .json({ message: "Wine deleted successfully", wine: deletedWine });
+        .json({ message: "Wine deleted successfully", wine: existingWine });
     } catch (error) {
       console.error("Error deleting wine:", error);
       res.status(500).json({ error: "Failed to delete wine" });
