@@ -20,7 +20,8 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
     bodega: "Bodega La Pertenencia",
     tipo: "Tinto",
     varietal: "Malbec",
-    maridaje: "Armoniza con todo tipo de carnes en diferentes cocciones, bondiola braseada, diversos tipos de risottos.",
+    maridaje:
+      "Armoniza con todo tipo de carnes en diferentes cocciones, bondiola braseada, diversos tipos de risottos.",
     description:
       "Un Malbec que equilibra fruta, elegancia y un legado único...",
     price: 15300,
@@ -87,7 +88,7 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
         />
 
         {/* Wine Information Card */}
-        <div className="absolute top-8 left-[280px] z-20 px-7 py-5 inline-flex flex-col justify-center items-center gap-1 bg-opacity-95 rounded-lg">
+        {/* <div className="absolute top-8 left-[280px] z-20 px-7 py-5 inline-flex flex-col justify-center items-center gap-1 bg-opacity-95 rounded-lg">
           <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-1">
             <div className="self-stretch text-center justify-start text-black text-base font-semibold font-['Lora'] uppercase tracking-[4px]">
               {wine.marca}
@@ -150,6 +151,28 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
               <div className="w-4 h-3 left-[7px] top-[7.50px] absolute bg-amber-300" />
             </div>
           </button>
+        </div> */}
+        <div className="absolute top-16 left-[280px] z-20 self-stretch px-7 py-5 inline-flex flex-col justify-center items-center gap-1">
+          <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-4">
+            <div className="self-stretch text-center justify-start text-black text-xl font-semibold font-['Lora'] uppercase tracking-[5px]">
+              la pertenencia
+            </div>
+            <div className="self-stretch text-center justify-start text-yellow-700 text-base font-medium font-['Lora'] tracking-[4px]">
+              Malbec
+            </div>
+          </div>
+          <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-yellow-700" />
+          <div className="self-stretch bg-amber-300 inline-flex justify-center items-center gap-2.5 ">
+            <button className="w-64 h-8 text-center justify-center items-center text-black font-medium font-['Lora'] tracking-wide">
+              PROXIMAMENTE
+            </button>
+          </div>
+          <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-yellow-700" />
+          <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5 mt-4">
+            <div className="w-64 text-center justify-start text-black text-base font-normal font-['Lora'] italic leading-normal tracking-wide">
+              Un Malbec que equilibra fruta, elegancia y un legado único...
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex flex-col justify-end items-end">
