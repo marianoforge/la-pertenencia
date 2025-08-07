@@ -4,7 +4,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Wine, UpdateWineInput } from "../../../types/wine";
 import { getWineById, updateWine, deleteWine } from "../../../lib/firestore";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { id } = req.query;
 
   if (typeof id !== "string") {
