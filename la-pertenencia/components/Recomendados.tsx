@@ -42,10 +42,6 @@ const Recomendados = () => {
     );
   };
 
-  const goToPage = (page: number) => {
-    setCurrentPage(page);
-  };
-
   const goToPreviousPage = () => {
     setCurrentPage((prev) => Math.max(0, prev - 1));
   };
@@ -73,7 +69,7 @@ const Recomendados = () => {
   }
 
   return (
-    <Section id="recomendados" variant="default">
+    <Section className="!px-0" id="recomendados" variant="default">
       <SectionHeader
         subtitle="Elegidos con el Corazón"
         title="vinos recomendados"

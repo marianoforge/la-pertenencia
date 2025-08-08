@@ -46,18 +46,24 @@ export default function DefaultLayout({
                   Regalos Empresariales
                   <br />
                   Membresías
-                </div>
-              </div>
-
-              {/* Experiencias */}
-              <div className="inline-flex flex-col justify-start items-start gap-2.5">
-                <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
-                  experiencias
-                </div>
-                <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  <br />
                   Crea tu vino
                   <br />
                   Catas y Maridajes
+                </div>
+              </div>
+
+              {/* Ayuda */}
+              <div className="inline-flex flex-col justify-start items-start gap-2.5">
+                <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+                  Ayuda
+                </div>
+                <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  Preguntas Frecuentes
+                  <br />
+                  Términos y Condiciones
+                  <br />
+                  Política de Privacidad
                 </div>
               </div>
 
@@ -72,7 +78,7 @@ export default function DefaultLayout({
                     <div className="w-4 h-1.5 left-[2.50px] top-[5.13px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                   </div>
                   <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                    contacto@lapertenecia.com
+                    info@lapertenencia.com
                   </div>
                 </div>
                 <div className="inline-flex justify-start items-center gap-2.5">
@@ -80,7 +86,7 @@ export default function DefaultLayout({
                     <div className="w-3.5 h-3.5 left-[2.43px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                   </div>
                   <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                    +(54) 11-321-4567
+                    +(54) 9 11 6152-5562
                   </div>
                 </div>
                 <div className="inline-flex justify-start items-center gap-2.5">
@@ -89,7 +95,7 @@ export default function DefaultLayout({
                     <div className="w-1 h-1 left-[7.86px] top-[6.27px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                   </div>
                   <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                    Av. Sarasa 2542, Palermo - CABA
+                    Buenos Aires - Palermo - CABA
                   </div>
                 </div>
               </div>
@@ -155,7 +161,7 @@ export default function DefaultLayout({
 
           {/* Footer Layout - 1000px down to mobile */}
           <div
-            className="fluid-menu-show w-full flex flex-col lg:hidden"
+            className="fluid-menu-show hide-at-fluid-breakpoint w-full flex-col"
             style={{
               maxWidth: "min(100%, 1920px)",
               paddingLeft: "clamp(1rem, 4vw, 4rem)",
@@ -185,18 +191,24 @@ export default function DefaultLayout({
                   Regalos Empresariales
                   <br />
                   Membresías
-                </div>
-              </div>
-
-              {/* Experiencias */}
-              <div className="flex flex-col gap-2.5">
-                <div className="text-yellow-700 text-base sm:text-sm md:text-lg font-normal font-['Lora'] uppercase leading-normal tracking-[3px] sm:tracking-[2px] md:tracking-[3px]">
-                  experiencias
-                </div>
-                <div className="text-black text-xs sm:text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  <br />
                   Crea tu vino
                   <br />
                   Catas y Maridajes
+                </div>
+              </div>
+
+              {/* Ayuda */}
+              <div className="flex flex-col gap-2.5">
+                <div className="text-yellow-700 text-base sm:text-sm md:text-lg font-normal font-['Lora'] uppercase leading-normal tracking-[3px] sm:tracking-[2px] md:tracking-[3px]">
+                  Ayuda
+                </div>
+                <div className="text-black text-xs sm:text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  Preguntas Frecuentes
+                  <br />
+                  Términos y Condiciones
+                  <br />
+                  Política de Privacidad
                 </div>
               </div>
             </div>
@@ -217,7 +229,7 @@ export default function DefaultLayout({
                     <div className="w-4 h-1.5 left-[2.50px] top-[5.13px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                   </div>
                   <div className="text-black text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                    contacto@lapertenecia.com
+                    info@lapertenencia.com
                   </div>
                 </div>
                 <div className="flex justify-start items-center gap-2.5">
@@ -225,7 +237,7 @@ export default function DefaultLayout({
                     <div className="w-3.5 h-3.5 left-[2.43px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                   </div>
                   <div className="text-black text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                    +(54) 11-321-4567
+                    +(54) 9 11 6152-5562
                   </div>
                 </div>
                 <div className="flex justify-start items-center gap-2.5">
@@ -234,7 +246,7 @@ export default function DefaultLayout({
                     <div className="w-1 h-1 left-[7.86px] top-[6.27px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                   </div>
                   <div className="text-black text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                    Av. Sarasa 2542, Palermo - CABA
+                    Buenos Aires - Palermo - CABA
                   </div>
                 </div>
               </div>
@@ -254,7 +266,7 @@ export default function DefaultLayout({
                   <div className="w-4 h-1.5 left-[2.50px] top-[5.13px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                 </div>
                 <div className="text-black text-xs font-normal font-['Lora'] leading-loose tracking-wide">
-                  contacto@lapertenecia.com
+                  info@lapertenencia.com
                 </div>
               </div>
               <div className="flex justify-start items-center gap-2.5">
@@ -262,7 +274,7 @@ export default function DefaultLayout({
                   <div className="w-3.5 h-3.5 left-[2.43px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                 </div>
                 <div className="text-black text-xs font-normal font-['Lora'] leading-loose tracking-wide">
-                  +(54) 11-321-4567
+                  +(54) 9 11 6152-5562
                 </div>
               </div>
               <div className="flex justify-start items-center gap-2.5">
@@ -271,7 +283,7 @@ export default function DefaultLayout({
                   <div className="w-1 h-1 left-[7.86px] top-[6.27px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
                 </div>
                 <div className="text-black text-xs font-normal font-['Lora'] leading-loose tracking-wide">
-                  Av. Sarasa 2542, Palermo - CABA
+                  Buenos Aires - Palermo - CABA
                 </div>
               </div>
             </div>

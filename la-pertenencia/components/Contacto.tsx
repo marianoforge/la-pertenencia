@@ -48,7 +48,7 @@ const Contacto = () => {
 
   return (
     <Section
-      className="relative md:min-h-[800px] min-h-[630px]"
+      className="relative md:min-h-[800px] min-h-[630px] !px-0"
       id="contacto"
       variant="full-width"
     >

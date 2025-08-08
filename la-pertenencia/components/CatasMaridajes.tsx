@@ -40,7 +40,7 @@ const CatasMaridajes = () => {
   ];
 
   return (
-    <Section id="catas-maridajes" variant="gray">
+    <Section className="!px-0" id="catas-maridajes" variant="gray">
       <SectionHeader
         subtitle="Encuentros que conectan"
         title="Catas y maridajes"
