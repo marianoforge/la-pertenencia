@@ -21,7 +21,7 @@ const Regalos = () => {
   };
 
   return (
-    <Section id="regalos" variant="default">
+    <Section className="!px-0" id="regalos" variant="default">
       <SectionHeader
         subtitle="Regalos empresariales"
         title="Regala momentos que se brindan"

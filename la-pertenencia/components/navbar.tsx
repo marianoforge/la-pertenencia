@@ -7,7 +7,7 @@ import CartButton from "@/components/CartButton";
 const menuItems = [
   { name: "INICIO", href: "/" },
   { name: "VINOS", href: "/vinos" },
-  { name: "CREA TU VINO", href: "#imagina-tu-vino" },
+  { name: "CREA TU VINO", href: "/crea-tu-vino" },
   { name: "REGALOS", href: "#regalos" },
   { name: "CATAS", href: "#catas-maridajes" },
   { name: "MEMBRESÍAS", href: "#membresia" },

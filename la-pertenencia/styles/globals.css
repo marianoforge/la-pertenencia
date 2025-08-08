@@ -190,6 +190,17 @@ body {
       display: none;
     }
   }
+
+  /* Utility class to hide elements at 1000px+ to match fluid-menu breakpoint */
+  .hide-at-fluid-breakpoint {
+    display: flex;
+  }
+
+  @media (min-width: 1000px) {
+    .hide-at-fluid-breakpoint {
+      display: none;
+    }
+  }
   
   /* Media queries for fluid hero behavior */
   .fluid-hero-mobile {

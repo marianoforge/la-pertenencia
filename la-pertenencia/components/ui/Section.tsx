@@ -49,8 +49,8 @@ const Section: React.FC<SectionProps> = ({
   };
 
   return (
-    <div 
-      className={cn(baseStyles, variants[variant], className)} 
+    <div
+      className={cn(baseStyles, variants[variant], className)}
       style={getFluidStyles(variant)}
       {...props}
     >

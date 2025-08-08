@@ -4,7 +4,7 @@ import { Section, SectionHeader, Button } from "./ui";
 
 const MembresiaMensual = () => {
   return (
-    <Section id="membresia" variant="default">
+    <Section className="!px-0" id="membresia" variant="default">
       <SectionHeader
         subtitle="Una caja. Tres vinos. Un ritual."
         title="Membresía mensual"
