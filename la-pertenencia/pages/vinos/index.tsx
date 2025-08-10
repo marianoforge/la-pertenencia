@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -6,23 +6,33 @@ import DefaultLayout from "@/layouts/default";
 import { useWines } from "@/hooks/useWines";
 import { WineFilters } from "@/types/wine";
 import WineGridCard from "@/components/wines/WineGridCard";
-import WineFiltersComponent from "@/components/wines/WineFilters";
 import WineHero from "@/components/wines/WineHero";
+import FilterBar from "@/components/FilterBar";
+import FilterPanel from "@/components/FilterPanel";
+import { useFilterStore } from "@/stores/useFilterStore";
 import Contacto from "@/components/Contacto";
 
 export default function VinosPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filters, setFilters] = useState<WineFilters>({
+  const [localFilters, setLocalFilters] = useState<WineFilters>({
     search: "",
   });
-  const [sortBy, setSortBy] = useState("relevance");
   const router = useRouter();
 
-  const { data: wines = [], isLoading, error } = useWines(filters);
+  // Use filter store
+  const { filters: storeFilters, sortBy } = useFilterStore();
+  
+  // Combine local filters (search) with store filters
+  const combinedFilters = useMemo(() => ({
+    ...localFilters,
+    ...storeFilters,
+  }), [localFilters, storeFilters]);
+
+  const { data: wines = [], isLoading, error } = useWines(combinedFilters);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
-    setFilters({ ...filters, search: value });
+    setLocalFilters({ ...localFilters, search: value });
 
     // Actualizar URL con el término de búsqueda
     if (value) {
@@ -35,11 +45,7 @@ export default function VinosPage() {
   };
 
   const handleFiltersChange = (newFilters: WineFilters) => {
-    setFilters({ ...filters, ...newFilters });
-  };
-
-  const handleSortChange = (sort: string) => {
-    setSortBy(sort);
+    setLocalFilters({ ...localFilters, ...newFilters });
   };
 
   // Obtener vino destacado para el hero
@@ -158,12 +164,9 @@ export default function VinosPage() {
           }}
         />
 
-        {/* Filters Section */}
+        {/* Filter Bar Section */}
         <div className="w-full max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8">
-          <WineFiltersComponent
-            onFiltersChange={handleFiltersChange}
-            onSortChange={handleSortChange}
-          />
+          <FilterBar />
         </div>
 
         {/* Wine List Section */}
@@ -181,7 +184,7 @@ export default function VinosPage() {
           ) : sortedWines.length === 0 ? (
             <div className="flex justify-center items-center py-20">
               <div className="text-lg font-lora">
-                {searchTerm || Object.values(filters).some((f) => f)
+                {searchTerm || Object.values(combinedFilters).some((f) => f)
                   ? "No se encontraron vinos que coincidan con los filtros seleccionados"
                   : "No se encontraron vinos"}
               </div>
@@ -226,6 +229,7 @@ export default function VinosPage() {
         </div>
       </section>
       <Contacto />
+      <FilterPanel />
     </DefaultLayout>
   );
 }

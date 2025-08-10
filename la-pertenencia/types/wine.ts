@@ -53,6 +53,9 @@ export interface UpdateWineInput extends Partial<CreateWineInput> {
 export interface WineFilters {
   category?: string;
   region?: string;
+  bodega?: string;
+  marca?: string;
+  varietal?: string;
   minPrice?: number;
   maxPrice?: number;
   featured?: boolean;

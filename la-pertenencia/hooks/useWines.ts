@@ -53,6 +53,21 @@ function applyFilters(wines: any[], filters?: WineFilters): any[] {
       if (wine.region !== filters.region) return false;
     }
 
+    // Filtro por bodega
+    if (filters.bodega && filters.bodega !== "all") {
+      if (wine.bodega !== filters.bodega) return false;
+    }
+
+    // Filtro por marca
+    if (filters.marca && filters.marca !== "all") {
+      if (wine.marca !== filters.marca) return false;
+    }
+
+    // Filtro por varietal
+    if (filters.varietal && filters.varietal !== "all") {
+      if (wine.varietal !== filters.varietal) return false;
+    }
+
     // Filtro por rango de precios
     if (filters.minPrice !== undefined && wine.price < filters.minPrice) {
       return false;
