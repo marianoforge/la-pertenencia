@@ -16,18 +16,18 @@ export const useWineFilterOptions = () => {
         const wines = await getAllWines();
 
         // Extraer valores únicos para cada filtro usando los campos correctos
-        const bodegas = [
-          ...new Set(wines.map((wine) => wine.bodega).filter(Boolean)),
-        ].sort();
-        const marcas = [
-          ...new Set(wines.map((wine) => wine.marca).filter(Boolean)),
-        ].sort();
-        const tipos = [
-          ...new Set(wines.map((wine) => wine.tipo).filter(Boolean)),
-        ].sort();
-        const varietales = [
-          ...new Set(wines.map((wine) => wine.varietal).filter(Boolean)),
-        ].sort();
+        const bodegas = Array.from(
+          new Set(wines.map((wine) => wine.bodega).filter(Boolean))
+        ).sort();
+        const marcas = Array.from(
+          new Set(wines.map((wine) => wine.marca).filter(Boolean))
+        ).sort();
+        const tipos = Array.from(
+          new Set(wines.map((wine) => wine.tipo).filter(Boolean))
+        ).sort();
+        const varietales = Array.from(
+          new Set(wines.map((wine) => wine.varietal).filter(Boolean))
+        ).sort();
 
         return {
           bodegas,
