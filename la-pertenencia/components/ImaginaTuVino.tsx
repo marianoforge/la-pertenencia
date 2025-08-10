@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { Section, SectionHeader, Button } from "./ui";
 
@@ -14,7 +15,7 @@ const ImaginaTuVino = () => {
         <div className="w-full lg:w-[580px] h-48 sm:h-48 md:h-96 lg:h-[470px] relative rounded-lg overflow-hidden flex-shrink-0">
           <img
             alt="Imagen de vino"
-            className="w-full h-full object-cover rounded-lg shadow-[inset_0px_4px_36.099998474121094px_0px_rgba(0,0,0,0.25)]"
+            className="w-full h-[444px] object-cover rounded-lg shadow-[inset_0px_4px_36.099998474121094px_0px_rgba(0,0,0,0.25)]"
             src="/images/imagina.png"
           />
         </div>
@@ -54,9 +55,11 @@ const ImaginaTuVino = () => {
             </div>
           </div>
           <div className="w-full pt-2.5 lg:pt-0 flex flex-col lg:mt-8">
-            <Button size="sm" variant="primary">
-              Quiero saber más
-            </Button>
+            <Link href="/crea-tu-vino">
+              <Button size="sm" variant="primary">
+                Quiero saber más
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

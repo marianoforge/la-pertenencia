@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Head } from "./head";
 
 import { Navbar } from "@/components/navbar";
@@ -59,11 +61,17 @@ export default function DefaultLayout({
                   Ayuda
                 </div>
                 <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  Preguntas Frecuentes
+                  <Link href="/preguntas-frecuentes" className="hover:text-yellow-700 transition-colors">
+                    Preguntas Frecuentes
+                  </Link>
                   <br />
-                  Términos y Condiciones
+                  <Link href="/terminos-y-condiciones" className="hover:text-yellow-700 transition-colors">
+                    Términos y Condiciones
+                  </Link>
                   <br />
-                  Política de Privacidad
+                  <Link href="/politica-de-privacidad" className="hover:text-yellow-700 transition-colors">
+                    Política de Privacidad
+                  </Link>
                 </div>
               </div>
 
@@ -204,11 +212,17 @@ export default function DefaultLayout({
                   Ayuda
                 </div>
                 <div className="text-black text-xs sm:text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  Preguntas Frecuentes
+                  <Link href="/preguntas-frecuentes" className="hover:text-yellow-700 transition-colors">
+                    Preguntas Frecuentes
+                  </Link>
                   <br />
-                  Términos y Condiciones
+                  <Link href="/terminos-y-condiciones" className="hover:text-yellow-700 transition-colors">
+                    Términos y Condiciones
+                  </Link>
                   <br />
-                  Política de Privacidad
+                  <Link href="/politica-de-privacidad" className="hover:text-yellow-700 transition-colors">
+                    Política de Privacidad
+                  </Link>
                 </div>
               </div>
             </div>

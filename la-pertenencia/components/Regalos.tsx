@@ -27,13 +27,13 @@ const Regalos = () => {
         title="Regala momentos que se brindan"
       />
 
-      <div className="w-full max-w-[1300px] pt-6 md:pt-10 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0">
+      <div className="w-full max-w-[1300px] pt-6 md:pt-10 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0 ">
         {/* Kit "la pertenencia" - Large Card - Solo */}
-        <div className="w-full mx-auto sm:justify-start h-96 relative flex justify-center items-start overflow-hidden">
-          <div className="w-full h-96 relative rounded-lg">
+        <div className="w-full mx-auto sm:justify-start h-[400px] relative flex justify-center items-start overflow-hidden">
+          <div className="w-full h-[400px] relative rounded-lg">
             <img
               alt="Kit La Pertenencia"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-lg"
               src="/images/kitlapertenencia.png"
             />
           </div>
@@ -113,7 +113,7 @@ const Regalos = () => {
         {/* Los dos kits pequeños en la misma fila */}
         <div className="w-full flex flex-col sm:flex-row gap-6 md:gap-8 lg:gap-10">
           {/* Kit "1ra Copa" - Small Card */}
-          <div className="w-full mx-auto bg-white inline-flex flex-col justify-start items-center">
+          <div className="w-full mx-auto bg-white inline-flex flex-col justify-start items-center flex-1">
             <img
               alt="Kit Primera Copa"
               className="w-full h-36 lg:h-32 rounded-tl-lg rounded-tr-lg border-b-[3px] border-neutral-900 object-cover"
@@ -189,7 +189,7 @@ const Regalos = () => {
           </div>
 
           {/* Kit "2da Copa" - Small Card */}
-          <div className="w-full mx-auto bg-white inline-flex flex-col justify-start items-center">
+          <div className="w-full mx-auto bg-white inline-flex flex-col justify-start items-center flex-1">
             <img
               alt="Kit Segunda Copa"
               className="w-full h-36 lg:h-32 rounded-tl-lg rounded-tr-lg border-b-[3px] border-neutral-900 object-cover"

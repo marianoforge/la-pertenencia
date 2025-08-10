@@ -16,11 +16,11 @@ const MembresiaMensual = () => {
           <div className="w-[550px] h-[460px] relative overflow-hidden flex-shrink-0">
             <img
               alt="Membresía mensual"
-              className="w-full h-full object-cover rounded-lg"
+              className="w-full h-[444px] object-cover rounded-lg"
               src="/images/membresia.png"
             />
           </div>
-          <div className="flex-1 inline-flex flex-col justify-start items-start gap-10">
+          <div className="flex-1 inline-flex flex-col justify-start items-start gap-12 mb-6">
             <div className="text-neutral-900 text-xl font-normal font-['Lora'] italic leading-normal tracking-wide">
               Con nuestra membresía, cada mes recibís una selección de tres
               vinos especialmente elegidos para vos. Descubrí nuevas etiquetas

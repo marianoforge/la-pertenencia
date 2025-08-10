@@ -70,7 +70,7 @@ const Contacto = () => {
             <div className=" text-center justify-start text-amber-300 text-sm md:text-base lg:text-xl font-medium font-['Lora'] uppercase tracking-[7px] md:tracking-[8px] lg:tracking-[10px]">
               contáctanos
             </div>
-            <div className="self-stretch text-center justify-start text-neutral-100 text-2xl md:text-3xl lg:text-4xl font-medium font-['Lora'] tracking-[6px] md:tracking-[8px] lg:tracking-[10px] md:whitespace-nowrap">
+            <div className="self-stretch text-center justify-start text-neutral-100 text-2xl md:text-3xl lg:text-4xl font-medium font-['Lora'] tracking-[3px] md:tracking-[4px] lg:tracking-[5px]">
               Pertenecer es encontrarse
             </div>
           </div>
