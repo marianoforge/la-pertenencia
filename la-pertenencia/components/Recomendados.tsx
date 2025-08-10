@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 import WineCard from "./wines/WineCard";
 import { Section, SectionHeader, Button } from "./ui";
@@ -213,9 +214,11 @@ const Recomendados = () => {
           Nuestro deseo es simple: que cada vino te sorprenda, te emocione y te
           revele algo distinto. Todo comienza al abrir una botella.
         </div>
-        <Button size="sm" variant="primary">
-          catálogo completo
-        </Button>
+        <Link href="/vinos">
+          <Button size="sm" variant="primary">
+            catálogo completo
+          </Button>
+        </Link>
       </div>
     </Section>
   );
