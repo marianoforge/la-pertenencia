@@ -70,7 +70,7 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
   };
 
   return (
-    <div className="w-[1300px] h-[400px] relative bg-neutral-900 flex flex-col mx-auto overflow-hidden">
+    <div className="w-[1300px] h-[400px] relative bg-neutral-900 flex flex-col mx-auto overflow-hidden mt-6 rounded-lg">
       <div className="relative">
         <Image
           alt="Back Hero Inside"
