@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { useFilterStore } from "@/stores/useFilterStore";
 
@@ -95,19 +96,31 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
             <DropdownIcon />
           </button>
 
-          {showSortDropdown && (
-            <div className="absolute top-full right-0 bg-white border border-neutral-400 border-t-0 rounded-b-sm z-10 min-w-[180px] shadow-lg">
-              {sortOptions.map((option) => (
-                <button
-                  key={option.value}
-                  className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm hover:bg-neutral-100 transition-colors"
-                  onClick={() => handleSortChange(option.value)}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          )}
+          <AnimatePresence>
+            {showSortDropdown && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                transition={{ 
+                  duration: 0.2, 
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                  transformOrigin: "top"
+                }}
+                className="absolute top-full right-0 bg-white border border-neutral-400 border-t-0 rounded-b-sm z-10 min-w-[180px] shadow-lg"
+              >
+                {sortOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm hover:bg-neutral-100 transition-colors"
+                    onClick={() => handleSortChange(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>
