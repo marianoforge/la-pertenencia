@@ -14,6 +14,7 @@ import Contacto from "@/components/Contacto";
 
 export default function VinosPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
   const [localFilters, setLocalFilters] = useState<WineFilters>({
     search: "",
   });
@@ -84,6 +85,31 @@ export default function VinosPage() {
         });
     }
   }, [wines, sortBy]);
+
+  // Configuración de paginación
+  const winesPerPage = 12; // 12 vinos por página (4 por línea x 3 líneas)
+  const totalPages = Math.ceil(sortedWines.length / winesPerPage);
+  
+  // Vinos para la página actual
+  const currentWines = useMemo(() => {
+    const startIndex = currentPage * winesPerPage;
+    const endIndex = startIndex + winesPerPage;
+    return sortedWines.slice(startIndex, endIndex);
+  }, [sortedWines, currentPage, winesPerPage]);
+
+  // Resetear página actual cuando cambian los filtros o búsqueda
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [combinedFilters, sortBy]);
+
+  // Funciones de navegación de páginas
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(0, prev - 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+  };
 
   return (
     <DefaultLayout>
@@ -191,8 +217,8 @@ export default function VinosPage() {
             </div>
           ) : (
             <>
-              {/* Results count */}
-              <div className="mb-6">
+              {/* Results count and pagination info */}
+              <div className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <p className="text-sm md:text-base font-normal font-['Lora'] tracking-wide text-gray-600">
                   {sortedWines.length}{" "}
                   {sortedWines.length === 1
@@ -204,11 +230,17 @@ export default function VinosPage() {
                     </span>
                   )}
                 </p>
+                
+                {totalPages > 1 && (
+                  <p className="text-sm font-normal font-['Lora'] text-gray-500">
+                    Página {currentPage + 1} de {totalPages}
+                  </p>
+                )}
               </div>
 
               {/* Wine Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 justify-items-center">
-                {sortedWines.map((wine) => (
+                {currentWines.map((wine) => (
                   <WineGridCard
                     key={wine.id}
                     wine={wine}
@@ -224,6 +256,43 @@ export default function VinosPage() {
                   />
                 ))}
               </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 mt-8 mb-4">
+                  <button
+                    onClick={goToPreviousPage}
+                    disabled={currentPage === 0}
+                    className="px-6 py-2 bg-neutral-900 text-amber-300 rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
+                  >
+                    Anterior
+                  </button>
+                  
+                  <div className="flex items-center gap-2">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentPage(index)}
+                        className={`w-10 h-10 rounded-sm font-['Lora'] font-medium text-sm transition-colors ${
+                          currentPage === index
+                            ? "bg-amber-300 text-neutral-900"
+                            : "bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-100"
+                        }`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                  </div>
+                  
+                  <button
+                    onClick={goToNextPage}
+                    disabled={currentPage === totalPages - 1}
+                    className="px-6 py-2 bg-neutral-900 text-amber-300 rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>

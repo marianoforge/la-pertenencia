@@ -5,6 +5,7 @@ import { Head } from "./head";
 import { Navbar } from "@/components/navbar";
 import Cart from "@/components/Cart";
 import CartNotification from "@/components/CartNotification";
+import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
 
 export default function DefaultLayout({
   children,
@@ -368,6 +369,7 @@ export default function DefaultLayout({
       </footer>
       <Cart />
       <CartNotification />
+      <WhatsAppFloatingButton />
     </div>
   );
 }
