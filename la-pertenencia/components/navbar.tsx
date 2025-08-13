@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import { useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 import CartButton from "@/components/CartButton";
 
@@ -71,43 +72,79 @@ export const Navbar = () => {
             <div className="fluid-menu-show w-5 h-0 rotate-90 outline outline-[0.81px] outline-offset-[-0.41px] outline-white" />
 
             {/* Menu hamburger - Mobile only */}
-            <button
+            <motion.button
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               className="fluid-menu-show w-6 h-6 hover:opacity-75 transition-opacity"
               onClick={() => {
                 console.log("Menu clicked, current state:", isMenuOpen);
                 setIsMenuOpen(!isMenuOpen);
               }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.1 }}
             >
-              <Image
-                alt="Menu"
-                className="object-contain"
-                height={24}
-                src="/icons/majesticons_menu.svg"
-                width={24}
-              />
-            </button>
+              <motion.div
+                animate={{ rotate: isMenuOpen ? 90 : 0 }}
+                transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <Image
+                  alt="Menu"
+                  className="object-contain"
+                  height={24}
+                  src="/icons/majesticons_menu.svg"
+                  width={24}
+                />
+              </motion.div>
+            </motion.button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu - Only visible on smaller screens */}
-      {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-stone-900 border-t border-stone-700 lg:hidden z-40">
-          <div className="flex flex-col py-4">
-            {menuItems.map((item) => (
-              <NextLink
-                key={item.name}
-                className="px-4 py-3 text-white text-sm font-normal font-['Lora'] tracking-[2px] hover:bg-stone-800 hover:text-amber-300 transition-colors"
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </NextLink>
-            ))}
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ 
+              duration: 0.3, 
+              ease: [0.25, 0.46, 0.45, 0.94],
+              opacity: { duration: 0.2 }
+            }}
+            className="absolute top-full left-0 right-0 bg-stone-900 border-t border-stone-700 lg:hidden z-40 overflow-hidden"
+          >
+            <motion.div
+              initial={{ y: -20 }}
+              animate={{ y: 0 }}
+              exit={{ y: -20 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="flex flex-col py-4"
+            >
+              {menuItems.map((item, index) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ 
+                    duration: 0.3,
+                    delay: index * 0.05,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                >
+                  <NextLink
+                    className="block px-4 py-3 text-white text-sm font-normal font-['Lora'] tracking-[2px] hover:bg-stone-800 hover:text-amber-300 transition-colors"
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </NextLink>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

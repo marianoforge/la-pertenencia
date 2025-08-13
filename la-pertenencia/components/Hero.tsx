@@ -35,6 +35,8 @@ const Hero = () => {
       >
         {/* Logo */}
         <div
+          data-aos="fade-up"
+          data-aos-delay="200"
           className="relative overflow-hidden flex items-center justify-center"
           style={{
             width: "clamp(8rem, 25vw, 10rem)",
@@ -59,6 +61,8 @@ const Hero = () => {
           }}
         >
           <div
+            data-aos="fade-up"
+            data-aos-delay="400"
             className="w-full text-center text-amber-300 font-normal font-lora uppercase"
             style={{
               fontSize: "clamp(1.125rem, 4vw, 1.75rem)",

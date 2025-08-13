@@ -6,20 +6,30 @@ import { Section, SectionHeader, Button } from "./ui";
 const ImaginaTuVino = () => {
   return (
     <Section id="imagina-tu-vino" variant="gray">
-      <SectionHeader
-        subtitle="Tu Propio Vino, Tu Propia Historia."
-        title="imagina un vino"
-      />
+      <div data-aos="fade-up">
+        <SectionHeader
+          subtitle="Tu Propio Vino, Tu Propia Historia."
+          title="imagina un vino"
+        />
+      </div>
 
       <div className="w-full max-w-[1300px] pt-8 md:pt-12 pb-5 flex flex-col lg:flex-row justify-center items-start gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0 ">
-        <div className="w-full lg:w-[580px] h-48 sm:h-48 md:h-96 lg:h-[470px] relative rounded-lg overflow-hidden flex-shrink-0">
+        <div 
+          data-aos="fade-right"
+          data-aos-delay="200"
+          className="w-full lg:w-[580px] h-48 sm:h-48 md:h-96 lg:h-[470px] relative rounded-lg overflow-hidden flex-shrink-0"
+        >
           <img
             alt="Imagen de vino"
             className="w-full h-[444px] object-cover rounded-lg shadow-[inset_0px_4px_36.099998474121094px_0px_rgba(0,0,0,0.25)]"
             src="/images/imagina.png"
           />
         </div>
-        <div className="flex-1 w-full lg:w-auto inline-flex flex-col justify-start items-start lg:items-start gap-4 md:gap-5">
+        <div 
+          data-aos="fade-left"
+          data-aos-delay="400"
+          className="flex-1 w-full lg:w-auto inline-flex flex-col justify-start items-start lg:items-start gap-4 md:gap-5"
+        >
           <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-semibold font-['Lora'] italic leading-tight md:leading-normal lg:leading-normal tracking-tight">
             ¿Alguna vez soñaste con tener tu propio vino, con tu sello personal?
           </div>

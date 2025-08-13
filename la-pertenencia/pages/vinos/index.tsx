@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import DefaultLayout from "@/layouts/default";
 import { useWines } from "@/hooks/useWines";
@@ -177,30 +178,60 @@ export default function VinosPage() {
         {/* Breadcrumb and Search Section */}
 
         {/* Wine Hero Section */}
-        <WineHero
-          featuredWine={featuredWine}
-          onAddToCart={(wine, quantity) => {
-            // Los componentes ya manejan la funcionalidad del carrito
-            console.log(
-              "Vino agregado al carrito:",
-              wine.marca,
-              "Cantidad:",
-              quantity,
-            );
-          }}
-        />
+        <div data-aos="fade-up">
+          <WineHero
+            featuredWine={featuredWine}
+            onAddToCart={(wine, quantity) => {
+              // Los componentes ya manejan la funcionalidad del carrito
+              console.log(
+                "Vino agregado al carrito:",
+                wine.marca,
+                "Cantidad:",
+                quantity,
+              );
+            }}
+          />
+        </div>
 
         {/* Filter Bar Section */}
-        <div className="w-full max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8">
+        <div 
+          data-aos="fade-up"
+          data-aos-delay="200"
+          className="w-full max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8"
+        >
           <FilterBar />
         </div>
 
         {/* Wine List Section */}
         <div className="w-full max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8">
           {isLoading ? (
-            <div className="flex justify-center items-center py-20">
-              <div className="text-lg font-lora">Cargando vinos...</div>
-            </div>
+            <SkeletonTheme baseColor="#f3f3f3" highlightColor="#e0e0e0">
+              <div className="space-y-6">
+                {/* Skeleton para el contador de resultados */}
+                <div className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                  <Skeleton height={20} width={200} />
+                  <Skeleton height={20} width={150} />
+                </div>
+                
+                {/* Skeleton para la grilla de vinos */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 justify-items-center">
+                  {Array.from({ length: 12 }).map((_, index) => (
+                    <div key={index} className="w-full max-w-[280px]">
+                      {/* Imagen del vino */}
+                      <Skeleton height={350} className="rounded-lg mb-4" />
+                      {/* Título */}
+                      <Skeleton height={24} className="mb-2" />
+                      {/* Subtítulo */}
+                      <Skeleton height={20} width="80%" className="mb-3" />
+                      {/* Precio */}
+                      <Skeleton height={28} width="60%" className="mb-4" />
+                      {/* Botón */}
+                      <Skeleton height={40} className="rounded" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </SkeletonTheme>
           ) : error ? (
             <div className="flex justify-center items-center py-20">
               <div className="text-lg font-lora text-red-600">
@@ -218,7 +249,11 @@ export default function VinosPage() {
           ) : (
             <>
               {/* Results count and pagination info */}
-              <div className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+              <div 
+                data-aos="fade-up"
+                data-aos-delay="300"
+                className="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
+              >
                 <p className="text-sm md:text-base font-normal font-['Lora'] tracking-wide text-gray-600">
                   {sortedWines.length}{" "}
                   {sortedWines.length === 1
@@ -239,7 +274,11 @@ export default function VinosPage() {
               </div>
 
               {/* Wine Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 justify-items-center">
+              <div 
+                data-aos="fade-up"
+                data-aos-delay="400"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 justify-items-center"
+              >
                 {currentWines.map((wine) => (
                   <WineGridCard
                     key={wine.id}
@@ -259,7 +298,11 @@ export default function VinosPage() {
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-4 mt-8 mb-4">
+                <div 
+                  data-aos="fade-up"
+                  data-aos-delay="500"
+                  className="flex justify-center items-center gap-4 mt-8 mb-4"
+                >
                   <button
                     onClick={goToPreviousPage}
                     disabled={currentPage === 0}

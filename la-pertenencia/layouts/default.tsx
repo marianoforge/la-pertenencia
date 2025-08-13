@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { Head } from "./head";
 
@@ -12,6 +16,16 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
+  useEffect(() => {
+    AOS.init({
+      duration: 800, // Duración de la animación
+      easing: 'ease-out-cubic', // Easing suave
+      once: true, // Solo anima una vez
+      offset: 100, // Offset desde el viewport
+      delay: 0, // Sin delay por defecto
+    });
+  }, []);
+
   return (
     <div className="fluid-width mx-auto relative flex flex-col min-h-screen">
       <Head />
