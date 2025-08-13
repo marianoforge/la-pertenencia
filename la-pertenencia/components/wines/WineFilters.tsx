@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { WineFilters as WineFiltersType } from "@/types/wine";
 
@@ -190,19 +191,31 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
             </div>
             <DropdownIcon />
           </button>
-          {showSortDropdown && (
-            <div className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg">
-              {sortOptions.map((option) => (
-                <button
-                  key={option.value}
-                  className="w-full px-3 py-2 text-left text-sm md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
-                  onClick={() => handleSortChange(option.value)}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          )}
+          <AnimatePresence>
+            {showSortDropdown && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                transition={{ 
+                  duration: 0.2, 
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                  transformOrigin: "top"
+                }}
+                className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+              >
+                {sortOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className="w-full px-3 py-2 text-left text-sm md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
+                    onClick={() => handleSortChange(option.value)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
@@ -224,19 +237,31 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
               </div>
               <DropdownIcon />
             </button>
-            {showBodegaDropdown && (
-              <div className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg">
-                {bodegas.map((bodega) => (
-                  <button
-                    key={bodega.value}
-                    className="w-full px-3 py-2 text-left text-xs md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
-                    onClick={() => handleFilterChange("bodega", bodega.value)}
-                  >
-                    {bodega.label}
-                  </button>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {showBodegaDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                  animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                  transition={{ 
+                    duration: 0.2, 
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    transformOrigin: "top"
+                  }}
+                  className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+                >
+                  {bodegas.map((bodega) => (
+                    <button
+                      key={bodega.value}
+                      className="w-full px-3 py-2 text-left text-xs md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
+                      onClick={() => handleFilterChange("bodega", bodega.value)}
+                    >
+                      {bodega.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Marca */}
@@ -251,19 +276,31 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
               </div>
               <DropdownIcon />
             </button>
-            {showMarcaDropdown && (
-              <div className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg">
-                {marcas.map((marca) => (
-                  <button
-                    key={marca.value}
-                    className="w-full px-3 py-2 text-left text-xs md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
-                    onClick={() => handleFilterChange("marca", marca.value)}
-                  >
-                    {marca.label}
-                  </button>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {showMarcaDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                  animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                  transition={{ 
+                    duration: 0.2, 
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    transformOrigin: "top"
+                  }}
+                  className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+                >
+                  {marcas.map((marca) => (
+                    <button
+                      key={marca.value}
+                      className="w-full px-3 py-2 text-left text-xs md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
+                      onClick={() => handleFilterChange("marca", marca.value)}
+                    >
+                      {marca.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Tipo */}
@@ -277,19 +314,31 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
               </div>
               <DropdownIcon />
             </button>
-            {showTipoDropdown && (
-              <div className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg">
-                {tipos.map((tipo) => (
-                  <button
-                    key={tipo.value}
-                    className="w-full px-3 py-2 text-left text-xs md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
-                    onClick={() => handleFilterChange("tipo", tipo.value)}
-                  >
-                    {tipo.label}
-                  </button>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {showTipoDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                  animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                  transition={{ 
+                    duration: 0.2, 
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    transformOrigin: "top"
+                  }}
+                  className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+                >
+                  {tipos.map((tipo) => (
+                    <button
+                      key={tipo.value}
+                      className="w-full px-3 py-2 text-left text-xs md:text-base font-normal font-['Lora'] tracking-wide hover:bg-gray-50 transition-colors"
+                      onClick={() => handleFilterChange("tipo", tipo.value)}
+                    >
+                      {tipo.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Varietal */}
