@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import WineCard from "./wines/WineCard";
 import { Section, SectionHeader, Button } from "./ui";
@@ -53,8 +54,52 @@ const Recomendados = () => {
 
   if (isLoading) {
     return (
-      <Section variant="default">
-        <div className="text-center">Cargando vinos...</div>
+      <Section className="!px-0" id="recomendados" variant="default">
+        <div data-aos="fade-up">
+          <SectionHeader
+            subtitle="Elegidos con el Corazón"
+            title="vinos recomendados"
+          />
+        </div>
+
+        <SkeletonTheme baseColor="#f3f3f3" highlightColor="#e0e0e0">
+          <div className="w-full max-w-[1300px] px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden">
+            {/* Mobile: 1 wine skeleton */}
+            <div className="block sm:hidden">
+              <div className="self-stretch pt-5 pb-2.5 inline-flex justify-center items-center">
+                <div className="w-full max-w-[280px]">
+                  <Skeleton height={350} className="rounded-lg mb-4" />
+                  <Skeleton height={24} className="mb-2" />
+                  <Skeleton height={20} width="80%" className="mb-3" />
+                  <Skeleton height={28} width="60%" className="mb-4" />
+                  <Skeleton height={40} className="rounded" />
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop: 3 wine skeletons */}
+            <div className="hidden sm:flex">
+              <div className="pt-5 pb-2.5 flex gap-6">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <div key={index} className="w-full max-w-[280px]">
+                    <Skeleton height={350} className="rounded-lg mb-4" />
+                    <Skeleton height={24} className="mb-2" />
+                    <Skeleton height={20} width="80%" className="mb-3" />
+                    <Skeleton height={28} width="60%" className="mb-4" />
+                    <Skeleton height={40} className="rounded" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation dots skeleton */}
+            <div className="flex gap-2 mt-4">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <Skeleton key={index} circle height={12} width={12} />
+              ))}
+            </div>
+          </div>
+        </SkeletonTheme>
       </Section>
     );
   }
@@ -71,13 +116,19 @@ const Recomendados = () => {
 
   return (
     <Section className="!px-0" id="recomendados" variant="default">
-      <SectionHeader
-        subtitle="Elegidos con el Corazón"
-        title="vinos recomendados"
-      />
+      <div data-aos="fade-up">
+        <SectionHeader
+          subtitle="Elegidos con el Corazón"
+          title="vinos recomendados"
+        />
+      </div>
 
       {/* Carousel Container */}
-      <div className="w-full max-w-[1300px] px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden">
+      <div 
+        data-aos="fade-up"
+        data-aos-delay="200"
+        className="w-full max-w-[1300px] px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden"
+      >
         {/* Mobile: 1 wine */}
         <div className="block sm:hidden">
           <div className="self-stretch pt-5 pb-2.5 inline-flex justify-center items-center">

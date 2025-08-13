@@ -72,20 +72,24 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
   return (
     <div className="w-[1300px] h-[400px] relative bg-neutral-900 flex flex-col mx-auto overflow-hidden mt-6 rounded-lg">
       <div className="relative">
-        <Image
-          alt="Back Hero Inside"
-          className="absolute w-[620px] h-[361px] bg-neutral-900 rounded-sm top-5 left-8 z-10"
-          height={361}
-          src="/images/back2HeroVinos.png"
-          width={620}
-        />
-        <Image
-          alt="Botella Vinos"
-          className="absolute rounded-sm top-8 left-20 z-10"
-          height={340}
-          src="/images/botellaHeroVinos.png"
-          width={165}
-        />
+        <div data-aos="fade-up" data-aos-delay="100">
+          <Image
+            alt="Back Hero Inside"
+            className="absolute w-[620px] h-[361px] bg-neutral-900 rounded-sm top-5 left-8 z-10"
+            height={361}
+            src="/images/back2HeroVinos.png"
+            width={620}
+          />
+        </div>
+        <div data-aos="zoom-in" data-aos-delay="300">
+          <Image
+            alt="Botella Vinos"
+            className="absolute rounded-sm top-8 left-20 z-10"
+            height={340}
+            src="/images/botellaHeroVinos.png"
+            width={165}
+          />
+        </div>
 
         {/* Wine Information Card */}
         {/* <div className="absolute top-8 left-[280px] z-20 px-7 py-5 inline-flex flex-col justify-center items-center gap-1 bg-opacity-95 rounded-lg">
@@ -152,7 +156,11 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
             </div>
           </button>
         </div> */}
-        <div className="absolute top-16 left-[280px] z-20 self-stretch px-7 py-5 inline-flex flex-col justify-center items-center gap-1">
+        <div 
+          data-aos="fade-left"
+          data-aos-delay="500"
+          className="absolute top-16 left-[280px] z-20 self-stretch px-7 py-5 inline-flex flex-col justify-center items-center gap-1"
+        >
           <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-4">
             <div className="self-stretch text-center justify-start text-black text-xl font-semibold font-['Lora'] uppercase tracking-[5px]">
               la pertenencia

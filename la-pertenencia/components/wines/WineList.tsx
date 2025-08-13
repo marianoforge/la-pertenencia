@@ -5,6 +5,7 @@ import { Card } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Spinner } from "@heroui/spinner";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import { useWines, useWinesByCategory, useSearchWines } from "@/hooks/useWines";
 import { WineFilters } from "@/types/wine";
@@ -192,12 +193,19 @@ export default function WineList() {
 
       {/* Lista de vinos */}
       {isLoadingAny ? (
-        <div className="flex justify-center items-center py-12">
-          <div className="text-center">
-            <Spinner size="lg" />
-            <p className="mt-4 text-gray-600">Cargando vinos...</p>
+        <SkeletonTheme baseColor="#f3f3f3" highlightColor="#e0e0e0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <Card key={index} className="p-4">
+                <Skeleton height={200} className="rounded-lg mb-4" />
+                <Skeleton height={20} className="mb-2" />
+                <Skeleton height={16} width="80%" className="mb-3" />
+                <Skeleton height={24} width="60%" className="mb-4" />
+                <Skeleton height={36} className="rounded" />
+              </Card>
+            ))}
           </div>
-        </div>
+        </SkeletonTheme>
       ) : displayWines.length === 0 ? (
         <Card className="p-8 text-center">
           <h3 className="text-lg font-medium text-gray-900 mb-2">
