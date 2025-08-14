@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { Card } from "@heroui/card";
 
 import WineCard from "./wines/WineCard";
 import { Section, SectionHeader, Button } from "./ui";
@@ -52,57 +53,8 @@ const Recomendados = () => {
     setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
   };
 
-  if (isLoading) {
-    return (
-      <Section className="!px-0" id="recomendados" variant="default">
-        <div data-aos="fade-up">
-          <SectionHeader
-            subtitle="Elegidos con el Corazón"
-            title="vinos recomendados"
-          />
-        </div>
-
-        <SkeletonTheme baseColor="#f3f3f3" highlightColor="#e0e0e0">
-          <div className="w-full max-w-[1300px] px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden">
-            {/* Mobile: 1 wine skeleton */}
-            <div className="block sm:hidden">
-              <div className="self-stretch pt-5 pb-2.5 inline-flex justify-center items-center">
-                <div className="w-full max-w-[280px]">
-                  <Skeleton className="rounded-lg mb-4" height={350} />
-                  <Skeleton className="mb-2" height={24} />
-                  <Skeleton className="mb-3" height={20} width="80%" />
-                  <Skeleton className="mb-4" height={28} width="60%" />
-                  <Skeleton className="rounded" height={40} />
-                </div>
-              </div>
-            </div>
-
-            {/* Desktop: 3 wine skeletons */}
-            <div className="hidden sm:flex">
-              <div className="pt-5 pb-2.5 flex gap-6">
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <div key={index} className="w-full max-w-[280px]">
-                    <Skeleton className="rounded-lg mb-4" height={350} />
-                    <Skeleton className="mb-2" height={24} />
-                    <Skeleton className="mb-3" height={20} width="80%" />
-                    <Skeleton className="mb-4" height={28} width="60%" />
-                    <Skeleton className="rounded" height={40} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Navigation dots skeleton */}
-            <div className="flex gap-2 mt-4">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <Skeleton key={index} circle height={12} width={12} />
-              ))}
-            </div>
-          </div>
-        </SkeletonTheme>
-      </Section>
-    );
-  }
+  // Mostrar skeleton solo mientras está cargando
+  const shouldShowSkeleton = isLoading;
 
   if (error) {
     return (
@@ -123,165 +75,204 @@ const Recomendados = () => {
         />
       </div>
 
-      {/* Carousel Container */}
-      <div
-        className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
-        {/* Mobile: 1 wine */}
-        <div className="block sm:hidden">
-          <div className="self-stretch pt-5 pb-2.5 inline-flex justify-center items-center">
-            {displayWines.length > 0 && displayWines[currentPage] && (
-              <WineCard
-                index={currentPage}
-                wine={displayWines[currentPage]}
-                onAddToCart={handleAddToCart}
-              />
+      {/* Skeleton Section - Positioned correctly */}
+      {shouldShowSkeleton ? (
+        <SkeletonTheme baseColor="#f3f3f3" highlightColor="#e0e0e0">
+          <div
+            className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            {/* Desktop: 3 wine skeletons */}
+            <SkeletonTheme baseColor="#f3f3f3" highlightColor="#e0e0e0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <Card key={index} className="p-4">
+                    <Skeleton className="rounded-lg mb-4" height={200} />
+                    <Skeleton height={16} width="400px" />
+                    <Skeleton className="rounded" height={36} />
+                  </Card>
+                ))}
+              </div>
+            </SkeletonTheme>
+          </div>
+
+          {/* Description skeleton */}
+          <div className="w-full max-w-[1300px] pt-8 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-2">
+            <div className="text-center max-w-[600px]">
+              <Skeleton className="mb-2" height={20} />
+              <Skeleton className="mb-2" height={20} />
+              <Skeleton height={20} width="60%" />
+            </div>
+            <Skeleton className="rounded" height={40} width={200} />
+          </div>
+        </SkeletonTheme>
+      ) : (
+        <>
+          {/* Carousel Container */}
+          <div
+            className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            {/* Mobile: 1 wine */}
+            <div className="block sm:hidden">
+              <div className="self-stretch pt-5 pb-2.5 inline-flex justify-center items-center">
+                {displayWines.length > 0 && displayWines[currentPage] && (
+                  <WineCard
+                    index={currentPage}
+                    wine={displayWines[currentPage]}
+                    onAddToCart={handleAddToCart}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Tablet: 1 wine */}
+            <div className="hidden sm:block md:hidden lg:hidden px-4 sm:px-8">
+              <div className="pt-5 pb-2.5">
+                <div className="grid grid-cols-1 gap-6 md:gap-8">
+                  {displayWines
+                    .slice(currentPage * 1, currentPage * 1 + 1)
+                    .map((wine, index) => (
+                      <div key={wine.id} className="flex justify-center">
+                        <WineCard
+                          index={currentPage * 1 + index}
+                          wine={wine}
+                          onAddToCart={handleAddToCart}
+                        />
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Laptop: 2 wines */}
+            <div className="hidden md:block lg:hidden px-4 md:px-0">
+              <div className="pt-5 pb-2.5">
+                <div className="grid grid-cols-2 gap-6 md:gap-8">
+                  {displayWines
+                    .slice(currentPage * 2, currentPage * 2 + 2)
+                    .map((wine, index) => (
+                      <div key={wine.id} className="flex justify-center">
+                        <WineCard
+                          index={currentPage * 2 + index}
+                          wine={wine}
+                          onAddToCart={handleAddToCart}
+                        />
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop: 3 wines */}
+            <div className=" w-full hidden lg:block px-4 lg:px-0">
+              <div className="pt-5 pb-2.5">
+                <div className="grid grid-cols-3 gap-12 xl:gap-2">
+                  {displayWines
+                    .slice(currentPage * 3, currentPage * 3 + 3)
+                    .map((wine, index) => (
+                      <div key={wine.id} className="flex justify-center">
+                        <WineCard
+                          index={currentPage * 3 + index}
+                          wine={wine}
+                          onAddToCart={handleAddToCart}
+                        />
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Controles de navegación - Solo mostrar si hay más de 1 página */}
+            {totalPages > 1 && (
+              <div className="flex flex-col items-center gap-4 mt-4">
+                {/* Navegación con flechas y números */}
+                <div className="flex justify-center items-center gap-4">
+                  <button
+                    aria-label="Previous page"
+                    className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
+                    disabled={currentPage === 0}
+                    onClick={goToPreviousPage}
+                  >
+                    <svg
+                      fill="none"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15 18L9 12L15 6"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </button>
+
+                  <div className="text-neutral-900 text-sm font-medium font-['Lora'] min-w-[40px] text-center">
+                    {currentPage + 1} / {totalPages}
+                  </div>
+
+                  <button
+                    aria-label="Next page"
+                    className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
+                    disabled={currentPage === totalPages - 1}
+                    onClick={goToNextPage}
+                  >
+                    <svg
+                      fill="none"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M9 18L15 12L9 6"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             )}
           </div>
-        </div>
+        </>
+      )}
 
-        {/* Tablet: 1 wine */}
-        <div className="hidden sm:block md:hidden lg:hidden px-4 sm:px-8">
-          <div className="pt-5 pb-2.5">
-            <div className="grid grid-cols-1 gap-6 md:gap-8">
-              {displayWines
-                .slice(currentPage * 1, currentPage * 1 + 1)
-                .map((wine, index) => (
-                  <div key={wine.id} className="flex justify-center">
-                    <WineCard
-                      index={currentPage * 1 + index}
-                      wine={wine}
-                      onAddToCart={handleAddToCart}
-                    />
-                  </div>
-                ))}
-            </div>
+      {/* Description and button section - Solo mostrar cuando NO hay skeleton */}
+      {!shouldShowSkeleton && (
+        <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-2">
+          <div className="text-center text-neutral-900 text-lg font-normal font-['Lora'] italic leading-tight tracking-wide">
+            Descubrimos etiquetas únicas que quizás todavía no hayas probado.
+            <br />
+            Nuestro deseo es simple: que cada vino te sorprenda, te emocione y
+            te revele algo distinto. Todo comienza al abrir una botella.
           </div>
-        </div>
-
-        {/* Laptop: 2 wines */}
-        <div className="hidden md:block lg:hidden px-4 md:px-0">
-          <div className="pt-5 pb-2.5">
-            <div className="grid grid-cols-2 gap-6 md:gap-8">
-              {displayWines
-                .slice(currentPage * 2, currentPage * 2 + 2)
-                .map((wine, index) => (
-                  <div key={wine.id} className="flex justify-center">
-                    <WineCard
-                      index={currentPage * 2 + index}
-                      wine={wine}
-                      onAddToCart={handleAddToCart}
-                    />
-                  </div>
-                ))}
-            </div>
+          {/* Button for desktop - centered */}
+          <div className="min-[481px]:block hidden">
+            <Link href="/vinos">
+              <Button size="sm" variant="primary">
+                catálogo completo
+              </Button>
+            </Link>
           </div>
-        </div>
-
-        {/* Desktop: 3 wines */}
-        <div className=" w-full hidden lg:block px-4 lg:px-0">
-          <div className="pt-5 pb-2.5">
-            <div className="grid grid-cols-3 gap-12 xl:gap-2">
-              {displayWines
-                .slice(currentPage * 3, currentPage * 3 + 3)
-                .map((wine, index) => (
-                  <div key={wine.id} className="flex justify-center">
-                    <WineCard
-                      index={currentPage * 3 + index}
-                      wine={wine}
-                      onAddToCart={handleAddToCart}
-                    />
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Controles de navegación - Solo mostrar si hay más de 1 página */}
-      {totalPages > 1 && (
-        <div className="flex flex-col items-center gap-4 mt-4">
-          {/* Navegación con flechas y números */}
-          <div className="flex justify-center items-center gap-4">
-            <button
-              aria-label="Previous page"
-              className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
-              disabled={currentPage === 0}
-              onClick={goToPreviousPage}
-            >
-              <svg
-                fill="none"
-                height="20"
-                viewBox="0 0 24 24"
-                width="20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15 18L9 12L15 6"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                />
-              </svg>
-            </button>
-
-            <div className="text-neutral-900 text-sm font-medium font-['Lora'] min-w-[40px] text-center">
-              {currentPage + 1} / {totalPages}
-            </div>
-
-            <button
-              aria-label="Next page"
-              className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors disabled:text-neutral-400 disabled:cursor-not-allowed"
-              disabled={currentPage === totalPages - 1}
-              onClick={goToNextPage}
-            >
-              <svg
-                fill="none"
-                height="20"
-                viewBox="0 0 24 24"
-                width="20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                />
-              </svg>
-            </button>
+          {/* Button for mobile - full width outside centered container */}
+          <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
+            <Link className="block w-full" href="/vinos">
+              <Button size="sm" variant="primary">
+                catálogo completo
+              </Button>
+            </Link>
           </div>
         </div>
       )}
-
-      <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-2">
-        <div className="text-center text-neutral-900 text-lg font-normal font-['Lora'] italic leading-tight tracking-wide">
-          Descubrimos etiquetas únicas que quizás todavía no hayas probado.
-          <br />
-          Nuestro deseo es simple: que cada vino te sorprenda, te emocione y te
-          revele algo distinto. Todo comienza al abrir una botella.
-        </div>
-        {/* Button for desktop - centered */}
-        <div className="min-[481px]:block hidden">
-          <Link href="/vinos">
-            <Button size="sm" variant="primary">
-              catálogo completo
-            </Button>
-          </Link>
-        </div>
-        {/* Button for mobile - full width outside centered container */}
-        <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
-          <Link className="block w-full" href="/vinos">
-            <Button size="sm" variant="primary">
-              catálogo completo
-            </Button>
-          </Link>
-        </div>
-      </div>
     </Section>
   );
 };

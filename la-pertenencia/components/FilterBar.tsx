@@ -148,21 +148,13 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
   );
 
   const FilterIcon = () => (
-    <svg
-      fill="none"
-      height="20"
-      viewBox="0 0 24 24"
-      width="20"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 6H20M7 12H17M10 18H14"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
+    <img 
+      src="/images/icon-filtros.svg" 
+      alt="Filtrar" 
+      width={20} 
+      height={20}
+      className="w-5 h-5"
+    />
   );
 
   return (
