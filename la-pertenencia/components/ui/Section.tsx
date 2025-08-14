@@ -33,8 +33,8 @@ const Section: React.FC<SectionProps> = ({
         };
       case "gray":
         return {
-          paddingLeft: "clamp(2rem, 6vw, 7rem)",
-          paddingRight: "clamp(2rem, 6vw, 7rem)",
+          paddingLeft: "clamp(1rem, 4vw, 4rem)",
+          paddingRight: "clamp(1rem, 4vw, 4rem)",
           paddingTop: "clamp(3rem, 6vw, 6rem)",
           paddingBottom: "clamp(3rem, 6vw, 6rem)",
         };

@@ -4,11 +4,11 @@ import Image from "next/image";
 const Hero = () => {
   return (
     <div
-      className="w-full relative bg-white inline-flex flex-col justify-start items-center gap-2.5 fluid-hero-container"
+      className="w-full relative bg-white inline-flex flex-col justify-start items-center gap-2.5 fluid-hero-container max-[480px]:!px-0"
       id="hero"
       style={{
-        paddingLeft: "clamp(0.625rem, 2.5vw, 2.5rem)",
-        paddingRight: "clamp(0.625rem, 2.5vw, 2.5rem)",
+        paddingLeft: "clamp(1rem, 2.5vw, 2.5rem)",
+        paddingRight: "clamp(1rem, 2.5vw, 2.5rem)",
         paddingTop: "clamp(2.5rem, 8vw, 5rem)",
         paddingBottom: "clamp(2.5rem, 8vw, 0rem)",
       }}
@@ -28,8 +28,8 @@ const Hero = () => {
       <div
         className="relative z-10 w-full flex-col justify-start items-center fluid-hero-mobile"
         style={{
-          paddingLeft: "clamp(0.75rem, 3vw, 1.5rem)",
-          paddingRight: "clamp(0.75rem, 3vw, 1.5rem)",
+          paddingLeft: "clamp(0rem, 3vw, 1.5rem)",
+          paddingRight: "clamp(0rem, 3vw, 1.5rem)",
           gap: "clamp(1.25rem, 4vw, 2rem)",
         }}
       >

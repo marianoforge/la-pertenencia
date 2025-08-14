@@ -136,6 +136,22 @@ body {
     padding-right: clamp(1rem, 4vw, 4rem);
   }
   
+  /* Mobile 16px margins override */
+  @media (max-width: 480px) {
+    .fluid-container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  /* Extra small mobile 12px margins override */
+  @media (max-width: 380px) {
+    .fluid-container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+  }
+  
   .fluid-hero-container {
     width: min(calc(100% - 2rem), 1300px);
     margin-left: auto;
@@ -147,6 +163,22 @@ body {
   .fluid-navbar-padding {
     padding-left: clamp(1rem, 4vw, 4rem);
     padding-right: clamp(1rem, 4vw, 4rem);
+  }
+  
+  /* Mobile navbar padding override */
+  @media (max-width: 480px) {
+    .fluid-navbar-padding {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  /* Extra small mobile navbar padding override */
+  @media (max-width: 380px) {
+    .fluid-navbar-padding {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
   }
   
   .fluid-text-lg {

@@ -68,11 +68,11 @@ const Recomendados = () => {
             <div className="block sm:hidden">
               <div className="self-stretch pt-5 pb-2.5 inline-flex justify-center items-center">
                 <div className="w-full max-w-[280px]">
-                  <Skeleton height={350} className="rounded-lg mb-4" />
-                  <Skeleton height={24} className="mb-2" />
-                  <Skeleton height={20} width="80%" className="mb-3" />
-                  <Skeleton height={28} width="60%" className="mb-4" />
-                  <Skeleton height={40} className="rounded" />
+                  <Skeleton className="rounded-lg mb-4" height={350} />
+                  <Skeleton className="mb-2" height={24} />
+                  <Skeleton className="mb-3" height={20} width="80%" />
+                  <Skeleton className="mb-4" height={28} width="60%" />
+                  <Skeleton className="rounded" height={40} />
                 </div>
               </div>
             </div>
@@ -82,11 +82,11 @@ const Recomendados = () => {
               <div className="pt-5 pb-2.5 flex gap-6">
                 {Array.from({ length: 3 }).map((_, index) => (
                   <div key={index} className="w-full max-w-[280px]">
-                    <Skeleton height={350} className="rounded-lg mb-4" />
-                    <Skeleton height={24} className="mb-2" />
-                    <Skeleton height={20} width="80%" className="mb-3" />
-                    <Skeleton height={28} width="60%" className="mb-4" />
-                    <Skeleton height={40} className="rounded" />
+                    <Skeleton className="rounded-lg mb-4" height={350} />
+                    <Skeleton className="mb-2" height={24} />
+                    <Skeleton className="mb-3" height={20} width="80%" />
+                    <Skeleton className="mb-4" height={28} width="60%" />
+                    <Skeleton className="rounded" height={40} />
                   </div>
                 ))}
               </div>
@@ -124,10 +124,10 @@ const Recomendados = () => {
       </div>
 
       {/* Carousel Container */}
-      <div 
+      <div
+        className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden"
         data-aos="fade-up"
         data-aos-delay="200"
-        className="w-full max-w-[1300px] px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden"
       >
         {/* Mobile: 1 wine */}
         <div className="block sm:hidden">
@@ -265,11 +265,22 @@ const Recomendados = () => {
           Nuestro deseo es simple: que cada vino te sorprenda, te emocione y te
           revele algo distinto. Todo comienza al abrir una botella.
         </div>
-        <Link href="/vinos">
-          <Button size="sm" variant="primary">
-            catálogo completo
-          </Button>
-        </Link>
+        {/* Button for desktop - centered */}
+        <div className="min-[481px]:block hidden">
+          <Link href="/vinos">
+            <Button size="sm" variant="primary">
+              catálogo completo
+            </Button>
+          </Link>
+        </div>
+        {/* Button for mobile - full width outside centered container */}
+        <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
+          <Link className="block w-full" href="/vinos">
+            <Button size="sm" variant="primary">
+              catálogo completo
+            </Button>
+          </Link>
+        </div>
       </div>
     </Section>
   );

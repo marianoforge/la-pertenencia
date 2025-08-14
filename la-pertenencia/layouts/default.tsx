@@ -19,7 +19,7 @@ export default function DefaultLayout({
   useEffect(() => {
     AOS.init({
       duration: 800, // Duración de la animación
-      easing: 'ease-out-cubic', // Easing suave
+      easing: "ease-out-cubic", // Easing suave
       once: true, // Solo anima una vez
       offset: 100, // Offset desde el viewport
       delay: 0, // Sin delay por defecto
@@ -76,15 +76,24 @@ export default function DefaultLayout({
                   Ayuda
                 </div>
                 <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  <Link href="/preguntas-frecuentes" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/preguntas-frecuentes"
+                  >
                     Preguntas Frecuentes
                   </Link>
                   <br />
-                  <Link href="/terminos-y-condiciones" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/terminos-y-condiciones"
+                  >
                     Términos y Condiciones
                   </Link>
                   <br />
-                  <Link href="/politica-de-privacidad" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/politica-de-privacidad"
+                  >
                     Política de Privacidad
                   </Link>
                 </div>
@@ -184,7 +193,7 @@ export default function DefaultLayout({
 
           {/* Footer Layout - 1000px down to mobile */}
           <div
-            className="fluid-menu-show hide-at-fluid-breakpoint w-full flex-col"
+            className="fluid-menu-show hide-at-fluid-breakpoint w-full flex-col max-[380px]:px-3 max-[480px]:px-4"
             style={{
               maxWidth: "min(100%, 1920px)",
               paddingLeft: "clamp(1rem, 4vw, 4rem)",
@@ -227,15 +236,24 @@ export default function DefaultLayout({
                   Ayuda
                 </div>
                 <div className="text-black text-xs sm:text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  <Link href="/preguntas-frecuentes" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/preguntas-frecuentes"
+                  >
                     Preguntas Frecuentes
                   </Link>
                   <br />
-                  <Link href="/terminos-y-condiciones" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/terminos-y-condiciones"
+                  >
                     Términos y Condiciones
                   </Link>
                   <br />
-                  <Link href="/politica-de-privacidad" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/politica-de-privacidad"
+                  >
                     Política de Privacidad
                   </Link>
                 </div>

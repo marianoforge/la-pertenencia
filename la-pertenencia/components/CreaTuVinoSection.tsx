@@ -7,9 +7,9 @@ export default function CreaTuVinoSection() {
     <>
       {/* Hero Section with Background Image */}
       <Section className="!p-0 !mt-10" variant="default">
-        <div 
-          data-aos="fade-up"
+        <div
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
+          data-aos="fade-up"
         >
           <img
             alt="Imagina tu vino - Background"
@@ -51,10 +51,10 @@ export default function CreaTuVinoSection() {
 
         <div className="w-full max-w-[1300px] py-5 flex flex-col lg:flex-row justify-center items-start gap-10 italic">
           {/* Left Content */}
-          <div 
+          <div
+            className="flex-1 w-full flex flex-col justify-start items-start gap-2.5"
             data-aos="fade-right"
             data-aos-delay="200"
-            className="flex-1 w-full flex flex-col justify-start items-start gap-2.5"
           >
             <div className="w-full text-yellow-700 text-lg md:text-xl font-medium font-['Lora'] uppercase tracking-[3px] md:tracking-[5px]">
               Cómo funciona:
@@ -93,18 +93,19 @@ export default function CreaTuVinoSection() {
               <li>Proyectos personales con alma</li>
             </ul>
 
-            <button className="px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 flex justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors">
-              <div className="text-neutral-900 text-sm md:text-base font-medium font-['Lora'] uppercase tracking-[6px] md:tracking-[8px]">
+            {/* Button for desktop - inside left content */}
+            <button className="min-[481px]:flex hidden max-[380px]:px-4 px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors">
+              <div className="text-neutral-900 text-sm md:text-base font-medium font-['Lora'] uppercase max-[380px]:tracking-[3px] tracking-[6px] md:tracking-[8px]">
                 Quiero crear mi vino
               </div>
             </button>
           </div>
 
           {/* Right Image */}
-          <div 
+          <div
+            className="flex flex-col justify-center items-start gap-2.5 w-full lg:w-auto italic"
             data-aos="fade-left"
             data-aos-delay="400"
-            className="flex flex-col justify-center items-start gap-2.5 w-full lg:w-auto italic"
           >
             <div className="w-full max-w-[460px] h-[400px] md:h-[500px] lg:h-[582px] relative rounded-lg overflow-hidden mx-auto lg:mx-0">
               <img
@@ -124,6 +125,13 @@ export default function CreaTuVinoSection() {
             </div>
           </div>
         </div>
+
+        {/* Button for mobile - outside flex container to be full width */}
+        <button className="max-[480px]:flex hidden w-full max-[380px]:px-4 px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors">
+          <div className="text-neutral-900 text-sm md:text-base font-medium font-['Lora'] uppercase max-[380px]:tracking-[3px] tracking-[6px] md:tracking-[8px]">
+            Quiero crear mi vino
+          </div>
+        </button>
       </Section>
     </>
   );

@@ -66,10 +66,10 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
   );
 
   return (
-    <div className="self-stretch py-5 rounded-sm border-t border-neutral-400 flex justify-between items-center">
+    <div className="self-stretch py-5 rounded-sm border-t border-neutral-400 max-[480px]:flex-col max-[480px]:gap-4 flex justify-between items-center">
       {/* Left side - Filter button */}
       <button
-        className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors"
+        className="max-[480px]:w-full flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors"
         onClick={toggleFilters}
       >
         <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
@@ -79,14 +79,14 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
       </button>
 
       {/* Right side - Sort dropdown */}
-      <div className="flex items-center gap-3">
+      <div className="max-[480px]:w-full flex items-center gap-3">
         <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
           Ordenar por:
         </span>
 
-        <div className="relative">
+        <div className="max-[480px]:flex-1 relative">
           <button
-            className="flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors min-w-[180px]"
+            className="max-[480px]:w-full flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors min-w-[180px]"
             onClick={() => setShowSortDropdown(!showSortDropdown)}
           >
             <span className="text-neutral-900 font-['Lora'] text-sm flex-1">

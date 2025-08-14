@@ -9,7 +9,7 @@ const menuItems = [
   { name: "INICIO", href: "/" },
   { name: "VINOS", href: "/vinos" },
   { name: "CREA TU VINO", href: "/crea-tu-vino" },
-  { name: "REGALOS", href: "/#regalos" },
+  // { name: "REGALOS", href: "/#regalos" },
   { name: "CATAS", href: "/catas" },
   { name: "MEMBRESÍAS", href: "/membresias" },
   { name: "CONTACTO", href: "#contacto" },
@@ -75,12 +75,12 @@ export const Navbar = () => {
             <motion.button
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               className="fluid-menu-show w-6 h-6 hover:opacity-75 transition-opacity"
+              transition={{ duration: 0.1 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => {
                 console.log("Menu clicked, current state:", isMenuOpen);
                 setIsMenuOpen(!isMenuOpen);
               }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.1 }}
             >
               <motion.div
                 animate={{ rotate: isMenuOpen ? 90 : 0 }}
@@ -103,33 +103,33 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ 
-              duration: 0.3, 
-              ease: [0.25, 0.46, 0.45, 0.94],
-              opacity: { duration: 0.2 }
-            }}
             className="absolute top-full left-0 right-0 bg-stone-900 border-t border-stone-700 lg:hidden z-40 overflow-hidden"
+            exit={{ height: 0, opacity: 0 }}
+            initial={{ height: 0, opacity: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94],
+              opacity: { duration: 0.2 },
+            }}
           >
             <motion.div
-              initial={{ y: -20 }}
               animate={{ y: 0 }}
-              exit={{ y: -20 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="flex flex-col py-4"
+              exit={{ y: -20 }}
+              initial={{ y: -20 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               {menuItems.map((item, index) => (
                 <motion.div
                   key={item.name}
-                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
-                  transition={{ 
+                  initial={{ opacity: 0, x: -20 }}
+                  transition={{
                     duration: 0.3,
                     delay: index * 0.05,
-                    ease: [0.25, 0.46, 0.45, 0.94]
+                    ease: [0.25, 0.46, 0.45, 0.94],
                   }}
                 >
                   <NextLink

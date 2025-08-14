@@ -63,7 +63,7 @@ const Contacto = () => {
       <div className="md:h-[800px] absolute inset-0 bg-gradient-to-l from-neutral-900 via-neutral-900/85 to-neutral-900" />
 
       {/* Form Container */}
-      <div className="relative z-10 w-full px-4 flex justify-center items-center">
+      <div className="relative z-10 w-full max-[380px]:px-0 max-[480px]:px-0 px-4 flex justify-center items-center">
         <div className="w-full max-w-96 sm:max-w-2xl px-4 sm:px-8 flex flex-col justify-start items-center gap-7 overflow-hidden rounded-lg">
           {/* Header */}
           <div className="self-stretch py-5 flex flex-col justify-start items-center gap-2.5">
