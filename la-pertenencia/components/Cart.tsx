@@ -1,9 +1,11 @@
-import { Button } from "@heroui/button";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 import { useCartStore } from "../stores/useCartStore";
 import { useMercadoPago } from "../hooks/useMercadoPago";
+
+import { Button } from "./ui/Button";
 
 const Cart = () => {
   const {
@@ -65,120 +67,186 @@ const Cart = () => {
         <>
           {/* Backdrop */}
           <motion.button
-            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
             aria-label="Cerrar carrito"
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={toggleCart}
           />
 
           {/* Cart Panel */}
           <motion.div
-            initial={{ x: "100%" }}
             animate={{ x: 0 }}
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-xl z-50 flex flex-col font-['Lora']"
             exit={{ x: "100%" }}
+            initial={{ x: "100%" }}
             transition={{
               duration: 0.3,
               ease: [0.25, 0.46, 0.45, 0.94], // easeOutCubic
             }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-white dark:bg-gray-900 shadow-xl z-50 flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-lg font-semibold">
-                Carrito ({totalItems} {totalItems === 1 ? "item" : "items"})
+            <div className="flex items-center justify-between p-6 border-b border-neutral-200">
+              <h2 className="text-xl font-semibold font-['Lora'] text-neutral-900 uppercase tracking-[3px]">
+                Carrito ({totalItems})
               </h2>
-              <Button
-                className="text-gray-500 hover:text-gray-700"
-                size="sm"
-                variant="light"
+              <button
+                className="w-8 h-8 flex items-center justify-center text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-full transition-colors"
                 onClick={toggleCart}
               >
-                ✕
-              </Button>
+                <svg
+                  fill="none"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 4L4 12M4 4L12 12"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </button>
             </div>
 
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-4">
+            <div className="flex-1 overflow-y-auto p-6">
               {items.length === 0 ? (
-                <div className="text-center py-12">
-                  <div className="text-6xl mb-4">🛒</div>
-                  <h3 className="text-lg font-medium mb-2">
+                <div className="text-center py-16">
+                  <div className="w-20 h-20 mx-auto mb-6 bg-neutral-100 rounded-full flex items-center justify-center">
+                    <svg
+                      fill="none"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      width="32"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3 3H5L5.4 5M7 13H17L21 5H5.4M7 13L5.4 5M7 13L4.7 15.3C4.3 15.7 4.6 16.5 5.1 16.5H17M17 13V16.5M9 19.5C9.8 19.5 10.5 20.2 10.5 21S9.8 22.5 9 22.5 7.5 21.8 7.5 21 8.2 19.5 9 19.5ZM20 19.5C20.8 19.5 21.5 20.2 21.5 21S20.8 22.5 20 22.5 18.5 21.8 18.5 21 19.2 19.5 20 19.5Z"
+                        stroke="#737373"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold font-['Lora'] text-neutral-900 mb-2 uppercase tracking-[2px]">
                     Tu carrito está vacío
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <p className="text-neutral-600 font-['Lora'] tracking-wide">
                     Agrega algunos vinos para comenzar
                   </p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {items.map((item) => (
                     <div
                       key={item.wine.id}
-                      className="flex gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                      className="flex gap-4 p-4 bg-neutral-50 rounded-sm border border-neutral-200"
                     >
                       {/* Wine Image */}
-                      <div className="w-16 h-16 bg-gradient-to-br from-purple-900 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <span className="text-2xl opacity-70">🍷</span>
+                      <div className="w-20 h-20 bg-neutral-900 rounded-sm flex items-center justify-center flex-shrink-0 relative overflow-hidden">
+                        {item.wine.image ? (
+                          <Image
+                            alt={item.wine.marca}
+                            className="w-full h-full object-cover"
+                            height={80}
+                            src={item.wine.image}
+                            width={80}
+                          />
+                        ) : (
+                          <svg
+                            fill="none"
+                            height="32"
+                            viewBox="0 0 24 24"
+                            width="32"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 2C12 2 8 6 8 12C8 16 10 20 12 22C14 20 16 16 16 12C16 6 12 2 12 2Z"
+                              stroke="#D4AF37"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                            />
+                            <path
+                              d="M12 8V16"
+                              stroke="#D4AF37"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                            />
+                          </svg>
+                        )}
                       </div>
 
                       {/* Wine Info */}
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-sm mb-1 truncate">
+                        <h4 className="font-semibold text-sm font-['Lora'] text-neutral-900 mb-1 truncate uppercase tracking-[1px]">
                           {item.wine.marca}
                         </h4>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                        <p className="text-xs text-neutral-600 font-['Lora'] mb-3 tracking-wide">
                           {item.wine.winery} • {item.wine.vintage}
                         </p>
 
                         {/* Quantity Controls */}
-                        <div className="flex items-center gap-2 mb-2">
-                          <Button
-                            className="w-6 h-6 min-w-6 p-0 text-xs"
+                        <div className="flex items-center gap-3 mb-3">
+                          <button
+                            className="w-7 h-7 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex items-center justify-center text-amber-300 text-sm font-bold font-['Lora'] hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={item.quantity <= 1}
-                            size="sm"
-                            variant="bordered"
                             onClick={() =>
                               updateQuantity(item.wine.id, item.quantity - 1)
                             }
                           >
                             -
-                          </Button>
-                          <span className="text-sm font-medium w-8 text-center">
+                          </button>
+                          <span className="text-sm font-medium font-['Lora'] text-neutral-900 w-8 text-center tracking-wide">
                             {item.quantity}
                           </span>
-                          <Button
-                            className="w-6 h-6 min-w-6 p-0 text-xs"
+                          <button
+                            className="w-7 h-7 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex items-center justify-center text-amber-300 text-sm font-bold font-['Lora'] hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={item.quantity >= item.wine.stock}
-                            size="sm"
-                            variant="bordered"
                             onClick={() =>
                               updateQuantity(item.wine.id, item.quantity + 1)
                             }
                           >
                             +
-                          </Button>
+                          </button>
                         </div>
 
-                        {/* Price */}
+                        {/* Price and Remove */}
                         <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">
+                          <span className="text-sm font-semibold font-['Lora'] text-neutral-900 tracking-wide">
                             $
                             {(
                               item.priceAtTimeOfAdd * item.quantity
                             ).toLocaleString()}
                           </span>
-                          <Button
-                            className="text-xs p-1 h-auto min-w-0"
-                            color="danger"
-                            size="sm"
-                            variant="light"
+                          <button
+                            className="text-neutral-500 hover:text-red-600 transition-colors p-1"
                             onClick={() => removeItem(item.wine.id)}
                           >
-                            🗑️
-                          </Button>
+                            <svg
+                              fill="none"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M3 6H5H21M8 6V4C8 3.4 8.4 3 9 3H15C15.6 3 16 3.4 16 4V6M19 6V20C19 20.6 18.6 21 18 21H6C5.4 21 5 20.6 5 20V6H19ZM10 11V17M14 11V17"
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                              />
+                            </svg>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -189,61 +257,60 @@ const Cart = () => {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="border-t border-gray-200 dark:border-gray-700 p-4 space-y-4">
+              <div className="border-t border-neutral-200 p-6 space-y-6">
                 {/* Total */}
-                <div className="flex items-center justify-between text-lg font-semibold">
-                  <span>Total:</span>
-                  <span className="text-purple-600">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-semibold font-['Lora'] text-neutral-900 uppercase tracking-[2px]">
+                    Total:
+                  </span>
+                  <span className="text-xl font-bold font-['Lora'] text-yellow-700 tracking-wide">
                     ${totalAmount.toLocaleString()}
                   </span>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Button
-                    className="w-full"
-                    color="primary"
+                    className="w-full !tracking-[3px]"
                     disabled={isCheckingOut || mpLoading}
-                    isLoading={isCheckingOut || mpLoading}
-                    size="lg"
+                    variant="primary"
                     onClick={handleMercadoPagoCheckout}
                   >
                     {isCheckingOut || mpLoading
-                      ? "Procesando..."
-                      : "Pagar con Mercado Pago"}
+                      ? "PROCESANDO..."
+                      : "PAGAR CON MERCADO PAGO"}
                   </Button>
 
                   <Button
-                    className="w-full"
-                    color="secondary"
+                    className="w-full !tracking-[3px] bg-neutral-100 hover:bg-neutral-200"
                     disabled={isCheckingOut}
-                    isLoading={isCheckingOut && !mpLoading}
-                    variant="bordered"
+                    variant="outline"
                     onClick={handleLegacyCheckout}
                   >
-                    Pago Tradicional
+                    PAGO TRADICIONAL
                   </Button>
 
                   <Button
-                    className="w-full"
-                    color="danger"
+                    className="w-full hover:bg-transparent text-sm font-medium font-['Lora'] text-neutral-600 hover:text-red-600 transition-colors py-2 uppercase tracking-[3px] disabled:opacity-50"
                     disabled={isCheckingOut}
-                    variant="light"
+                    variant="outline"
                     onClick={clearCart}
                   >
-                    Vaciar Carrito
+                    VACIAR CARRITO
                   </Button>
                 </div>
 
                 {/* Error Message */}
                 {mpError && (
-                  <div className="mt-2 p-2 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-xs rounded">
-                    {mpError}
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-sm">
+                    <p className="text-red-700 text-xs font-['Lora'] tracking-wide">
+                      {mpError}
+                    </p>
                   </div>
                 )}
 
                 {/* Info */}
-                <p className="text-xs text-center text-gray-600 dark:text-gray-400">
+                <p className="text-xs text-center text-neutral-600 font-['Lora'] tracking-wide leading-relaxed">
                   Los precios incluyen IVA. Te contactaremos para coordinar la
                   entrega.
                 </p>
