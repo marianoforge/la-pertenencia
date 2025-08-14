@@ -323,19 +323,19 @@ const FilterPanel = () => {
             {/* Footer Actions */}
             <div className="p-5 border-t border-neutral-400 flex gap-3">
               <button
-                className="flex-1 h-10 px-4 py-2 rounded-sm border border-neutral-400 flex justify-center items-center hover:bg-neutral-100 transition-colors"
-                onClick={handleClearFilters}
-              >
-                <span className="text-neutral-900 text-sm font-medium font-['Lora'] uppercase tracking-[3px]">
-                  Descartar
-                </span>
-              </button>
-              <button
                 className="flex-1 h-10 px-4 py-2 bg-neutral-900 rounded-sm flex justify-center items-center hover:bg-neutral-800 transition-colors"
                 onClick={closeFilters}
               >
                 <span className="text-amber-300 text-sm font-medium font-['Lora'] uppercase tracking-[3px]">
                   Aplicar
+                </span>
+              </button>
+              <button
+                className="flex-1 h-10 px-4 py-2 rounded-sm border border-neutral-400 flex justify-center items-center hover:bg-neutral-100 transition-colors"
+                onClick={handleClearFilters}
+              >
+                <span className="text-neutral-900 text-sm font-medium font-['Lora'] uppercase tracking-[3px]">
+                  Descartar
                 </span>
               </button>
             </div>

@@ -13,11 +13,11 @@ const ImaginaTuVino = () => {
         />
       </div>
 
-      <div className="w-full max-w-[1300px] pt-8 md:pt-12 pb-5 flex flex-col lg:flex-row justify-center items-start gap-6 md:gap-8 lg:gap-10 px-4 sm:px-0 ">
-        <div 
+      <div className="w-full max-w-[1300px] pt-8 md:pt-12 pb-5 flex flex-col lg:flex-row justify-center items-start gap-6 md:gap-8 lg:gap-10 sm:px-0 ">
+        <div
+          className="w-full lg:w-[580px] h-48 sm:h-48 md:h-96 lg:h-[470px] relative rounded-lg overflow-hidden flex-shrink-0"
           data-aos="fade-right"
           data-aos-delay="200"
-          className="w-full lg:w-[580px] h-48 sm:h-48 md:h-96 lg:h-[470px] relative rounded-lg overflow-hidden flex-shrink-0"
         >
           <img
             alt="Imagen de vino"
@@ -25,10 +25,10 @@ const ImaginaTuVino = () => {
             src="/images/imagina.png"
           />
         </div>
-        <div 
+        <div
+          className="flex-1 w-full lg:w-auto inline-flex flex-col justify-start items-start lg:items-start gap-4 md:gap-5"
           data-aos="fade-left"
           data-aos-delay="400"
-          className="flex-1 w-full lg:w-auto inline-flex flex-col justify-start items-start lg:items-start gap-4 md:gap-5"
         >
           <div className="text-neutral-900 text-sm md:text-base lg:text-xl font-semibold font-['Lora'] italic leading-tight md:leading-normal lg:leading-normal tracking-tight">
             ¿Alguna vez soñaste con tener tu propio vino, con tu sello personal?
@@ -64,7 +64,8 @@ const ImaginaTuVino = () => {
               </span>
             </div>
           </div>
-          <div className="w-full pt-2.5 lg:pt-0 flex flex-col lg:mt-8">
+          {/* Button for desktop - inside right content */}
+          <div className="w-full pt-2.5 lg:pt-0 lg:mt-8 min-[481px]:flex hidden flex-col">
             <Link href="/crea-tu-vino">
               <Button size="sm" variant="primary">
                 Quiero saber más
@@ -72,6 +73,15 @@ const ImaginaTuVino = () => {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* Button for mobile - outside flex container to be full width */}
+      <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
+        <Link className="block w-full" href="/crea-tu-vino">
+          <Button size="sm" variant="primary">
+            Quiero saber más
+          </Button>
+        </Link>
       </div>
     </Section>
   );

@@ -19,7 +19,7 @@ export default function DefaultLayout({
   useEffect(() => {
     AOS.init({
       duration: 800, // Duración de la animación
-      easing: 'ease-out-cubic', // Easing suave
+      easing: "ease-out-cubic", // Easing suave
       once: true, // Solo anima una vez
       offset: 100, // Offset desde el viewport
       delay: 0, // Sin delay por defecto
@@ -76,15 +76,24 @@ export default function DefaultLayout({
                   Ayuda
                 </div>
                 <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  <Link href="/preguntas-frecuentes" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/preguntas-frecuentes"
+                  >
                     Preguntas Frecuentes
                   </Link>
                   <br />
-                  <Link href="/terminos-y-condiciones" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/terminos-y-condiciones"
+                  >
                     Términos y Condiciones
                   </Link>
                   <br />
-                  <Link href="/politica-de-privacidad" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/politica-de-privacidad"
+                  >
                     Política de Privacidad
                   </Link>
                 </div>
@@ -97,16 +106,33 @@ export default function DefaultLayout({
                 </div>
                 <div className="inline-flex justify-start items-center gap-2.5">
                   <div className="w-5 h-5 relative">
-                    <div className="w-4 h-3 left-[2.50px] top-[3.60px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
-                    <div className="w-4 h-1.5 left-[2.50px] top-[5.13px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                    <svg
+                      fill="none"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3.33334 5.83333L10 10.8333L16.6667 5.83333M3.33334 5H16.6667C17.5872 5 18.3333 5.74619 18.3333 6.66667V13.3333C18.3333 14.2538 17.5872 15 16.6667 15H3.33334C2.41286 15 1.66667 14.2538 1.66667 13.3333V6.66667C1.66667 5.74619 2.41286 5 3.33334 5Z"
+                        stroke="#B45309"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.38"
+                      />
+                    </svg>
                   </div>
                   <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
                     info@lapertenencia.com
                   </div>
                 </div>
                 <div className="inline-flex justify-start items-center gap-2.5">
-                  <div className="w-5 h-5 relative">
-                    <div className="w-3.5 h-3.5 left-[2.43px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                  <div className="w-4.5 h-4.5 relative">
+                    <img
+                      alt="WhatsApp"
+                      className="w-full h-full object-contain"
+                      src="/images/icon-wapp.svg"
+                    />
                   </div>
                   <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
                     +(54) 9 11 6152-5562
@@ -114,8 +140,11 @@ export default function DefaultLayout({
                 </div>
                 <div className="inline-flex justify-start items-center gap-2.5">
                   <div className="w-5 h-5 relative">
-                    <div className="w-3 h-4 left-[4.09px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
-                    <div className="w-1 h-1 left-[7.86px] top-[6.27px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                    <img
+                      alt="Ubicación"
+                      className="w-full h-full object-contain"
+                      src="/icons/ICON_lugar.svg"
+                    />
                   </div>
                   <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
                     Buenos Aires - Palermo - CABA
@@ -184,7 +213,7 @@ export default function DefaultLayout({
 
           {/* Footer Layout - 1000px down to mobile */}
           <div
-            className="fluid-menu-show hide-at-fluid-breakpoint w-full flex-col"
+            className="fluid-menu-show hide-at-fluid-breakpoint w-full flex-col max-[380px]:px-3 max-[480px]:px-4"
             style={{
               maxWidth: "min(100%, 1920px)",
               paddingLeft: "clamp(1rem, 4vw, 4rem)",
@@ -227,15 +256,24 @@ export default function DefaultLayout({
                   Ayuda
                 </div>
                 <div className="text-black text-xs sm:text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  <Link href="/preguntas-frecuentes" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/preguntas-frecuentes"
+                  >
                     Preguntas Frecuentes
                   </Link>
                   <br />
-                  <Link href="/terminos-y-condiciones" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/terminos-y-condiciones"
+                  >
                     Términos y Condiciones
                   </Link>
                   <br />
-                  <Link href="/politica-de-privacidad" className="hover:text-yellow-700 transition-colors">
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/politica-de-privacidad"
+                  >
                     Política de Privacidad
                   </Link>
                 </div>
@@ -254,16 +292,33 @@ export default function DefaultLayout({
                 </div>
                 <div className="flex justify-start items-center gap-2.5">
                   <div className="w-5 h-5 relative">
-                    <div className="w-4 h-3 left-[2.50px] top-[3.60px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
-                    <div className="w-4 h-1.5 left-[2.50px] top-[5.13px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                    <svg
+                      fill="none"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3.33334 5.83333L10 10.8333L16.6667 5.83333M3.33334 5H16.6667C17.5872 5 18.3333 5.74619 18.3333 6.66667V13.3333C18.3333 14.2538 17.5872 15 16.6667 15H3.33334C2.41286 15 1.66667 14.2538 1.66667 13.3333V6.66667C1.66667 5.74619 2.41286 5 3.33334 5Z"
+                        stroke="#B45309"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.38"
+                      />
+                    </svg>
                   </div>
                   <div className="text-black text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
                     info@lapertenencia.com
                   </div>
                 </div>
                 <div className="flex justify-start items-center gap-2.5">
-                  <div className="w-5 h-5 relative">
-                    <div className="w-3.5 h-3.5 left-[2.43px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                  <div className="w-4.5 h-4.5 relative">
+                    <img
+                      alt="WhatsApp"
+                      className="w-full h-full object-contain"
+                      src="/images/icon-wapp.svg"
+                    />
                   </div>
                   <div className="text-black text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
                     +(54) 9 11 6152-5562
@@ -271,8 +326,11 @@ export default function DefaultLayout({
                 </div>
                 <div className="flex justify-start items-center gap-2.5">
                   <div className="w-5 h-5 relative">
-                    <div className="w-3 h-4 left-[4.09px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
-                    <div className="w-1 h-1 left-[7.86px] top-[6.27px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                    <img
+                      alt="Ubicación"
+                      className="w-full h-full object-contain"
+                      src="/icons/ICON_lugar.svg"
+                    />
                   </div>
                   <div className="text-black text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
                     Buenos Aires - Palermo - CABA
@@ -291,16 +349,33 @@ export default function DefaultLayout({
               </div>
               <div className="flex justify-start items-center gap-2.5">
                 <div className="w-5 h-5 relative">
-                  <div className="w-4 h-3 left-[2.50px] top-[3.60px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
-                  <div className="w-4 h-1.5 left-[2.50px] top-[5.13px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                  <svg
+                    fill="none"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.33334 5.83333L10 10.8333L16.6667 5.83333M3.33334 5H16.6667C17.5872 5 18.3333 5.74619 18.3333 6.66667V13.3333C18.3333 14.2538 17.5872 15 16.6667 15H3.33334C2.41286 15 1.66667 14.2538 1.66667 13.3333V6.66667C1.66667 5.74619 2.41286 5 3.33334 5Z"
+                      stroke="#B45309"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.38"
+                    />
+                  </svg>
                 </div>
                 <div className="text-black text-xs font-normal font-['Lora'] leading-loose tracking-wide">
                   info@lapertenencia.com
                 </div>
               </div>
               <div className="flex justify-start items-center gap-2.5">
-                <div className="w-5 h-5 relative">
-                  <div className="w-3.5 h-3.5 left-[2.43px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                <div className="w-4.5 h-4.5 relative">
+                  <img
+                    alt="WhatsApp"
+                    className="w-full h-full object-contain"
+                    src="/images/icon-wapp.svg"
+                  />
                 </div>
                 <div className="text-black text-xs font-normal font-['Lora'] leading-loose tracking-wide">
                   +(54) 9 11 6152-5562
@@ -308,8 +383,11 @@ export default function DefaultLayout({
               </div>
               <div className="flex justify-start items-center gap-2.5">
                 <div className="w-5 h-5 relative">
-                  <div className="w-3 h-4 left-[4.09px] top-[2.50px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
-                  <div className="w-1 h-1 left-[7.86px] top-[6.27px] absolute outline outline-[1.38px] outline-offset-[-0.69px] outline-yellow-700" />
+                  <img
+                    alt="Ubicación"
+                    className="w-full h-full object-contain"
+                    src="/icons/ICON_lugar.svg"
+                  />
                 </div>
                 <div className="text-black text-xs font-normal font-['Lora'] leading-loose tracking-wide">
                   Buenos Aires - Palermo - CABA

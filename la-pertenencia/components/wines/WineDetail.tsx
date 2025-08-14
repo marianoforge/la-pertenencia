@@ -63,12 +63,12 @@ const WineDetail = ({ wine, onAddToCart }: WineDetailProps) => {
   return (
     <>
       {/* Breadcrumb and Search Bar */}
-      <div className="w-full mx-auto px-4 md:px-2 lg:px-2 bg-white shadow-md">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-2.5 py-[5px] rounded-sm overflow-hidden">
+      <div className="w-full mx-auto md:px-2 lg:px-2 bg-white shadow-md">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 py-[5px] rounded-sm overflow-hidden">
           {/* Breadcrumb Navigation */}
           <nav
             aria-label="Breadcrumb"
-            className="text-black text-sm md:text-base font-normal font-['Lora'] tracking-wide"
+            className="text-black text-sm md:text-base font-normal font-['Lora'] tracking-wide max-[480px]:hidden"
           >
             <ol className="flex items-center space-x-2">
               <li>
@@ -237,12 +237,12 @@ const WineDetail = ({ wine, onAddToCart }: WineDetailProps) => {
                 <div className="flex-1 h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
               </div>
               <button
-                className="w-64 pl-12 pr-10 py-2 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 inline-flex justify-center items-center gap-4 cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                className="max-[480px]:w-full w-64 max-[380px]:px-4 pl-12 pr-10 py-2 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 inline-flex justify-center items-center gap-4 cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
                 data-property-1="Default"
                 disabled={wine.stock === 0}
                 onClick={handleAddToCart}
               >
-                <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
+                <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase max-[380px]:tracking-[4px] tracking-[8px]">
                   {wine.stock === 0 ? "agotado" : "agregar"}
                 </div>
                 <Image

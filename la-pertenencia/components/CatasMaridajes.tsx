@@ -40,13 +40,13 @@ const CatasMaridajes = () => {
   ];
 
   return (
-    <Section className="!px-0" id="catas-maridajes" variant="gray">
+    <Section id="catas-maridajes" variant="gray">
       <SectionHeader
         subtitle="Encuentros que conectan"
         title="Catas y maridajes"
       />
 
-      <div className="w-full max-w-[1300px] pt-2.5 pb-5 md:pb-7 lg:pb-10 flex flex-col justify-center items-center gap-2.5 px-4 sm:px-0">
+      <div className="w-full max-w-[1300px] pt-2.5 pb-5 md:pb-7 lg:pb-10 flex flex-col justify-center items-center gap-2.5 sm:px-0">
         <div className="text-center text-neutral-900 text-sm md:text-base lg:text-xl font-normal font-['Lora'] leading-tight md:leading-normal lg:leading-loose tracking-wide">
           Creemos que las degustaciones y catas son más que una prueba de
           productos; son experiencias sensoriales y sociales para disfrutar,
@@ -56,7 +56,7 @@ const CatasMaridajes = () => {
       </div>
 
       <div className="w-full max-w-[1300px] px-0 sm:px-2.5 md:px-5 lg:px-2.5 flex flex-col lg:flex-row justify-start items-start gap-10 lg:gap-10">
-        <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-5 md:gap-12">
+        <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-5 md:gap-14">
           {events.map((event) => (
             <EventCard
               key={event.id}
@@ -79,10 +79,21 @@ const CatasMaridajes = () => {
               src="/images/maridajeeventos.png"
             />
           </div>
-          <div className="w-full flex justify-center items-center lg:items-stretch mt-4">
-            <Button variant="primary">todos los eventos</Button>
+          <div className="w-full justify-center items-center lg:items-stretch mt-4 min-[481px]:flex hidden">
+            <Button
+              className="w-full"
+              style={{ minWidth: "100%" }}
+              variant="primary"
+            >
+              todos los eventos
+            </Button>
           </div>
         </div>
+      </div>
+
+      {/* Button for mobile - outside containers to be full width */}
+      <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
+        <Button variant="primary">todos los eventos</Button>
       </div>
     </Section>
   );

@@ -6,14 +6,14 @@ export default function CatasSection() {
   return (
     <>
       {/* Hero Section with Background Image */}
-      <Section className="!p-0 !mt-10" variant="default">
-        <div 
-          data-aos="fade-up"
+      <Section className="!p-0" variant="default">
+        <div
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
+          data-aos="fade-up"
         >
           <img
             alt="Catas y Maridajes - Background"
-            className="w-full h-full object-cover absolute inset-0"
+            className="w-full h-full object-cover object-[88%_center] absolute inset-0"
             src="/images/catas_hederbg.png"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
@@ -55,10 +55,10 @@ export default function CatasSection() {
 
         <div className="w-full max-w-[1300px] py-5 flex flex-col lg:flex-row justify-center items-start gap-10 italic">
           {/* Left Content */}
-          <div 
+          <div
+            className="flex-1 w-full flex flex-col justify-start items-start gap-2.5"
             data-aos="fade-right"
             data-aos-delay="200"
-            className="flex-1 w-full flex flex-col justify-start items-start gap-2.5"
           >
             <div className="w-full text-yellow-700 text-lg md:text-xl font-medium font-['Lora'] uppercase tracking-[3px] md:tracking-[5px]">
               Tipos de encuentros:
@@ -98,10 +98,10 @@ export default function CatasSection() {
           </div>
 
           {/* Right Image */}
-          <div 
+          <div
+            className="w-full lg:w-[679px] flex flex-col justify-center items-start gap-2.5 italic "
             data-aos="fade-left"
             data-aos-delay="400"
-            className="w-full lg:w-[679px] flex flex-col justify-center items-start gap-2.5 italic "
           >
             <div className="w-full h-[462px] relative rounded-lg overflow-hidden">
               <img

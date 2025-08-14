@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 interface EventCardProps {
   title: string;
   description: string;
-  date: string;
-  time: string;
-  location: string;
+  date?: string;
+  time?: string;
+  location?: string;
   image: string;
   imageAlt: string;
   className?: string;
@@ -16,9 +16,6 @@ interface EventCardProps {
 const EventCard: React.FC<EventCardProps> = ({
   title,
   description,
-  date,
-  time,
-  location,
   image,
   imageAlt,
   className,
@@ -35,14 +32,14 @@ const EventCard: React.FC<EventCardProps> = ({
       {/* Image */}
       <img
         alt={imageAlt}
-        className="w-full h-56 sm:w-28 sm:h-28 md:w-36 md:h-44 object-cover flex-shrink-0"
+        className="w-full h-56 sm:w-28 sm:h-28 md:w-36 md:h-full object-cover flex-shrink-0"
         src={image}
       />
 
       {/* Content */}
-      <div className="w-full flex flex-col justify-start items-start gap-2 p-2.5 sm:p-0 sm:py-4 sm:pr-5 md:pr-7 lg:pr-0">
+      <div className="w-full flex flex-col justify-start items-start gap-2 p-2.5 sm:p-0 sm:pt-6 sm:pr-5 md:pr-7 lg:pr-0">
         {/* Title and Description */}
-        <div className="pt-[5px] pb-3 flex flex-col justify-start items-start gap-4">
+        <div className="flex flex-col justify-start items-start gap-4">
           <div className="text-neutral-900 text-sm md:text-base font-semibold font-['Lora'] uppercase tracking-[3.50px] md:tracking-[4px]">
             {title}
           </div>
@@ -54,7 +51,7 @@ const EventCard: React.FC<EventCardProps> = ({
         {/* Metadata */}
         <div className="pb-[5px] flex justify-start items-center gap-3 sm:gap-5 flex-wrap">
           {/* Date */}
-          <div className="flex justify-start items-center gap-[5px]">
+          {/* <div className="flex justify-start items-center gap-[5px]">
             <img
               alt="Fecha"
               className="w-5 h-5 object-contain"
@@ -63,10 +60,10 @@ const EventCard: React.FC<EventCardProps> = ({
             <div className="text-neutral-500 text-xs md:text-base font-normal font-['Lora'] tracking-wide">
               {date}
             </div>
-          </div>
+          </div> */}
 
           {/* Time */}
-          <div className="flex justify-start items-center gap-[5px]">
+          {/* <div className="flex justify-start items-center gap-[5px]">
             <img
               alt="Hora"
               className="w-5 h-5 object-contain"
@@ -75,10 +72,10 @@ const EventCard: React.FC<EventCardProps> = ({
             <div className="text-neutral-500 text-xs md:text-base font-normal font-['Lora'] tracking-wide">
               {time}
             </div>
-          </div>
+          </div> */}
 
           {/* Location */}
-          <div className="flex justify-start items-center gap-1">
+          {/* <div className="flex justify-start items-center gap-1">
             <img
               alt="Lugar"
               className="w-5 h-5 object-contain"
@@ -87,7 +84,7 @@ const EventCard: React.FC<EventCardProps> = ({
             <div className="text-neutral-500 text-xs md:text-base font-normal font-['Lora'] tracking-wide">
               {location}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

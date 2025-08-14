@@ -59,7 +59,7 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
 
   return (
     <div
-      className="w-full max-w-[280px] bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+      className="w-full bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
       role="button"
       tabIndex={0}
       onClick={handleCardClick}

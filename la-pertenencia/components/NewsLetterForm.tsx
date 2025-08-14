@@ -5,8 +5,6 @@ const NewsLetterForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Newsletter signup:", email);
-    // Aquí iría la lógica de suscripción
   };
 
   return (
@@ -17,14 +15,15 @@ const NewsLetterForm = () => {
           className="w-full h-80 sm:h-[262px] md:h-64 lg:h-[300px] object-cover"
           src="/images/newsletterSectionBG.png"
         />
-        <div className="absolute top-[36px] left-1/2 -translate-x-1/2 sm:top-10 lg:top-[15%] min-[900px]:left-auto min-[900px]:translate-x-0 min-[900px]:right-[max(0px,calc((100vw-1300px)/2))]">
-          <div className="w-80 sm:w-96  lg:w-[600px] lg:h-[300px] px-7 pt-5 pb-10 bg-neutral-900 rounded outline outline-1 outline-offset-[-1px] outline-neutral-400 inline-flex flex-col justify-center items-center gap-5">
+        <div className="absolute top-[36px] left-1/2 -translate-x-1/2 sm:top-10 lg:top-[15%] min-[900px]:left-auto min-[900px]:translate-x-0 min-[900px]:right-[max(0px,calc((100vw-1300px)/2))] max-[380px]:left-3 max-[380px]:right-3 max-[480px]:left-4 max-[480px]:right-4 max-[480px]:translate-x-0">
+          <div className="max-[480px]:w-full w-80 sm:w-96 lg:w-[600px] lg:h-[300px] px-7 pt-5 pb-10 bg-neutral-900 rounded outline outline-1 outline-offset-[-1px] outline-neutral-400 inline-flex flex-col justify-center items-center gap-5">
             <div className="self-stretch pt-2.5 flex flex-col justify-start items-center gap-1.5">
-              <div className="self-stretch text-center justify-start text-amber-300 text-sm font-medium font-['Lora'] uppercase tracking-[7px]">
+              <div className="self-stretch text-center justify-start text-amber-300 text-sm font-medium md:text-lg font-['Lora'] uppercase tracking-[7px]">
                 newsletter
               </div>
               <div className="self-stretch text-center justify-start text-white text-sm font-normal font-['Lora'] leading-tight tracking-wide">
-                Suscríbete a nuestro Newsletter y disfruta de experiencias únicas.
+                Suscríbete a nuestro Newsletter y disfruta de experiencias
+                únicas.
               </div>
             </div>
             <form

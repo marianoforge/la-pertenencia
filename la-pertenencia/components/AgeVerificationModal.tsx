@@ -41,22 +41,21 @@ const AgeVerificationModal = () => {
 
         <div className="self-stretch py-2 inline-flex justify-start items-end gap-3 md:gap-5 flex-col sm:flex-row">
           <button
-            className="flex-1 h-10 px-7 py-2 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 flex justify-center items-center gap-4 w-full sm:w-auto cursor-pointer hover:bg-neutral-100 transition-colors duration-200"
-            onClick={handleDeny}
-            onKeyDown={(e) => e.key === "Enter" && handleDeny()}
-          >
-            <div className="justify-start text-neutral-900 text-base font-medium font-['Lora'] tracking-[3.20px]">
-              NO
-            </div>
-          </button>
-
-          <button
             className="flex-1 h-10 px-7 py-2 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex justify-center items-center gap-4 w-full sm:w-auto cursor-pointer hover:bg-neutral-800 transition-colors duration-200"
             onClick={handleConfirm}
             onKeyDown={(e) => e.key === "Enter" && handleConfirm()}
           >
             <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] tracking-[3.20px]">
               SI
+            </div>
+          </button>
+          <button
+            className="flex-1 h-10 px-7 py-2 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 flex justify-center items-center gap-4 w-full sm:w-auto cursor-pointer hover:bg-neutral-100 transition-colors duration-200"
+            onClick={handleDeny}
+            onKeyDown={(e) => e.key === "Enter" && handleDeny()}
+          >
+            <div className="justify-start text-neutral-900 text-base font-medium font-['Lora'] tracking-[3.20px]">
+              NO
             </div>
           </button>
         </div>
