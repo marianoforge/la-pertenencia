@@ -22,25 +22,50 @@ export default function VinosPage() {
   const router = useRouter();
 
   // Use filter store
-  const { filters: storeFilters, sortBy } = useFilterStore();
+  const {
+    filters: storeFilters,
+    sortBy,
+    isOpen: isFilterPanelOpen,
+  } = useFilterStore();
 
   // Combine local filters (search) with store filters
   const combinedFilters = useMemo(
     () => ({
-      ...localFilters,
       ...storeFilters,
+      ...localFilters, // Local filters (search) should override store filters
     }),
     [localFilters, storeFilters],
   );
 
   const { data: wines = [], isLoading, error } = useWines(combinedFilters);
 
+  // Initialize search term from URL on page load
+  useEffect(() => {
+    if (router.query.search && typeof router.query.search === "string") {
+      const urlSearchTerm = router.query.search;
+
+      setSearchTerm(urlSearchTerm);
+      setLocalFilters((prev) => ({ ...prev, search: urlSearchTerm }));
+    }
+  }, [router.query.search]);
+
+  // Reset search input when filter panel opens
+  useEffect(() => {
+    if (isFilterPanelOpen) {
+      setSearchTerm("");
+      setLocalFilters((prev) => ({ ...prev, search: "" }));
+
+      // Also clear search from URL
+      router.push("/vinos", undefined, { shallow: true });
+    }
+  }, [isFilterPanelOpen, router]);
+
   const handleSearch = (value: string) => {
     setSearchTerm(value);
     setLocalFilters({ ...localFilters, search: value });
 
     // Actualizar URL con el término de búsqueda
-    if (value) {
+    if (value.trim()) {
       router.push(`/vinos?search=${encodeURIComponent(value)}`, undefined, {
         shallow: true,
       });
@@ -119,11 +144,11 @@ export default function VinosPage() {
   return (
     <DefaultLayout>
       <div className="w-full mx-auto px-4 md:px-2 lg:px-2 bg-white shadow-md">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 px-2.5 py-[5px] rounded-sm overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 py-[5px] rounded-sm overflow-hidden">
           {/* Breadcrumb Navigation */}
           <nav
             aria-label="Breadcrumb"
-            className="text-black text-sm md:text-base font-normal font-['Lora'] tracking-wide"
+            className="text-black text-sm md:text-base font-normal font-['Lora'] tracking-wide max-[480px]:hidden"
           >
             <ol className="flex items-center space-x-2">
               <li>
@@ -147,7 +172,7 @@ export default function VinosPage() {
           </nav>
 
           {/* Search Input */}
-          <div className="w-full sm:w-72 pl-3 pr-2.5 py-2.5 bg-white rounded-sm outline outline-1 outline-offset-[-1px] outline-neutral-400 flex justify-between items-center">
+          <div className="w-full sm:w-72 pl-3 pr-2.5 py-1.5 bg-white rounded-sm outline outline-1 outline-offset-[-1px] outline-neutral-400 flex justify-between items-center">
             <input
               className="flex-1 outline-none text-black text-sm md:text-base font-normal font-['Lora'] tracking-wide bg-transparent"
               placeholder="Buscar vinos..."
@@ -207,7 +232,7 @@ export default function VinosPage() {
         </div>
 
         {/* Wine List Section */}
-        <div className="w-full max-w-[1300px] mx-auto md:px-6 lg:px-8">
+        <div className="w-full max-w-[1300px] mx-auo px-4 md:px-6 lg:px-8">
           {isLoading ? (
             <SkeletonTheme baseColor="#f3f3f3" highlightColor="#e0e0e0">
               <div className="space-y-6">

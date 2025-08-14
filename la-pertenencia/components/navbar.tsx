@@ -61,7 +61,7 @@ export const Navbar = () => {
           </div>
 
           {/* Vertical separator - Desktop only */}
-          <div className="fluid-menu-hide w-5 h-0 rotate-90 outline outline-[0.81px] outline-offset-[-0.41px] outline-white" />
+          <div className="fluid-menu-hide w-5 h-0 rotate-90 outline outline-[0.5px] outline-offset-[-0.41px] outline-white" />
 
           {/* Icons */}
           <div className="flex justify-start items-center gap-4">
@@ -78,7 +78,6 @@ export const Navbar = () => {
               transition={{ duration: 0.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
-                console.log("Menu clicked, current state:", isMenuOpen);
                 setIsMenuOpen(!isMenuOpen);
               }}
             >

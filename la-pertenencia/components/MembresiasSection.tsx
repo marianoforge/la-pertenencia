@@ -6,14 +6,14 @@ export default function MembresiasSection() {
   return (
     <>
       {/* Hero Section with Background Image */}
-      <Section className="!p-0 !mt-10" variant="default">
-        <div 
-          data-aos="fade-up"
+      <Section className="!p-0" variant="default">
+        <div
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
+          data-aos="fade-up"
         >
           <img
             alt="Membresías - Background"
-            className="w-full h-full object-cover absolute inset-0"
+            className="w-full h-full object-cover object-[87%_center] absolute inset-0"
             src="/images/membresia_headerbg.png"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
@@ -55,10 +55,10 @@ export default function MembresiasSection() {
 
         <div className="w-full max-w-[1300px] py-5 flex flex-col lg:flex-row justify-center items-start gap-10 italic">
           {/* Left Content */}
-          <div 
+          <div
+            className="flex-1 w-full flex flex-col justify-start items-start gap-2.5"
             data-aos="fade-right"
             data-aos-delay="200"
-            className="flex-1 w-full flex flex-col justify-start items-start gap-2.5"
           >
             <div className="w-full text-yellow-700 text-lg md:text-xl font-medium font-['Lora'] uppercase tracking-[3px] md:tracking-[5px]">
               Qué incluye:
@@ -96,10 +96,10 @@ export default function MembresiasSection() {
           </div>
 
           {/* Right Image */}
-          <div 
+          <div
+            className="w-full lg:w-[674px] flex flex-col justify-center items-start gap-2.5 italic"
             data-aos="fade-left"
             data-aos-delay="400"
-            className="w-full lg:w-[674px] flex flex-col justify-center items-start gap-2.5 italic"
           >
             <div className="w-full relative rounded-lg overflow-hidden flex justify-center items-center">
               <img

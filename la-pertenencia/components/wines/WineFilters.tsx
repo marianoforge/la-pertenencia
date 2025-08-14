@@ -194,15 +194,15 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
           <AnimatePresence>
             {showSortDropdown && (
               <motion.div
-                initial={{ opacity: 0, y: -10, scaleY: 0 }}
                 animate={{ opacity: 1, y: 0, scaleY: 1 }}
-                exit={{ opacity: 0, y: -10, scaleY: 0 }}
-                transition={{ 
-                  duration: 0.2, 
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                  transformOrigin: "top"
-                }}
                 className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+                exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                transition={{
+                  duration: 0.2,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                  transformOrigin: "top",
+                }}
               >
                 {sortOptions.map((option) => (
                   <button
@@ -240,15 +240,15 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
             <AnimatePresence>
               {showBodegaDropdown && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
                   animate={{ opacity: 1, y: 0, scaleY: 1 }}
-                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
-                  transition={{ 
-                    duration: 0.2, 
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                    transformOrigin: "top"
-                  }}
                   className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                  transition={{
+                    duration: 0.2,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    transformOrigin: "top",
+                  }}
                 >
                   {bodegas.map((bodega) => (
                     <button
@@ -279,15 +279,15 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
             <AnimatePresence>
               {showMarcaDropdown && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
                   animate={{ opacity: 1, y: 0, scaleY: 1 }}
-                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
-                  transition={{ 
-                    duration: 0.2, 
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                    transformOrigin: "top"
-                  }}
                   className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                  transition={{
+                    duration: 0.2,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    transformOrigin: "top",
+                  }}
                 >
                   {marcas.map((marca) => (
                     <button
@@ -317,15 +317,15 @@ const WineFilters = ({ onFiltersChange, onSortChange }: WineFiltersProps) => {
             <AnimatePresence>
               {showTipoDropdown && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
                   animate={{ opacity: 1, y: 0, scaleY: 1 }}
-                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
-                  transition={{ 
-                    duration: 0.2, 
-                    ease: [0.25, 0.46, 0.45, 0.94],
-                    transformOrigin: "top"
-                  }}
                   className="absolute top-full left-0 w-full bg-white border border-neutral-400 rounded-sm mt-1 z-[9999] shadow-lg"
+                  exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                  initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                  transition={{
+                    duration: 0.2,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                    transformOrigin: "top",
+                  }}
                 >
                   {tipos.map((tipo) => (
                     <button

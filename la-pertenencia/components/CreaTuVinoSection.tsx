@@ -6,14 +6,14 @@ export default function CreaTuVinoSection() {
   return (
     <>
       {/* Hero Section with Background Image */}
-      <Section className="!p-0 !mt-10" variant="default">
+      <Section className="!p-0" variant="default">
         <div
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
           data-aos="fade-up"
         >
           <img
             alt="Imagina tu vino - Background"
-            className="w-full h-full object-cover absolute inset-0"
+            className="w-full h-full object-cover object-[50%_center] absolute inset-0"
             src="/images/crea-tu-vino-bg.jpg"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />

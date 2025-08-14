@@ -56,7 +56,7 @@ const CatasMaridajes = () => {
       </div>
 
       <div className="w-full max-w-[1300px] px-0 sm:px-2.5 md:px-5 lg:px-2.5 flex flex-col lg:flex-row justify-start items-start gap-10 lg:gap-10">
-        <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-5 md:gap-12">
+        <div className="w-full lg:flex-1 flex flex-col justify-start items-start gap-5 md:gap-14">
           {events.map((event) => (
             <EventCard
               key={event.id}
@@ -80,7 +80,13 @@ const CatasMaridajes = () => {
             />
           </div>
           <div className="w-full justify-center items-center lg:items-stretch mt-4 min-[481px]:flex hidden">
-            <Button variant="primary">todos los eventos</Button>
+            <Button
+              className="w-full"
+              style={{ minWidth: "100%" }}
+              variant="primary"
+            >
+              todos los eventos
+            </Button>
           </div>
         </div>
       </div>

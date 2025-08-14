@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useRef, useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import { motion } from "framer-motion";
 
 import { useFilterStore } from "@/stores/useFilterStore";
 
@@ -10,6 +11,12 @@ interface FilterBarProps {
 const FilterBar = ({ onSortChange }: FilterBarProps) => {
   const { toggleFilters, sortBy, updateSort } = useFilterStore();
   const [showSortDropdown, setShowSortDropdown] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+  });
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const sortOptions = [
     { value: "relevance", label: "Más relevantes" },
@@ -26,6 +33,99 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
       onSortChange(value);
     }
   };
+
+  const calculateDropdownPosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    }
+  };
+
+  const handleDropdownToggle = () => {
+    if (!showSortDropdown) {
+      calculateDropdownPosition();
+    }
+    setShowSortDropdown(!showSortDropdown);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setShowSortDropdown(false);
+      }
+    };
+
+    if (showSortDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSortDropdown]);
+
+  // Portal dropdown
+  useEffect(() => {
+    if (!showSortDropdown || typeof window === "undefined") {
+      return;
+    }
+
+    const portalRoot = document.createElement("div");
+
+    document.body.appendChild(portalRoot);
+
+    const dropdown = (
+      <motion.div
+        animate={{ opacity: 1, y: 0, scaleY: 1 }}
+        className="bg-white border border-neutral-400 rounded-b-sm shadow-2xl"
+        exit={{ opacity: 0, y: -10, scaleY: 0 }}
+        initial={{ opacity: 0, y: -10, scaleY: 0 }}
+        style={{
+          position: "fixed",
+          top: dropdownPosition.top,
+          left: dropdownPosition.left,
+          width: Math.max(dropdownPosition.width, 180),
+          zIndex: 99999,
+          backgroundColor: "white",
+          boxShadow:
+            "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05)",
+        }}
+        transition={{
+          duration: 0.2,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          transformOrigin: "top",
+        }}
+      >
+        {sortOptions.map((option) => (
+          <button
+            key={option.value}
+            className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm bg-white hover:bg-neutral-100 transition-colors"
+            onClick={() => handleSortChange(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </motion.div>
+    );
+
+    const root = ReactDOM.createRoot(portalRoot);
+
+    root.render(dropdown);
+
+    return () => {
+      root.unmount();
+      document.body.removeChild(portalRoot);
+    };
+  }, [showSortDropdown, dropdownPosition, handleSortChange, sortOptions]);
 
   const DropdownIcon = () => (
     <div className="w-5 h-5 relative flex items-center justify-center">
@@ -66,28 +166,27 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
   );
 
   return (
-    <div className="self-stretch py-5 rounded-sm border-t border-neutral-400 max-[480px]:flex-col max-[480px]:gap-4 flex justify-between items-center">
-      {/* Left side - Filter button */}
+    <div className="self-stretch py-5 rounded-sm border-t border-neutral-400 flex justify-between items-center gap-3 relative z-[9997]">
       <button
-        className="max-[480px]:w-full flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors"
+        className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors max-[480px]:hidden"
         onClick={toggleFilters}
       >
-        <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
+        <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide max-[480px]:hidden">
           Filtrar por:
         </span>
         <FilterIcon />
       </button>
-
       {/* Right side - Sort dropdown */}
-      <div className="max-[480px]:w-full flex items-center gap-3">
+      <div className="flex items-center gap-3">
         <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
           Ordenar por:
         </span>
 
-        <div className="max-[480px]:flex-1 relative">
+        <div className="relative z-[9998]">
           <button
-            className="max-[480px]:w-full flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors min-w-[180px]"
-            onClick={() => setShowSortDropdown(!showSortDropdown)}
+            ref={buttonRef}
+            className="flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors min-w-[120px] max-[480px]:min-w-[100px]"
+            onClick={handleDropdownToggle}
           >
             <span className="text-neutral-900 font-['Lora'] text-sm flex-1">
               {sortOptions.find((option) => option.value === sortBy)?.label ||
@@ -95,34 +194,18 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
             </span>
             <DropdownIcon />
           </button>
-
-          <AnimatePresence>
-            {showSortDropdown && (
-              <motion.div
-                initial={{ opacity: 0, y: -10, scaleY: 0 }}
-                animate={{ opacity: 1, y: 0, scaleY: 1 }}
-                exit={{ opacity: 0, y: -10, scaleY: 0 }}
-                transition={{ 
-                  duration: 0.2, 
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                  transformOrigin: "top"
-                }}
-                className="absolute top-full right-0 bg-white border border-neutral-400 border-t-0 rounded-b-sm z-10 min-w-[180px] shadow-lg"
-              >
-                {sortOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm hover:bg-neutral-100 transition-colors"
-                    onClick={() => handleSortChange(option.value)}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
+      {/* Left side - Filter button */}
+      <button
+        className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors min-[480px]:hidden"
+        onClick={toggleFilters}
+      >
+        <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide max-[480px]:hidden">
+          Filtrar por:
+        </span>
+        <FilterIcon />
+      </button>
     </div>
   );
 };
