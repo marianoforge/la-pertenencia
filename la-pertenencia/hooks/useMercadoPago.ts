@@ -44,7 +44,7 @@ export const useMercadoPago = () => {
 
   const createPreference = async (
     cartItems: CartItem[],
-    payerInfo?: PayerInfo
+    payerInfo?: PayerInfo,
   ): Promise<CreatePreferenceResponse | null> => {
     setLoading(true);
     setError(null);

@@ -31,7 +31,7 @@ export const useCartStore = create<CartStore>()(
       addItem: (wine: Wine, quantity = 1) => {
         const currentItems = get().items;
         const existingItemIndex = currentItems.findIndex(
-          (item) => item.wine.id === wine.id
+          (item) => item.wine.id === wine.id,
         );
         const finalPrice = calculateFinalPrice(wine);
 
@@ -42,7 +42,7 @@ export const useCartStore = create<CartStore>()(
           newItems = currentItems.map((item, index) =>
             index === existingItemIndex
               ? { ...item, quantity: item.quantity + quantity }
-              : item
+              : item,
           );
         } else {
           // Si es un item nuevo, agregarlo
@@ -58,11 +58,11 @@ export const useCartStore = create<CartStore>()(
         // Recalcular totales
         const totalItems = newItems.reduce(
           (sum, item) => sum + item.quantity,
-          0
+          0,
         );
         const totalAmount = newItems.reduce(
           (sum, item) => sum + item.priceAtTimeOfAdd * item.quantity,
-          0
+          0,
         );
 
         // Mostrar notificación
@@ -89,11 +89,11 @@ export const useCartStore = create<CartStore>()(
         // Recalcular totales
         const totalItems = newItems.reduce(
           (sum, item) => sum + item.quantity,
-          0
+          0,
         );
         const totalAmount = newItems.reduce(
           (sum, item) => sum + item.priceAtTimeOfAdd * item.quantity,
-          0
+          0,
         );
 
         set({
@@ -112,17 +112,17 @@ export const useCartStore = create<CartStore>()(
 
         const currentItems = get().items;
         const newItems = currentItems.map((item) =>
-          item.wine.id === wineId ? { ...item, quantity } : item
+          item.wine.id === wineId ? { ...item, quantity } : item,
         );
 
         // Recalcular totales
         const totalItems = newItems.reduce(
           (sum, item) => sum + item.quantity,
-          0
+          0,
         );
         const totalAmount = newItems.reduce(
           (sum, item) => sum + item.priceAtTimeOfAdd * item.quantity,
-          0
+          0,
         );
 
         set({
@@ -165,6 +165,6 @@ export const useCartStore = create<CartStore>()(
         totalItems: state.totalItems,
         totalAmount: state.totalAmount,
       }),
-    }
-  )
+    },
+  ),
 );

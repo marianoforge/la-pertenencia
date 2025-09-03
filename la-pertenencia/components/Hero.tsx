@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 
+// Ya no necesitas esta variable - usa directamente className="text-dorado-light"
+
 const Hero = () => {
   return (
     <div
@@ -21,7 +23,7 @@ const Hero = () => {
           className="object-bottom object-cover"
           src="/images/bg-hero.png"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent lg:bg-gradient-to-l lg:from-black/70 lg:via-black/10 lg:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent lg:bg-gradient-to-l lg:from-black/10 lg:via-black/0 lg:to-transparent" />
       </div>
 
       {/* Content - Mobile/Tablet Layout */}
@@ -35,9 +37,9 @@ const Hero = () => {
       >
         {/* Logo */}
         <div
+          className="relative overflow-hidden flex items-center justify-center"
           data-aos="fade-up"
           data-aos-delay="200"
-          className="relative overflow-hidden flex items-center justify-center"
           style={{
             width: "clamp(8rem, 25vw, 10rem)",
             height: "clamp(12rem, 35vw, 15rem)",
@@ -61,9 +63,9 @@ const Hero = () => {
           }}
         >
           <div
+            className="w-full text-center text-dorado-light font-normal font-lora uppercase"
             data-aos="fade-up"
             data-aos-delay="400"
-            className="w-full text-center text-amber-300 font-normal font-lora uppercase"
             style={{
               fontSize: "clamp(1.125rem, 4vw, 1.75rem)",
               letterSpacing: "clamp(0.25rem, 1vw, 0.75rem)",
@@ -125,7 +127,7 @@ const Hero = () => {
           }}
         >
           <div
-            className="justify-start text-amber-300 font-normal font-lora uppercase"
+            className="justify-start text-dorado-light font-normal font-lora uppercase"
             style={{
               fontSize: "clamp(1.5rem, 3vw, 2rem)",
               letterSpacing: "clamp(0.5rem, 1.2vw, 1rem)",
@@ -189,19 +191,17 @@ const Hero = () => {
 
         {/* Logo Column */}
         <div
-          className="relative ml-auto flex items-center justify-center"
+          className="relative ml-auto flex items-center justify-center overflow-hidden"
           style={{
-            width: "clamp(20rem, 30vw, 24rem)",
-            height: "clamp(25rem, 40vw, 35rem)",
+            width: "clamp(17rem, 30vw, 21rem)",
+            height: "clamp(23rem, 40vw, 33rem)",
           }}
         >
           <div
-            className="absolute overflow-visible flex items-center justify-center"
+            className="relative flex items-center justify-center mb-24"
             style={{
-              width: "clamp(18rem, 25vw, 22rem)",
-              height: "clamp(28rem, 45vw, 40rem)",
-              top: "clamp(2rem, 4vw, 4rem)",
-              left: "0",
+              width: "clamp(16rem, 24vw, 17rem)",
+              height: "clamp(18rem, 32vw, 26rem)",
               zIndex: 50,
             }}
           >

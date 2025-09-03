@@ -14,7 +14,7 @@ export const themeColors = {
   gris30: "#A6A6A6",
 
   // Colores dorados (primarios)
-  doradoLight: "#FEC85B",
+  doradoLight: "#FEBB41",
   doradoDark: "#9B6502",
 } as const;
 

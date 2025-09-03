@@ -68,7 +68,7 @@ const Regalos = () => {
                   className="w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex justify-center items-center gap-16"
                   onClick={() => handleQuantityChange("kit1", -1)}
                 >
-                  <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+                  <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                     -
                   </div>
                 </button>
@@ -81,7 +81,7 @@ const Regalos = () => {
                   className="w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex justify-center items-center gap-16"
                   onClick={() => handleQuantityChange("kit1", 1)}
                 >
-                  <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+                  <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                     +
                   </div>
                 </button>
@@ -94,7 +94,7 @@ const Regalos = () => {
                 handleAddToCart('Kit "la pertenencia"', quantities.kit1)
               }
             >
-              <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
+              <div className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase tracking-[8px]">
                 agregar
               </div>
               <img
@@ -146,7 +146,7 @@ const Regalos = () => {
                     className="w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex justify-center items-center gap-16"
                     onClick={() => handleQuantityChange("kit2", -1)}
                   >
-                    <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+                    <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                       -
                     </div>
                   </button>
@@ -159,7 +159,7 @@ const Regalos = () => {
                     className="w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex justify-center items-center gap-16"
                     onClick={() => handleQuantityChange("kit2", 1)}
                   >
-                    <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+                    <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                       +
                     </div>
                   </button>
@@ -172,7 +172,7 @@ const Regalos = () => {
                   handleAddToCart('Kit "1ra Copa"', quantities.kit2)
                 }
               >
-                <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
+                <div className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase tracking-[8px]">
                   agregar
                 </div>
                 <img
@@ -222,7 +222,7 @@ const Regalos = () => {
                     className="w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex justify-center items-center gap-16"
                     onClick={() => handleQuantityChange("kit3", -1)}
                   >
-                    <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+                    <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                       -
                     </div>
                   </button>
@@ -235,7 +235,7 @@ const Regalos = () => {
                     className="w-7 h-7 px-3 py-1.5 bg-neutral-900 rounded-[3px] outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex justify-center items-center gap-16"
                     onClick={() => handleQuantityChange("kit3", 1)}
                   >
-                    <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+                    <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                       +
                     </div>
                   </button>
@@ -248,7 +248,7 @@ const Regalos = () => {
                   handleAddToCart('Kit "2da Copa"', quantities.kit3)
                 }
               >
-                <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
+                <div className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase tracking-[8px]">
                   agregar
                 </div>
                 <img

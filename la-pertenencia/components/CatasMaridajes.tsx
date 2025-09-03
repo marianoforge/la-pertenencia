@@ -6,18 +6,18 @@ const CatasMaridajes = () => {
   const events = [
     {
       id: 1,
-      title: "MARIDAJE CARNES ROJAS",
+      title: "MARIDAJE",
       description:
         "Lorem ipsum dolor sit amet consectetur. Eget in scelerisque quis sit amet nulla.",
       date: "28 Junio, 2025",
       time: "20:30",
       location: "Palermo - CABA",
       image: "/images/maridajecarnesrojas.png",
-      imageAlt: "Maridaje Carnes Rojas",
+      imageAlt: "Maridaje",
     },
     {
       id: 2,
-      title: "Coctelería",
+      title: "CATAS TEMATICAS",
       description:
         "Lorem ipsum dolor sit amet consectetur. Eget in scelerisque quis sit amet nulla.",
       date: "28 Junio, 2025",
@@ -28,7 +28,7 @@ const CatasMaridajes = () => {
     },
     {
       id: 3,
-      title: "catas temáticas",
+      title: "COCTELERIA",
       description:
         "Lorem ipsum dolor sit amet consectetur. Eget in scelerisque quis sit amet nulla.",
       date: "28 Junio, 2025",

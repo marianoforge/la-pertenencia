@@ -58,15 +58,40 @@ export default function DefaultLayout({
                   Productos
                 </div>
                 <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  Catalogo de Vinos
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/vinos"
+                  >
+                    Catalogo de Vinos
+                  </Link>
                   <br />
-                  Regalos Empresariales
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/#regalos"
+                  >
+                    Regalos Empresariales
+                  </Link>
                   <br />
-                  Membresías
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/membresias"
+                  >
+                    Membresías
+                  </Link>
                   <br />
-                  Crea tu vino
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/crea-tu-vino"
+                  >
+                    Crea tu vino
+                  </Link>
                   <br />
-                  Catas y Maridajes
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/catas"
+                  >
+                    Catas y Maridajes
+                  </Link>
                 </div>
               </div>
 
@@ -182,7 +207,7 @@ export default function DefaultLayout({
                       src="/icons/ICON IG.svg"
                     />
                   </a>
-                  <a
+                  {/* <a
                     className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
                     href="https://x.com/lapertenencia"
                     rel="noopener noreferrer"
@@ -205,7 +230,7 @@ export default function DefaultLayout({
                       className="w-full h-full object-contain"
                       src="/icons/ICON YT.svg"
                     />
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>
@@ -238,15 +263,40 @@ export default function DefaultLayout({
                   Productos
                 </div>
                 <div className="text-black text-xs sm:text-xs md:text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  Catalogo de Vinos
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/vinos"
+                  >
+                    Catalogo de Vinos
+                  </Link>
                   <br />
-                  Regalos Empresariales
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/#regalos"
+                  >
+                    Regalos Empresariales
+                  </Link>
                   <br />
-                  Membresías
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/membresias"
+                  >
+                    Membresías
+                  </Link>
                   <br />
-                  Crea tu vino
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/crea-tu-vino"
+                  >
+                    Crea tu vino
+                  </Link>
                   <br />
-                  Catas y Maridajes
+                  <Link
+                    className="hover:text-yellow-700 transition-colors"
+                    href="/catas"
+                  >
+                    Catas y Maridajes
+                  </Link>
                 </div>
               </div>
 
@@ -425,7 +475,7 @@ export default function DefaultLayout({
                     src="/icons/ICON IG.svg"
                   />
                 </a>
-                <a
+                {/* <a
                   className="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
                   href="https://x.com/lapertenencia"
                   rel="noopener noreferrer"
@@ -448,7 +498,7 @@ export default function DefaultLayout({
                     className="w-full h-full object-contain"
                     src="/icons/ICON YT.svg"
                   />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>

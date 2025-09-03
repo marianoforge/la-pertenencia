@@ -62,8 +62,8 @@ const PrivacyPolicy = () => {
                     <>
                       {policy.content.split("info@lapertenencia.com")[0]}
                       <a
-                        href="mailto:info@lapertenencia.com"
                         className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] underline leading-normal tracking-wide hover:text-yellow-700 transition-colors"
+                        href="mailto:info@lapertenencia.com"
                       >
                         info@lapertenencia.com
                       </a>

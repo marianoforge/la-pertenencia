@@ -58,7 +58,7 @@ export const useAuth = () => {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       if (displayName && userCredential.user) {
@@ -89,7 +89,7 @@ export const useAuth = () => {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
 
       setAuthState((prev) => ({ ...prev, loading: false }));

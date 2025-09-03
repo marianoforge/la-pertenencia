@@ -197,11 +197,11 @@ export default function WineList() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 6 }).map((_, index) => (
               <Card key={index} className="p-4">
-                <Skeleton height={200} className="rounded-lg mb-4" />
-                <Skeleton height={20} className="mb-2" />
-                <Skeleton height={16} width="80%" className="mb-3" />
-                <Skeleton height={24} width="60%" className="mb-4" />
-                <Skeleton height={36} className="rounded" />
+                <Skeleton className="rounded-lg mb-4" height={200} />
+                <Skeleton className="mb-2" height={20} />
+                <Skeleton className="mb-3" height={16} width="80%" />
+                <Skeleton className="mb-4" height={24} width="60%" />
+                <Skeleton className="rounded" height={36} />
               </Card>
             ))}
           </div>

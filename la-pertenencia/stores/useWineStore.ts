@@ -56,7 +56,7 @@ export const useWineStore = create<WineStore>((set, get) => ({
   updateWine: (updatedWine) =>
     set((state) => ({
       wines: state.wines.map((wine) =>
-        wine.id === updatedWine.id ? updatedWine : wine
+        wine.id === updatedWine.id ? updatedWine : wine,
       ),
       selectedWine:
         state.selectedWine?.id === updatedWine.id

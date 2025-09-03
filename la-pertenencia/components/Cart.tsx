@@ -197,7 +197,7 @@ const Cart = () => {
                         {/* Quantity Controls */}
                         <div className="flex items-center gap-3 mb-3">
                           <button
-                            className="w-7 h-7 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex items-center justify-center text-amber-300 text-sm font-bold font-['Lora'] hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-7 h-7 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex items-center justify-center text-dorado-light text-sm font-bold font-['Lora'] hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={item.quantity <= 1}
                             onClick={() =>
                               updateQuantity(item.wine.id, item.quantity - 1)
@@ -209,7 +209,7 @@ const Cart = () => {
                             {item.quantity}
                           </span>
                           <button
-                            className="w-7 h-7 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex items-center justify-center text-amber-300 text-sm font-bold font-['Lora'] hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-7 h-7 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 flex items-center justify-center text-dorado-light text-sm font-bold font-['Lora'] hover:bg-neutral-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={item.quantity >= item.wine.stock}
                             onClick={() =>
                               updateQuantity(item.wine.id, item.quantity + 1)
