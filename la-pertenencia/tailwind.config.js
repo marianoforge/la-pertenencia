@@ -75,7 +75,7 @@ const config = {
         "gris-bg": "#F5F5F5",
         "gris-60": "#707070",
         "gris-30": "#A6A6A6",
-        "dorado-light": "#FEC85B",
+        "dorado-light": "#FEBB41",
         "dorado-dark": "#9B6502",
 
         // CSS variables for theme switching

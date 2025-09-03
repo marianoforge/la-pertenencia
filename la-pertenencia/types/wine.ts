@@ -30,7 +30,14 @@ export interface Wine {
 export interface CreateWineInput {
   marca: string;
   bodega: string;
-  tipo: "Tinto" | "Blanco" | "Red" | "Blend" | "Rosado" | "Espumante" | "Naranjo";
+  tipo:
+    | "Tinto"
+    | "Blanco"
+    | "Red"
+    | "Blend"
+    | "Rosado"
+    | "Espumante"
+    | "Naranjo";
   varietal: string;
   maridaje?: string;
   description?: string;

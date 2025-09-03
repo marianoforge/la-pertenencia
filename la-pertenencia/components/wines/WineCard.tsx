@@ -90,7 +90,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
               disabled={quantity <= 1}
               onClick={decreaseQuantity}
             >
-              <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+              <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                 -
               </div>
             </button>
@@ -105,7 +105,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
               disabled={quantity >= wine.stock}
               onClick={increaseQuantity}
             >
-              <div className="justify-start text-amber-300 text-base font-bold font-['Lora']">
+              <div className="justify-start text-dorado-light text-base font-bold font-['Lora']">
                 +
               </div>
             </button>
@@ -118,7 +118,7 @@ const WineCard = ({ wine, index = 0, onAddToCart }: WineCardProps) => {
           disabled={wine.stock === 0}
           onClick={handleAddToCart}
         >
-          <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase max-[380px]:tracking-[4px] tracking-[8px]">
+          <div className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase max-[380px]:tracking-[4px] tracking-[8px]">
             {wine.stock === 0 ? "agotado" : "agregar"}
           </div>
           <Image

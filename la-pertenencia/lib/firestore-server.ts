@@ -19,7 +19,7 @@ const COLLECTIONS = {
  */
 export const reduceWineStockServerSide = async (
   wineId: string,
-  quantity: number
+  quantity: number,
 ): Promise<{ success: boolean; newStock?: number; error?: string }> => {
   try {
     const wineDoc = adminDb.collection(COLLECTIONS.WINES).doc(wineId);
@@ -37,7 +37,7 @@ export const reduceWineStockServerSide = async (
 
       if (currentStock < quantity) {
         throw new Error(
-          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`
+          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`,
         );
       }
 
@@ -53,7 +53,7 @@ export const reduceWineStockServerSide = async (
     });
 
     console.log(
-      `✅ [SERVER] Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`
+      `✅ [SERVER] Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`,
     );
 
     return { success: true, newStock: result };

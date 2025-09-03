@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { getAllWines } from "@/lib/firestore";
 
 export interface FilterOptions {
@@ -17,16 +18,16 @@ export const useWineFilterOptions = () => {
 
         // Extraer valores únicos para cada filtro usando los campos correctos
         const bodegas = Array.from(
-          new Set(wines.map((wine) => wine.bodega).filter(Boolean))
+          new Set(wines.map((wine) => wine.bodega).filter(Boolean)),
         ).sort();
         const marcas = Array.from(
-          new Set(wines.map((wine) => wine.marca).filter(Boolean))
+          new Set(wines.map((wine) => wine.marca).filter(Boolean)),
         ).sort();
         const tipos = Array.from(
-          new Set(wines.map((wine) => wine.tipo).filter(Boolean))
+          new Set(wines.map((wine) => wine.tipo).filter(Boolean)),
         ).sort();
         const varietales = Array.from(
-          new Set(wines.map((wine) => wine.varietal).filter(Boolean))
+          new Set(wines.map((wine) => wine.varietal).filter(Boolean)),
         ).sort();
 
         return {
@@ -37,6 +38,7 @@ export const useWineFilterOptions = () => {
         };
       } catch (error) {
         console.error("Error fetching wine filter options:", error);
+
         return {
           bodegas: [],
           marcas: [],

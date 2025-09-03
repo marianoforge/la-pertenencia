@@ -11,7 +11,6 @@ import {
   orderBy,
   limit,
   runTransaction,
-  DocumentData,
   QuerySnapshot,
   DocumentSnapshot,
 } from "firebase/firestore";
@@ -78,7 +77,7 @@ export const getWinesByCategory = async (category: string): Promise<Wine[]> => {
     const q = query(
       winesCollection,
       where("tipo", "==", category),
-      orderBy("marca")
+      orderBy("marca"),
     );
     const snapshot = await getDocs(q);
 
@@ -101,7 +100,7 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
       winesCollection,
       where("featured", "==", true),
       orderBy("marca"),
-      limit(6)
+      limit(6),
     );
     const snapshot = await getDocs(q);
 
@@ -118,7 +117,7 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
 
 // Add new wine
 export const addWine = async (
-  wineData: Omit<Wine, "id" | "createdAt" | "updatedAt">
+  wineData: Omit<Wine, "id" | "createdAt" | "updatedAt">,
 ): Promise<string | null> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
@@ -143,7 +142,7 @@ export const addWine = async (
 // Update wine
 export const updateWine = async (
   id: string,
-  wineData: Partial<Wine>
+  wineData: Partial<Wine>,
 ): Promise<boolean> => {
   try {
     const wineDoc = doc(db, COLLECTIONS.WINES, id);
@@ -183,7 +182,7 @@ export const deleteWine = async (id: string): Promise<boolean> => {
 // Reduce wine stock (transactional to prevent race conditions)
 export const reduceWineStock = async (
   wineId: string,
-  quantity: number
+  quantity: number,
 ): Promise<{ success: boolean; newStock?: number; error?: string }> => {
   try {
     const wineDoc = doc(db, COLLECTIONS.WINES, wineId);
@@ -200,7 +199,7 @@ export const reduceWineStock = async (
 
       if (currentStock < quantity) {
         throw new Error(
-          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`
+          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`,
         );
       }
 
@@ -216,7 +215,7 @@ export const reduceWineStock = async (
     });
 
     console.log(
-      `✅ Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`
+      `✅ Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`,
     );
 
     return { success: true, newStock: result };
@@ -231,7 +230,7 @@ export const reduceWineStock = async (
 
 // Search wines by name
 export const searchWinesByName = async (
-  searchTerm: string
+  searchTerm: string,
 ): Promise<Wine[]> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
@@ -247,7 +246,7 @@ export const searchWinesByName = async (
       (wine) =>
         wine.marca?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         wine.bodega?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        wine.description?.toLowerCase().includes(searchTerm.toLowerCase())
+        wine.description?.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   } catch (error) {
     console.error("Error searching wines:", error);
@@ -260,7 +259,7 @@ export const searchWinesByName = async (
  * 📦 Migration function to import initial wine data
  */
 export const migrateWineData = async (
-  wines: Omit<Wine, "id">[]
+  wines: Omit<Wine, "id">[],
 ): Promise<boolean> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);

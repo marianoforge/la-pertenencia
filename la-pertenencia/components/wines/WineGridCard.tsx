@@ -127,7 +127,7 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
               disabled={quantity <= 1}
               onClick={decreaseQuantity}
             >
-              <span className="text-amber-300 text-sm md:text-base font-bold font-['Lora']">
+              <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
                 -
               </span>
             </button>
@@ -141,7 +141,7 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
               disabled={quantity >= wine.stock}
               onClick={increaseQuantity}
             >
-              <span className="text-amber-300 text-sm md:text-base font-bold font-['Lora']">
+              <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
                 +
               </span>
             </button>
@@ -155,7 +155,7 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
           disabled={wine.stock === 0}
           onClick={handleAddToCart}
         >
-          <span className="text-amber-300 text-xs md:text-base font-medium font-['Lora'] uppercase tracking-[4px] md:tracking-[8px]">
+          <span className="text-dorado-light text-xs md:text-base font-medium font-['Lora'] uppercase tracking-[4px] md:tracking-[8px]">
             {wine.stock === 0 ? "agotado" : "agregar"}
           </span>
           <Image

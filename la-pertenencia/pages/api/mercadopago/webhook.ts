@@ -17,7 +17,10 @@ const client = new MercadoPagoConfig({
 
 const payment = new Payment(client);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Método no permitido" });
   }
@@ -61,16 +64,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               for (const item of items) {
                 const result = await reduceWineStockServerSide(
                   item.wine_id,
-                  item.quantity
+                  item.quantity,
                 );
 
                 if (result.success) {
                   console.log(
-                    `✅ Stock reduced for wine ${item.wine_id}: ${item.quantity} units. New stock: ${result.newStock}`
+                    `✅ Stock reduced for wine ${item.wine_id}: ${item.quantity} units. New stock: ${result.newStock}`,
                   );
                 } else {
                   console.error(
-                    `❌ Failed to reduce stock for wine ${item.wine_id}: ${result.error}`
+                    `❌ Failed to reduce stock for wine ${item.wine_id}: ${result.error}`,
                   );
 
                   // En un caso real, aquí podrías implementar lógica adicional como:
@@ -84,7 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
           } else {
             console.warn(
-              "No metadata.items found in payment, cannot reduce stock"
+              "No metadata.items found in payment, cannot reduce stock",
             );
           }
 

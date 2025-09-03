@@ -38,7 +38,7 @@ export default function WineDetailPage() {
               Lo sentimos, no pudimos encontrar el vino que buscas.
             </p>
             <button
-              className="px-6 py-3 bg-neutral-900 rounded-sm border border-amber-300 text-amber-300 font-medium font-['Lora'] uppercase tracking-[4px] hover:bg-neutral-800 transition-colors"
+              className="px-6 py-3 bg-neutral-900 rounded-sm border border-amber-300 text-dorado-light font-medium font-['Lora'] uppercase tracking-[4px] hover:bg-neutral-800 transition-colors"
               onClick={() => router.push("/vinos")}
             >
               Volver a Vinos

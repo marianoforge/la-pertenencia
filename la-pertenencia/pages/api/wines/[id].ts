@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { Wine, UpdateWineInput } from "../../../types/wine";
+import { UpdateWineInput } from "../../../types/wine";
 import { getWineById, updateWine, deleteWine } from "../../../lib/firestore";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const { id } = req.query;
 
@@ -33,6 +33,7 @@ export default async function handler(
 
       // Verificar que el vino existe antes de actualizar
       const existingWine = await getWineById(id);
+
       if (!existingWine) {
         return res.status(404).json({ error: "Wine not found" });
       }
@@ -56,6 +57,7 @@ export default async function handler(
     try {
       // Verificar que el vino existe antes de eliminar
       const existingWine = await getWineById(id);
+
       if (!existingWine) {
         return res.status(404).json({ error: "Wine not found" });
       }

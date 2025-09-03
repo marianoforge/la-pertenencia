@@ -13,7 +13,7 @@ import {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method === "GET") {
     try {
@@ -42,13 +42,13 @@ export default async function handler(
 
       if (minPrice) {
         filteredWines = filteredWines.filter(
-          (wine) => wine.price >= Number(minPrice)
+          (wine) => wine.price >= Number(minPrice),
         );
       }
 
       if (maxPrice) {
         filteredWines = filteredWines.filter(
-          (wine) => wine.price <= Number(maxPrice)
+          (wine) => wine.price <= Number(maxPrice),
         );
       }
 

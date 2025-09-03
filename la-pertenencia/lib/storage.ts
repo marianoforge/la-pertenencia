@@ -24,7 +24,7 @@ const STORAGE_PATHS = {
 // Upload wine image
 export const uploadWineImage = async (
   file: File,
-  wineId: string
+  wineId: string,
 ): Promise<string | null> => {
   try {
     const timestamp = Date.now();
@@ -47,7 +47,7 @@ export const uploadWineImage = async (
 // Upload category image
 export const uploadCategoryImage = async (
   file: File,
-  categoryName: string
+  categoryName: string,
 ): Promise<string | null> => {
   try {
     const timestamp = Date.now();
@@ -70,7 +70,7 @@ export const uploadCategoryImage = async (
 // Upload gallery image
 export const uploadGalleryImage = async (
   file: File,
-  imageName?: string
+  imageName?: string,
 ): Promise<string | null> => {
   try {
     const timestamp = Date.now();
@@ -95,7 +95,7 @@ export const uploadGalleryImage = async (
 // Upload user avatar
 export const uploadUserAvatar = async (
   file: File,
-  userId: string
+  userId: string,
 ): Promise<string | null> => {
   try {
     const fileName = `${userId}_avatar.${file.name.split(".").pop()}`;
@@ -165,7 +165,7 @@ export const getWineImages = async (): Promise<string[]> => {
     const urls = await Promise.all(
       result.items.map(async (itemRef) => {
         return await getDownloadURL(itemRef);
-      })
+      }),
     );
 
     return urls;
@@ -185,7 +185,7 @@ export const getGalleryImages = async (): Promise<string[]> => {
     const urls = await Promise.all(
       result.items.map(async (itemRef) => {
         return await getDownloadURL(itemRef);
-      })
+      }),
     );
 
     return urls;
@@ -231,7 +231,7 @@ export const validateImageFile = (file: File): boolean => {
 
   if (!validTypes.includes(file.type)) {
     console.error(
-      "❌ Invalid file type. Only JPEG, PNG, and WebP are allowed."
+      "❌ Invalid file type. Only JPEG, PNG, and WebP are allowed.",
     );
 
     return false;
@@ -249,7 +249,7 @@ export const validateImageFile = (file: File): boolean => {
 // Generate optimized file name
 export const generateFileName = (
   originalName: string,
-  prefix?: string
+  prefix?: string,
 ): string => {
   const timestamp = Date.now();
   const extension = originalName.split(".").pop();

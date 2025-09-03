@@ -8,7 +8,7 @@ const ImaginaTuVino = () => {
     <Section id="imagina-tu-vino" variant="gray">
       <div data-aos="fade-up">
         <SectionHeader
-          subtitle="Tu Propio Vino, Tu Propia Historia."
+          subtitle="Tu propio vino, tu propia historia."
           title="imagina un vino"
         />
       </div>

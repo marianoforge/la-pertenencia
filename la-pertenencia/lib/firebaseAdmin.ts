@@ -26,7 +26,7 @@ const missingVars = Object.entries(requiredEnvVars)
 if (missingVars.length > 0) {
   console.error("❌ Missing required environment variables:", missingVars);
   throw new Error(
-    `Missing Firebase Admin SDK environment variables: ${missingVars.join(", ")}`
+    `Missing Firebase Admin SDK environment variables: ${missingVars.join(", ")}`,
   );
 }
 

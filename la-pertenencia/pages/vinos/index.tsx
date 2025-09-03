@@ -5,7 +5,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import DefaultLayout from "@/layouts/default";
 import { useWines } from "@/hooks/useWines";
-import { WineFilters } from "@/types/wine";
+import { Wine, WineFilters } from "@/types/wine";
 import WineGridCard from "@/components/wines/WineGridCard";
 import WineHero from "@/components/wines/WineHero";
 import FilterBar from "@/components/FilterBar";
@@ -83,7 +83,7 @@ export default function VinosPage() {
     if (!wines.length) return undefined;
 
     // Buscar un vino destacado, o tomar el primero
-    return wines.find((wine) => wine.featured) || wines[0];
+    return wines.find((wine: Wine) => wine.featured) || wines[0];
   }, [wines]);
 
   // Aplicar ordenamiento a los vinos
@@ -308,7 +308,7 @@ export default function VinosPage() {
                 data-aos="fade-up"
                 data-aos-delay="400"
               >
-                {currentWines.map((wine) => (
+                {currentWines.map((wine: Wine) => (
                   <WineGridCard
                     key={wine.id}
                     wine={wine}
@@ -333,7 +333,7 @@ export default function VinosPage() {
                   data-aos-delay="500"
                 >
                   <button
-                    className="px-6 py-2 bg-neutral-900 text-amber-300 rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
+                    className="px-6 py-2 bg-neutral-900 text-dorado-light rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
                     disabled={currentPage === 0}
                     onClick={goToPreviousPage}
                   >
@@ -357,7 +357,7 @@ export default function VinosPage() {
                   </div>
 
                   <button
-                    className="px-6 py-2 bg-neutral-900 text-amber-300 rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
+                    className="px-6 py-2 bg-neutral-900 text-dorado-light rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
                     disabled={currentPage === totalPages - 1}
                     onClick={goToNextPage}
                   >

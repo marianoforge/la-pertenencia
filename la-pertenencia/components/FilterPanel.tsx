@@ -326,7 +326,7 @@ const FilterPanel = () => {
                 className="flex-1 h-10 px-4 py-2 bg-neutral-900 rounded-sm flex justify-center items-center hover:bg-neutral-800 transition-colors"
                 onClick={closeFilters}
               >
-                <span className="text-amber-300 text-sm font-medium font-['Lora'] uppercase tracking-[3px]">
+                <span className="text-dorado-light text-sm font-medium font-['Lora'] uppercase tracking-[3px]">
                   Aplicar
                 </span>
               </button>

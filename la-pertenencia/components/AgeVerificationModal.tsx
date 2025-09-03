@@ -45,7 +45,7 @@ const AgeVerificationModal = () => {
             onClick={handleConfirm}
             onKeyDown={(e) => e.key === "Enter" && handleConfirm()}
           >
-            <div className="justify-start text-amber-300 text-base font-medium font-['Lora'] tracking-[3.20px]">
+            <div className="justify-start text-dorado-light text-base font-medium font-['Lora'] tracking-[3.20px]">
               SI
             </div>
           </button>

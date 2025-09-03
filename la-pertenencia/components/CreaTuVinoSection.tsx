@@ -21,7 +21,7 @@ export default function CreaTuVinoSection() {
         <div className="w-full max-w-[1300px] pt-10">
           <div data-aos="fade-up">
             <SectionHeader
-              subtitle="Tu Propio Vino, Tu Propia Historia."
+              subtitle="Tu propio vino, tu propia historia."
               title="imagina un vino"
             />
           </div>

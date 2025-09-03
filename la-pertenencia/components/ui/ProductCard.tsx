@@ -92,7 +92,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             variant="secondary"
             onClick={handleAddToCart}
           >
-            <span className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
+            <span className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase tracking-[8px]">
               agregar
             </span>
             <div className="w-8 h-8 relative rounded-sm">
@@ -151,7 +151,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           variant="secondary"
           onClick={handleAddToCart}
         >
-          <span className="justify-start text-amber-300 text-base font-medium font-['Lora'] uppercase tracking-[8px]">
+          <span className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase tracking-[8px]">
             agregar
           </span>
           <div className="w-8 h-8 relative rounded-sm">
