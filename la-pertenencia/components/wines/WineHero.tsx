@@ -19,7 +19,7 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
     marca: "La Pertenencia",
     bodega: "Bodega La Pertenencia",
     tipo: "Tinto",
-    varietal: "Malbec",
+    varietal: "Malbec y Cabernet Franc",
     maridaje:
       "Armoniza con todo tipo de carnes en diferentes cocciones, bondiola braseada, diversos tipos de risottos.",
     description:
@@ -86,15 +86,15 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
           <div data-aos="zoom-in" data-aos-delay="300">
             <Image
               alt="Botella Vinos"
-              className="absolute rounded-sm top-8 left-20 z-10"
-              height={340}
+              className="absolute rounded-sm top-10 left-14 z-10"
+              height={300}
               src="/images/botellaHeroVinos.png"
-              width={165}
+              width={220}
             />
           </div>
 
           <div
-            className="absolute top-16 left-[280px] z-20 self-stretch px-7 py-5 inline-flex flex-col justify-center items-center gap-1"
+            className="absolute top-16 left-[280px] z-20 self-stretch px-7 py-2 inline-flex flex-col justify-center items-center gap-1"
             data-aos="fade-left"
             data-aos-delay="500"
           >
@@ -103,7 +103,7 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
                 la pertenencia
               </div>
               <div className="self-stretch text-center justify-start text-yellow-700 text-base font-medium font-['Lora'] tracking-[4px]">
-                Malbec
+                Malbec y Cabernet Franc
               </div>
             </div>
             <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-yellow-700" />
@@ -115,7 +115,9 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
             <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-yellow-700" />
             <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5 mt-4">
               <div className="w-64 text-center justify-start text-black text-base font-normal font-['Lora'] italic leading-normal tracking-wide">
-                Un Malbec que equilibra fruta, elegancia y un legado único...
+                Vinos creados para quienes disfrutan cada copa como una
+                experiencia única, con la esencia y pasión que nos representa.
+                ¡Prepárate para descubrirlos!{" "}
               </div>
             </div>
           </div>
