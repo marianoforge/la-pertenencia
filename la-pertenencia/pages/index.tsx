@@ -5,6 +5,7 @@ import ImaginaTuVino from "@/components/ImaginaTuVino";
 import NewsLetterForm from "@/components/NewsLetterForm";
 import CatasMaridajes from "@/components/CatasMaridajes";
 import MembresiaMensual from "@/components/MembresiaMensual";
+import EspacioLaPertenencia from "@/components/EspacioLaPertenencia";
 import Contacto from "@/components/Contacto";
 
 export default function IndexPage() {
@@ -15,6 +16,7 @@ export default function IndexPage() {
       <ImaginaTuVino />
       <NewsLetterForm />
       {/* <Regalos /> */}
+      <EspacioLaPertenencia />
       <CatasMaridajes />
       <MembresiaMensual />
       <Contacto />

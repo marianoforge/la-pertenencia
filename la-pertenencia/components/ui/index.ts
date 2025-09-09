@@ -8,3 +8,4 @@ export {
 export { EventCard, type EventCardProps } from "./EventCard";
 export { Input, type InputProps } from "./Input";
 export { Section, type SectionProps } from "./Section";
+export { ComboCard, type ComboCardProps } from "./ComboCard";
