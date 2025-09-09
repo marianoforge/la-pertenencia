@@ -57,7 +57,7 @@ const WineDetail = ({ wine, onAddToCart }: WineDetailProps) => {
   // Calculate discount percentage (mockup for now)
   const originalPrice = Math.round(wine.price * 1.25); // Simulated original price
   const discountPercentage = Math.round(
-    ((originalPrice - wine.price) / originalPrice) * 100,
+    ((originalPrice - wine.price) / originalPrice) * 100
   );
 
   return (

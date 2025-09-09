@@ -11,13 +11,15 @@ const FilterPanel = () => {
   // Estados locales para los dropdowns
   const [showBodegaDropdown, setShowBodegaDropdown] = useState(false);
   const [showMarcaDropdown, setShowMarcaDropdown] = useState(false);
-  const [showTipoDropdown, setShowTipoDropdown] = useState(false);
+  const [showColorDropdown, setShowColorDropdown] = useState(false);
+  const [showEspumanteDropdown, setShowEspumanteDropdown] = useState(false);
   const [showVarietalDropdown, setShowVarietalDropdown] = useState(false);
 
   // Estados locales para las selecciones
   const [selectedBodega, setSelectedBodega] = useState("");
   const [selectedMarca, setSelectedMarca] = useState("");
-  const [selectedTipo, setSelectedTipo] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedEspumante, setSelectedEspumante] = useState("");
   const [selectedVarietal, setSelectedVarietal] = useState("");
 
   // Hook para obtener opciones dinámicas
@@ -26,7 +28,8 @@ const FilterPanel = () => {
   // Opciones para los filtros (con fallback mientras cargan)
   const bodegas = (filterOptions as any)?.bodegas || [];
   const marcas = (filterOptions as any)?.marcas || [];
-  const tipos = (filterOptions as any)?.tipos || [];
+  const colores = ["Tinto", "Blanco", "Rosado"];
+  const espumantes = ["Sí", "No"];
   const varietales = (filterOptions as any)?.varietales || [];
 
   const handleFilterChange = (filterType: string, value: string) => {
@@ -43,10 +46,16 @@ const FilterPanel = () => {
         newFilters.marca = value || undefined;
         setShowMarcaDropdown(false);
         break;
-      case "tipo":
-        setSelectedTipo(value);
+      case "color":
+        setSelectedColor(value);
         newFilters.category = value || undefined;
-        setShowTipoDropdown(false);
+        setShowColorDropdown(false);
+        break;
+      case "espumante":
+        setSelectedEspumante(value);
+        // Mapear "Sí" a "Espumante" y "No" a filtro vacío
+        newFilters.category = value === "Sí" ? "Espumante" : undefined;
+        setShowEspumanteDropdown(false);
         break;
       case "varietal":
         setSelectedVarietal(value);
@@ -61,7 +70,8 @@ const FilterPanel = () => {
   const handleClearFilters = () => {
     setSelectedBodega("");
     setSelectedMarca("");
-    setSelectedTipo("");
+    setSelectedColor("");
+    setSelectedEspumante("");
     setSelectedVarietal("");
     clearFilters();
   };
@@ -221,21 +231,21 @@ const FilterPanel = () => {
                 </div>
               </div>
 
-              {/* Tipo Filter */}
+              {/* Color Filter */}
               <div className="mb-6">
                 <div className="relative">
                   <button
                     className="w-full px-4 py-3 bg-white border border-neutral-400 rounded-sm text-left flex justify-between items-center hover:border-neutral-600 transition-colors"
-                    onClick={() => setShowTipoDropdown(!showTipoDropdown)}
+                    onClick={() => setShowColorDropdown(!showColorDropdown)}
                   >
                     <span className="text-neutral-900 font-['Lora'] text-sm">
-                      {selectedTipo || "Tipo"}
+                      {selectedColor || "Color"}
                     </span>
                     <DropdownIcon />
                   </button>
 
                   <AnimatePresence>
-                    {showTipoDropdown && (
+                    {showColorDropdown && (
                       <motion.div
                         animate={{ opacity: 1, y: 0, scaleY: 1 }}
                         className="absolute top-full left-0 right-0 bg-white border border-neutral-400 border-t-0 rounded-b-sm z-10 max-h-40 overflow-y-auto"
@@ -249,17 +259,70 @@ const FilterPanel = () => {
                       >
                         <button
                           className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm hover:bg-neutral-100 transition-colors"
-                          onClick={() => handleFilterChange("tipo", "")}
+                          onClick={() => handleFilterChange("color", "")}
                         >
-                          Todos los tipos
+                          Todos los colores
                         </button>
-                        {tipos.map((tipo: string) => (
+                        {colores.map((color: string) => (
                           <button
-                            key={tipo}
+                            key={color}
                             className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm hover:bg-neutral-100 transition-colors"
-                            onClick={() => handleFilterChange("tipo", tipo)}
+                            onClick={() => handleFilterChange("color", color)}
                           >
-                            {tipo}
+                            {color}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Espumante Filter */}
+              <div className="mb-6">
+                <div className="relative">
+                  <button
+                    className="w-full px-4 py-3 bg-white border border-neutral-400 rounded-sm text-left flex justify-between items-center hover:border-neutral-600 transition-colors"
+                    onClick={() =>
+                      setShowEspumanteDropdown(!showEspumanteDropdown)
+                    }
+                  >
+                    <span className="text-neutral-900 font-['Lora'] text-sm">
+                      {selectedEspumante
+                        ? `Espumante: ${selectedEspumante}`
+                        : "Espumante"}
+                    </span>
+                    <DropdownIcon />
+                  </button>
+
+                  <AnimatePresence>
+                    {showEspumanteDropdown && (
+                      <motion.div
+                        animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                        className="absolute top-full left-0 right-0 bg-white border border-neutral-400 border-t-0 rounded-b-sm z-10 max-h-40 overflow-y-auto"
+                        exit={{ opacity: 0, y: -10, scaleY: 0 }}
+                        initial={{ opacity: 0, y: -10, scaleY: 0 }}
+                        transition={{
+                          duration: 0.2,
+                          ease: [0.25, 0.46, 0.45, 0.94],
+                          transformOrigin: "top",
+                        }}
+                      >
+                        <button
+                          className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm hover:bg-neutral-100 transition-colors"
+                          onClick={() => handleFilterChange("espumante", "")}
+                        >
+                          Todos
+                        </button>
+                        {espumantes.map((espumante: string) => (
+                          <button
+                            key={espumante}
+                            className="w-full px-4 py-2 text-left text-neutral-900 font-['Lora'] text-sm hover:bg-neutral-100 transition-colors"
+                            onClick={() =>
+                              handleFilterChange("espumante", espumante)
+                            }
+                          >
+                            {espumante}
                           </button>
                         ))}
                       </motion.div>

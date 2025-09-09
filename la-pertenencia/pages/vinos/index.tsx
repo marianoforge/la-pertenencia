@@ -12,6 +12,7 @@ import FilterBar from "@/components/FilterBar";
 import FilterPanel from "@/components/FilterPanel";
 import { useFilterStore } from "@/stores/useFilterStore";
 import Contacto from "@/components/Contacto";
+import Combos from "@/components/wines/Combos";
 
 export default function VinosPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,7 +35,7 @@ export default function VinosPage() {
       ...storeFilters,
       ...localFilters, // Local filters (search) should override store filters
     }),
-    [localFilters, storeFilters],
+    [localFilters, storeFilters]
   );
 
   const { data: wines = [], isLoading, error } = useWines(combinedFilters);
@@ -102,7 +103,7 @@ export default function VinosPage() {
       case "newest":
         return winesCopy.sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
       case "relevance":
       default:
@@ -144,7 +145,7 @@ export default function VinosPage() {
   return (
     <DefaultLayout>
       <div className="w-full mx-auto px-4 md:px-2 lg:px-2 bg-white shadow-md">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 py-[5px] rounded-sm overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 py-[10px] rounded-sm overflow-hidden">
           {/* Breadcrumb Navigation */}
           <nav
             aria-label="Breadcrumb"
@@ -216,7 +217,7 @@ export default function VinosPage() {
                 "Vino agregado al carrito:",
                 wine.marca,
                 "Cantidad:",
-                quantity,
+                quantity
               );
             }}
           />
@@ -318,7 +319,7 @@ export default function VinosPage() {
                         "Vino agregado al carrito:",
                         wine.marca,
                         "Cantidad:",
-                        quantity,
+                        quantity
                       );
                     }}
                   />
@@ -369,6 +370,7 @@ export default function VinosPage() {
           )}
         </div>
       </section>
+      <Combos />
       <Contacto />
       <FilterPanel />
     </DefaultLayout>

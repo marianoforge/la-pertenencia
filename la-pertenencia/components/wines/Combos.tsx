@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-import { Section, SectionHeader, Button, ComboCard } from "./ui";
+import { Section, SectionHeader, Button, ComboCard } from "../ui";
 
 import { Wine } from "@/types/wine";
 import { Combo } from "@/types/combo";
@@ -92,12 +92,9 @@ const Recomendados = () => {
   // No loading state needed for static combo data
 
   return (
-    <Section className="!px-0" id="recomendados" variant="default">
+    <Section className="!px-0 !py-16" id="combos" variant="default">
       <div data-aos="fade-up">
-        <SectionHeader
-          subtitle="Elegidos con el Corazón"
-          title="vinos recomendados"
-        />
+        <SectionHeader subtitle="Combinaciones únicas" title="nuestroscombos" />
       </div>
 
       {/* NEW: Combo Cards Carousel Container */}
@@ -128,7 +125,7 @@ const Recomendados = () => {
               ))}
           </div>
         </div>
-        V{/* Navigation Controls - Only show if there's more than 1 page */}
+        {/* Navigation Controls - Only show if there's more than 1 page */}
         {totalPages > 1 && (
           <div className="flex flex-col items-center gap-4 mt-4">
             {/* Navigation with arrows and numbers */}
@@ -216,32 +213,6 @@ const Recomendados = () => {
         // Original wine carousel content would go here
       )}
       */}
-
-      {/* Description and button section */}
-      <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-2">
-        <div className="text-center text-neutral-900 text-lg font-normal font-['Lora'] italic leading-tight tracking-wide">
-          Descubrimos etiquetas únicas que quizás todavía no hayas probado.
-          <br />
-          Nuestro deseo es simple: que cada vino te sorprenda, te emocione y te
-          revele algo distinto. Todo comienza al abrir una botella.
-        </div>
-        {/* Button for desktop - centered */}
-        <div className="min-[481px]:block hidden">
-          <Link href="/vinos">
-            <Button size="sm" variant="primary">
-              catálogo completo
-            </Button>
-          </Link>
-        </div>
-        {/* Button for mobile - full width outside centered container */}
-        <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
-          <Link className="block w-full" href="/vinos">
-            <Button size="sm" variant="primary">
-              catálogo completo
-            </Button>
-          </Link>
-        </div>
-      </div>
     </Section>
   );
 };
