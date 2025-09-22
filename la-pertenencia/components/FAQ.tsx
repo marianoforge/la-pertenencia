@@ -7,26 +7,27 @@ const FAQ = () => {
     {
       question: "¿Hacen envíos a todo el país?",
       answer:
-        "Sí, realizamos envíos a todo el territorio argentino a través de servicios logísticos confiables. Al finalizar tu compra, podrás ver el costo y tiempo estimado de entrega según tu ubicación.",
+        "Sí, realizamos envíos a todo el territorio argentino a través de servicios logísticos confiables. \n\nEnvíos gratuitos a partir de la compra de $ 90.000 en Caba y Gran Buenos Aires (nos reservamos el derecho a modificar este monto).\nInterior del País, hacenos tu consulta.\n\nAl finalizar tu compra, podrás ver el costo y tiempo estimado de entrega según tu ubicación.",
     },
     {
       question: "¿Cuál es el tiempo de entrega?",
       answer:
-        "El tiempo de entrega estimado es de 3 a 7 días hábiles, dependiendo de la localidad. Te enviaremos un número de seguimiento para que puedas ver el estado de tu pedido.",
+        "El tiempo de entrega estimado es de 3 a 7 días hábiles, dependiendo de la localidad. Te enviaremos un número de seguimiento para que puedas ver el estado de tu pedido.\n\nMáximo 48 hs",
     },
     {
       question: "¿Puedo programar una entrega para un día específico?",
       answer:
-        "Si tenés un pedido especial o querés enviar un regalo, escribinos a info@lapertenencia.com antes de realizar la compra y lo coordinamos.",
+        "En algunos casos sí. Si tenés un pedido especial o querés enviar un regalo, escribinos a info@lapertenencia.com antes de finalizar la compra y lo coordinamos.",
     },
     {
       question: "¿Hay un monto mínimo de compra?",
-      answer: "No. Podés comprar desde una sola botella hasta cajas completas.",
+      answer:
+        "La cantidad mínima de compra son 3 botellas (no necesariamente del mismo vino)",
     },
     {
       question: "¿Venden vinos para regalar?",
       answer:
-        'Sí, ofrecemos presentaciones especiales para regalar y también kits personalizados. Podés consultarnos o visitar la sección "Regalos Empresariales".',
+        "Sí, ofrecemos presentaciones especiales para regalar, y también kits personalizados. Consultanos.",
     },
     {
       question: "¿Se puede comprar sin ser mayor de edad?",
@@ -36,14 +37,14 @@ const FAQ = () => {
     {
       question: "¿Qué pasa si el vino llega dañado?",
       answer:
-        "Si el producto llega roto o en mal estado, escribinos dentro de las 48 hs a info@lapertenencia.com con fotos del estado del paquete y lo solucionamos rápidamente.",
+        "Si el producto llega roto o en mal estado, escribinos dentro de las 48 hs a info@lapertenencia.com con fotos del estado del paquete y lo solucionamos.",
     },
   ];
 
   return (
     <Section className="bg-white" id="preguntas-frecuentes">
       <SectionHeader
-        subtitle="Preguntas Frecuentes"
+        subtitle="PREGUNTAS FRECUENTES"
         subtitleClassName="text-neutral-900 text-2xl md:text-3xl lg:text-4xl font-medium font-['Lora'] tracking-[6px] md:tracking-[8px] lg:tracking-[10px] mb-8"
         title=""
       />
@@ -61,7 +62,7 @@ const FAQ = () => {
 
               {/* Answer */}
               <div className="w-full pt-1.5">
-                <div className="w-full justify-start text-neutral-900 text-sm md:text-base font-normal font-['Lora'] leading-normal tracking-wide">
+                <div className="w-full justify-start text-neutral-900 text-sm md:text-base font-normal font-['Lora'] leading-normal tracking-wide whitespace-pre-line">
                   {faq.answer.includes("info@lapertenencia.com") ? (
                     <>
                       {faq.answer.split("info@lapertenencia.com")[0]}

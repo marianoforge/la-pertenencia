@@ -22,7 +22,7 @@ export default function MembresiasSection() {
           <img
             alt="Membresías - Background"
             className="w-full h-full object-cover object-[87%_center] absolute inset-0"
-            src="/images/membresia_headerbg.png"
+            src="/images/membresia_headerbg_new.png"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
         </div>
