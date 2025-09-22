@@ -3,10 +3,26 @@ import React from "react";
 import { Section, SectionHeader } from "./ui";
 
 export default function CreaTuVinoSection() {
+  const handleWhatsAppClick = () => {
+    const message = encodeURIComponent("Quiero crear mi vino");
+    const whatsappUrl = `https://wa.me/5491161525562?text=${message}`;
+
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <>
       {/* Hero Section with Background Image */}
       <Section className="!p-0" variant="default">
+        <div className="w-full max-w-[1300px] pt-10">
+          <div data-aos="fade-up">
+            <SectionHeader
+              className="mb-10"
+              subtitle="Tu propio vino, tu propia historia."
+              title="imagina un vino"
+            />
+          </div>
+        </div>
         <div
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
           data-aos="fade-up"
@@ -17,14 +33,6 @@ export default function CreaTuVinoSection() {
             src="/images/crea-tu-vino-bg.jpg"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
-        </div>
-        <div className="w-full max-w-[1300px] pt-10">
-          <div data-aos="fade-up">
-            <SectionHeader
-              subtitle="Tu propio vino, tu propia historia."
-              title="imagina un vino"
-            />
-          </div>
         </div>
       </Section>
 
@@ -94,7 +102,10 @@ export default function CreaTuVinoSection() {
             </ul>
 
             {/* Button for desktop - inside left content */}
-            <button className="min-[481px]:flex hidden max-[380px]:px-4 px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors">
+            <button
+              className="min-[481px]:flex hidden max-[380px]:px-4 px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors cursor-pointer"
+              onClick={handleWhatsAppClick}
+            >
               <div className="text-neutral-900 text-sm md:text-base font-medium font-['Lora'] uppercase max-[380px]:tracking-[3px] tracking-[6px] md:tracking-[8px]">
                 Quiero crear mi vino
               </div>
@@ -127,7 +138,10 @@ export default function CreaTuVinoSection() {
         </div>
 
         {/* Button for mobile - outside flex container to be full width */}
-        <button className="max-[480px]:flex hidden w-full max-[380px]:px-4 px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors">
+        <button
+          className="max-[480px]:flex hidden w-full max-[380px]:px-4 px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors cursor-pointer"
+          onClick={handleWhatsAppClick}
+        >
           <div className="text-neutral-900 text-sm md:text-base font-medium font-['Lora'] uppercase max-[380px]:tracking-[3px] tracking-[6px] md:tracking-[8px]">
             Quiero crear mi vino
           </div>

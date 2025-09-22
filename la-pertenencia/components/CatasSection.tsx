@@ -7,24 +7,24 @@ export default function CatasSection() {
     <>
       {/* Hero Section with Background Image */}
       <Section className="!p-0" variant="default">
+        <div className="w-full max-w-[1300px] pt-10 mb-10">
+          <div data-aos="fade-up">
+            <SectionHeader
+              subtitle="Encuentros que conectan"
+              title="Catas y maridajes"
+            />
+          </div>
+        </div>
         <div
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
           data-aos="fade-up"
         >
           <img
             alt="Catas y Maridajes - Background"
-            className="w-full h-full object-cover object-[88%_center] absolute inset-0"
-            src="/images/catas_hederbg.png"
+            className="w-full h-full object-cover object-[88%_88%] absolute inset-0"
+            src="/images/catas_hederbg_new.png"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
-        </div>
-        <div className="w-full max-w-[1300px] pt-10">
-          <div data-aos="fade-up">
-            <SectionHeader
-              subtitle="Catas y maridajes"
-              title="Encuentros que conectan"
-            />
-          </div>
         </div>
       </Section>
 
@@ -87,7 +87,7 @@ export default function CatasSection() {
 
             <a
               className="px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 flex justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors"
-              href="https://wa.me/5491161525562?text=Hola!%20Me%20interesa%20participar%20en%20las%20catas%20y%20maridajes%20de%20La%20Pertenencia.%20¿Podrían%20darme%20más%20información?"
+              href="https://wa.me/5491161525562?text=Hola!%20Me%20interesa%20participar%20en%20las%20catas?"
               rel="noopener noreferrer"
               target="_blank"
             >

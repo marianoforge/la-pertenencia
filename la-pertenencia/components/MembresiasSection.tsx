@@ -7,6 +7,14 @@ export default function MembresiasSection() {
     <>
       {/* Hero Section with Background Image */}
       <Section className="!p-0" variant="default">
+        <div className="w-full max-w-[1300px] pt-10 mb-10">
+          <div data-aos="fade-up">
+            <SectionHeader
+              subtitle="Una caja. Tres vinos. Un Ritual."
+              title="Membresía mensual"
+            />
+          </div>
+        </div>
         <div
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
           data-aos="fade-up"
@@ -17,14 +25,6 @@ export default function MembresiasSection() {
             src="/images/membresia_headerbg.png"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
-        </div>
-        <div className="w-full max-w-[1300px] pt-10">
-          <div data-aos="fade-up">
-            <SectionHeader
-              subtitle="Una caja. Tres vinos. Cada mes."
-              title="Membresías"
-            />
-          </div>
         </div>
       </Section>
 
@@ -85,7 +85,7 @@ export default function MembresiasSection() {
 
             <a
               className="px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 flex justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors"
-              href="https://wa.me/5491161525562?text=Hola!%20Me%20interesa%20sumarme%20a%20la%20membresía%20de%20La%20Pertenencia.%20¿Podrían%20darme%20más%20información%20sobre%20los%20planes?"
+              href="https://wa.me/5491161525562?text=Hola!%20Quiero%20mi%20membresía"
               rel="noopener noreferrer"
               target="_blank"
             >
