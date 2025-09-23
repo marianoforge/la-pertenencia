@@ -26,7 +26,7 @@ const EventCard: React.FC<EventCardProps> = ({
         "bg-neutral-50 rounded-lg outline outline-1 outline-offset-[-1px] outline-amber-300 overflow-hidden",
         // Mobile: layout vertical, SM+: layout horizontal
         "flex flex-col sm:flex-row items-start gap-0 sm:gap-5 md:gap-6 lg:gap-6",
-        className,
+        className
       )}
     >
       {/* Image */}
@@ -39,11 +39,11 @@ const EventCard: React.FC<EventCardProps> = ({
       {/* Content */}
       <div className="w-full flex flex-col justify-start items-start gap-2 p-2.5 sm:p-0 sm:pt-6 sm:pr-5 md:pr-7 lg:pr-0">
         {/* Title and Description */}
-        <div className="flex flex-col justify-start items-start gap-4">
+        <div className="flex flex-col justify-start items-start gap-2">
           <div className="text-neutral-900 text-sm md:text-base font-semibold font-['Lora'] uppercase tracking-[3.50px] md:tracking-[4px]">
             {title}
           </div>
-          <div className="text-yellow-700 text-sm md:text-base font-normal font-['Lora'] tracking-wide sm:w-full md:w-[515px] lg:w-[515px]">
+          <div className="text-yellow-700 text-sm md:text-base font-normal font-['Lora'] tracking-wide sm:w-full md:w-[515px] lg:w-[515px] px-2">
             {description}
           </div>
         </div>
