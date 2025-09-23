@@ -65,13 +65,13 @@ export default function DefaultLayout({
                     Catalogo de Vinos
                   </Link>
                   <br />
-                  <Link
+                  {/* <Link
                     className="hover:text-yellow-700 transition-colors"
                     href="/#regalos"
                   >
                     Regalos Empresariales
                   </Link>
-                  <br />
+                  <br /> */}
                   <Link
                     className="hover:text-yellow-700 transition-colors"
                     href="/membresias"

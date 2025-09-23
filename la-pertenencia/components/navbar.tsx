@@ -7,7 +7,7 @@ import CartButton from "@/components/CartButton";
 
 const experienciasItems = [
   { name: "CREA TU VINO", href: "/crea-tu-vino" },
-  { name: "ESPACIO LA PERTENENCIA", href: "/espacio-la-pertenencia" },
+  // { name: "ESPACIO LA PERTENENCIA", href: "/espacio-la-pertenencia" },
   { name: "CATAS", href: "/catas" },
   { name: "MEMBRESÍAS", href: "/membresias" },
 ];
@@ -65,7 +65,7 @@ export const Navbar = () => {
                     onMouseLeave={() => setIsExperienciasOpen(false)}
                   >
                     <button
-                      className="text-white font-normal font-['Lora'] hover:text-dorado-light transition-colors whitespace-nowrap flex items-center gap-1"
+                      className="text-white font-normal font-['Lora'] hover:text-dorado-light transition-colors whitespace-nowrap flex items-center"
                       style={{
                         fontSize: "clamp(0.625rem, 0.8vw, 0.75rem)",
                         letterSpacing: "clamp(0.15rem, 0.3vw, 0.25rem)",
@@ -114,7 +114,7 @@ export const Navbar = () => {
                   </div>
                 ) : (
                   <NextLink
-                    className="text-white font-normal font-['Lora'] hover:text-dorado-light transition-colors whitespace-nowrap"
+                    className="text-white font-normal font-['Lora'] hover:text-dorado-light transition-colors whitespace-nowrap flex items-center"
                     href={item.href}
                     style={{
                       fontSize: "clamp(0.625rem, 0.8vw, 0.75rem)",
@@ -251,7 +251,7 @@ export const Navbar = () => {
                                     {dropdownItem.name}
                                   </NextLink>
                                 </motion.div>
-                              ),
+                              )
                             )}
                           </motion.div>
                         )}

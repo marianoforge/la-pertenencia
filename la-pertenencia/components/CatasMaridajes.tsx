@@ -8,7 +8,7 @@ const CatasMaridajes = () => {
       id: 1,
       title: "MARIDAJE",
       description:
-        "Lorem ipsum dolor sit amet consectetur. Eget in scelerisque quis sit amet nulla.",
+        "En La Pertenencia creemos que cada vino tiene una historia, y cada plato, un capítulo que la complementa. Buscamos esa armonía perfecta donde aromas, texturas se entrelazan.",
       date: "28 Junio, 2025",
       time: "20:30",
       location: "Palermo - CABA",
@@ -19,7 +19,7 @@ const CatasMaridajes = () => {
       id: 2,
       title: "CATAS TEMATICAS",
       description:
-        "Lorem ipsum dolor sit amet consectetur. Eget in scelerisque quis sit amet nulla.",
+        "Cada encuentro gira en torno a un eje, puede ser una región vitivinícola, una cepa, una bodega o incluso una añada especial para sumergirte en un mundo de matices y sensaciones.",
       date: "28 Junio, 2025",
       time: "20:30",
       location: "Palermo - CABA",
@@ -30,7 +30,7 @@ const CatasMaridajes = () => {
       id: 3,
       title: "COCTELERIA",
       description:
-        "Lorem ipsum dolor sit amet consectetur. Eget in scelerisque quis sit amet nulla.",
+        "En La Pertenencia exploramos recetas que van desde clásicos con un toque innovador, hasta creaciones propias que sorprenden a todos los sentidos.",
       date: "28 Junio, 2025",
       time: "20:30",
       location: "Palermo - CABA",

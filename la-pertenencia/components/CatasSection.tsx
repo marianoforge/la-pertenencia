@@ -24,7 +24,7 @@ export default function CatasSection() {
             className="w-full h-full object-cover object-[88%_88%] absolute inset-0"
             src="/images/catas_hederbg_new.png"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/5 to-transparent" />
         </div>
       </Section>
 

@@ -20,7 +20,7 @@ const Hero = () => {
         <Image
           fill
           alt="Hero"
-          className="object-bottom object-cover"
+          className="object-[center_70%]"
           src="/images/bg-hero.png"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent lg:bg-gradient-to-l lg:from-black/10 lg:via-black/0 lg:to-transparent" />

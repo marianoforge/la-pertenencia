@@ -128,7 +128,7 @@ const Recomendados = () => {
               ))}
           </div>
         </div>
-        V{/* Navigation Controls - Only show if there's more than 1 page */}
+        {/* Navigation Controls - Only show if there's more than 1 page */}
         {totalPages > 1 && (
           <div className="flex flex-col items-center gap-4 mt-4">
             {/* Navigation with arrows and numbers */}
