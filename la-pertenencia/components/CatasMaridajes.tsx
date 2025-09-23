@@ -1,4 +1,5 @@
 import React from "react";
+import NextLink from "next/link";
 
 import { Section, SectionHeader, EventCard, Button } from "./ui";
 
@@ -80,20 +81,24 @@ const CatasMaridajes = () => {
             />
           </div>
           <div className="w-full justify-center items-center lg:items-stretch mt-4 min-[481px]:flex hidden">
-            <Button
-              className="w-full"
-              style={{ minWidth: "100%" }}
-              variant="primary"
-            >
-              todos los eventos
-            </Button>
+            <NextLink className="w-full" href="/catas">
+              <Button
+                className="w-full"
+                style={{ minWidth: "100%" }}
+                variant="primary"
+              >
+                todos los eventos
+              </Button>
+            </NextLink>
           </div>
         </div>
       </div>
 
       {/* Button for mobile - outside containers to be full width */}
       <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
-        <Button variant="primary">todos los eventos</Button>
+        <NextLink className="w-full" href="/catas">
+          <Button variant="primary">todos los eventos</Button>
+        </NextLink>
       </div>
     </Section>
   );
