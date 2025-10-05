@@ -26,7 +26,8 @@ interface WineForm {
     | "Blend"
     | "Rosado"
     | "Espumante"
-    | "Naranjo";
+    | "Naranjo"
+    | "Combo";
   varietal: string;
   maridaje: string;
   description: string;
@@ -50,6 +51,7 @@ const WINE_TYPES = [
   "Rosado",
   "Espumante",
   "Naranjo",
+  "Combo",
 ] as const;
 
 const WINE_VARIETALS = [
@@ -530,7 +532,8 @@ export default function WineAdminPanel() {
                           | "Blend"
                           | "Rosado"
                           | "Espumante"
-                          | "Naranjo",
+                          | "Naranjo"
+                          | "Combo"
                       )
                     }
                   >

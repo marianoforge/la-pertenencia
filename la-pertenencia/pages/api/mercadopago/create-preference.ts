@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { NextApiRequest, NextApiResponse } from "next";
 import { MercadoPagoConfig, Preference } from "mercadopago";
 
@@ -5,14 +6,14 @@ import { getReturnUrls } from "../../../lib/mercadopago";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Método no permitido" });
   }
 
   try {
-    const { items, payer } = req.body;
+    const { items } = req.body;
 
     // Detectar si usar credenciales de TEST o producción
     const useTestCredentials = !!process.env.MERCADOPAGO_ACCESS_TOKEN_TEST;

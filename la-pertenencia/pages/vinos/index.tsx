@@ -370,7 +370,7 @@ export default function VinosPage() {
           )}
         </div>
       </section>
-      <Combos />
+      <Combos title="nuestros combos" subtitle="Combinaciones únicas" />
       <Contacto />
       <FilterPanel />
     </DefaultLayout>

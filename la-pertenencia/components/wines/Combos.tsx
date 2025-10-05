@@ -1,19 +1,29 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 
-import { Section, SectionHeader, Button, ComboCard } from "../ui";
+import { Section, SectionHeader, ComboCard, Button } from "../ui";
 
 import { Wine } from "@/types/wine";
 import { Combo } from "@/types/combo";
-import { combosData } from "@/data/combos";
+import { useFeaturedCombos } from "@/hooks/useCombos";
 import { useCartStore } from "@/stores/useCartStore";
 
-const Recomendados = () => {
+interface CombosProps {
+  title?: string;
+  subtitle?: string;
+}
+
+const Recomendados = ({
+  title = "recomendados",
+  subtitle = "Elegidos con el Corazón",
+}: CombosProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const { addItem } = useCartStore();
 
-  // NEW: Use combos data instead of wines
-  const displayCombos = combosData;
+  // Obtener combos destacados desde la base de datos
+  const { data: featuredCombos = [], isLoading, error } = useFeaturedCombos();
+
+  // Usar combos destacados, si no hay ninguno usar todos los combos disponibles
+  const displayCombos = featuredCombos;
 
   // Calcular combos por página basado en el tamaño de pantalla (2 combos por página)
   const combosPerPage = 2;
@@ -28,34 +38,33 @@ const Recomendados = () => {
     }
   }, [totalPages, currentPage]);
 
-  // NEW: Handle combo add to cart
+  // Handle combo add to cart - agregar como una unidad
   const handleAddComboToCart = (combo: Combo, quantity: number) => {
-    // For now, we'll add each wine in the combo individually to the cart
-    // In a real implementation, you might want to create a "combo" item type
-    combo.wines.forEach((comboWine) => {
-      // Create a temporary wine object for cart compatibility
-      const tempWine: Wine = {
-        id: `${combo.id}-${comboWine.id}`,
-        marca: `${combo.name} - ${comboWine.marca}`,
-        bodega: "Combo",
-        tipo: "Tinto",
-        varietal: "Combo",
-        price: combo.price / combo.wines.length, // Distribute price evenly
-        cost: 0,
-        iva: 0,
-        stock: 10,
-        region: "Argentina",
-        vintage: 2023,
-        alcohol: 14,
-        image: comboWine.image,
-        featured: true,
-        winery: "La Pertenencia",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
+    // Crear un objeto Wine que represente el combo completo
+    const comboAsWine: Wine = {
+      id: combo.id,
+      marca: combo.name,
+      bodega: "Combo",
+      tipo: "Combo", // Tipo especial para combos
+      varietal: `Combo de ${combo.wines.length} vinos`,
+      price: combo.price,
+      cost: 0,
+      iva: 0,
+      stock: 10,
+      region: "Argentina",
+      vintage: new Date().getFullYear(),
+      alcohol: 14,
+      image: combo.image,
+      featured: combo.featured,
+      winery: "La Pertenencia",
+      description: `Combo incluye: ${combo.wines.map((wine) => wine.marca).join(", ")}`,
+      maridaje: `Combo de ${combo.wines.length} vinos seleccionados`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
 
-      addItem(tempWine, quantity);
-    });
+    // Agregar el combo como una sola unidad al carrito
+    addItem(comboAsWine, quantity);
   };
 
   // LEGACY: Keep old wine handling (commented for reference)
@@ -89,20 +98,47 @@ const Recomendados = () => {
     setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
   };
 
-  // No loading state needed for static combo data
+  // Mostrar loading mientras cargan los combos
+  if (isLoading) {
+    return (
+      <Section className="!px-0 !py-16" id="combos" variant="default">
+        <div data-aos="fade-up">
+          <SectionHeader subtitle={subtitle} title={title} />
+        </div>
+        <div className="flex justify-center items-center py-16">
+          <div className="text-lg text-gray-600">Cargando combos...</div>
+        </div>
+      </Section>
+    );
+  }
+
+  // Mostrar error si hay problemas cargando
+  if (error) {
+    return (
+      <Section className="!px-0 !py-16" id="combos" variant="default">
+        <div data-aos="fade-up">
+          <SectionHeader subtitle={subtitle} title={title} />
+        </div>
+        <div className="flex justify-center items-center py-16">
+          <div className="text-lg text-red-600">Error al cargar combos</div>
+        </div>
+      </Section>
+    );
+  }
+
+  // No mostrar la sección si no hay combos destacados
+  if (displayCombos.length === 0) {
+    return null;
+  }
 
   return (
     <Section className="!px-0 !py-16" id="combos" variant="default">
       <div data-aos="fade-up">
-        <SectionHeader subtitle="Combinaciones únicas" title="nuestroscombos" />
+        <SectionHeader subtitle={subtitle} title={title} />
       </div>
 
       {/* NEW: Combo Cards Carousel Container */}
-      <div
-        className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5 overflow-hidden"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
+      <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 inline-flex flex-col justify-start items-center gap-2.5">
         {/* Combo Cards Display - 2 cards per page */}
         <div className="pt-5 pb-2.5 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 justify-items-center">
@@ -111,13 +147,16 @@ const Recomendados = () => {
                 currentPage * combosPerPage,
                 currentPage * combosPerPage + combosPerPage
               )
-              .map((combo) => (
+              .map((combo, index) => (
                 <div
                   key={combo.id}
-                  className="flex justify-center max-w-full overflow-hidden"
+                  className="flex justify-center w-full px-4 sm:px-0"
+                  data-aos="fade-up"
+                  data-aos-delay={300 + index * 100}
+                  data-aos-once="true"
                 >
                   <ComboCard
-                    className="max-w-[95vw] sm:max-w-none"
+                    className="w-full sm:w-auto"
                     combo={combo}
                     onAddToCart={handleAddComboToCart}
                   />
@@ -213,6 +252,28 @@ const Recomendados = () => {
         // Original wine carousel content would go here
       )}
       */}
+
+      {/* Texto descriptivo y botón */}
+      <div className="w-full max-w-[1300px] pt-2.5 flex flex-col justify-center items-center gap-7 px-4 sm:px-0 mt-2">
+        <div className="text-center text-neutral-900 text-lg font-normal font-['Lora'] italic leading-tight tracking-wide">
+          Descubrimos combinaciones únicas que quizás todavía no hayas probado.
+          <br />
+          Nuestro deseo es simple: que cada combo te sorprenda, te emocione y te
+          revele algo distinto. Todo comienza al abrir una botella.
+        </div>
+        {/* Button for desktop - centered */}
+        <div className="min-[481px]:block hidden">
+          <Button size="lg" variant="primary">
+            <a href="/vinos#combos">ver todos</a>
+          </Button>
+        </div>
+        {/* Button for mobile - full width outside centered container */}
+        <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
+          <Button className="w-full" size="lg" variant="primary">
+            <a href="/vinos#combos">ver todos</a>
+          </Button>
+        </div>
+      </div>
     </Section>
   );
 };
