@@ -232,6 +232,34 @@ export default function VinosPage() {
           <FilterBar />
         </div>
 
+        {/* Minimum Sale Banner */}
+        <div
+          className="w-full max-w-[1300px] mx-auto px-4 md:px-6 lg:px-8"
+          data-aos="fade-up"
+          data-aos-delay="250"
+        >
+          <div className="w-full bg-amber-300 py-3 px-6 flex justify-center items-center gap-4 rounded-sm relative">
+            {/* Left exclamation icon */}
+            <div className="absolute left-4 flex-shrink-0 w-7 h-7 md:w-8 md:h-8 bg-neutral-900 rounded-full flex items-center justify-center">
+              <span className="text-amber-300 text-lg md:text-xl font-bold font-['Lora']">
+                !
+              </span>
+            </div>
+
+            {/* Text */}
+            <p className="text-neutral-900 text-sm md:text-base font-semibold font-['Lora'] uppercase tracking-[3px] md:tracking-[4px] text-center flex-1">
+              ¡VENTA MÍNIMA POR CAJA DE 6 UNIDADES!
+            </p>
+
+            {/* Right exclamation icon */}
+            <div className="absolute right-4 flex-shrink-0 w-7 h-7 md:w-8 md:h-8 bg-neutral-900 rounded-full flex items-center justify-center">
+              <span className="text-amber-300 text-lg md:text-xl font-bold font-['Lora']">
+                !
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Wine List Section */}
         <div className="w-full max-w-[1300px] mx-auo px-4 md:px-6 lg:px-8">
           {isLoading ? (

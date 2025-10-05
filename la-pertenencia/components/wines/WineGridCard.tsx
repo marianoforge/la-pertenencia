@@ -119,34 +119,43 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
         </div>
 
         {/* Quantity Selector */}
-        <div className="flex justify-center items-center gap-2 md:gap-4 mb-3 md:mb-4">
-          <div className="flex-1 h-0 border-b border-neutral-400" />
-          <div className="flex justify-center items-center gap-1.5 md:gap-2.5">
-            <button
-              className="w-6 h-6 md:w-7 md:h-7 bg-neutral-900 rounded-[3px] border border-amber-300 flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
-              disabled={quantity <= 1}
-              onClick={decreaseQuantity}
-            >
-              <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
-                -
-              </span>
-            </button>
-            <div className="w-8 h-8 md:w-9 md:h-9 bg-white rounded-[3px] border border-neutral-400 flex justify-center items-center">
-              <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
-                {quantity}
-              </span>
-            </div>
-            <button
-              className="w-6 h-6 md:w-7 md:h-7 bg-neutral-900 rounded-[3px] border border-amber-300 flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
-              disabled={quantity >= wine.stock}
-              onClick={increaseQuantity}
-            >
-              <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
-                +
-              </span>
-            </button>
+        <div className="mb-3 md:mb-4">
+          {/* Label "Cajas por 6:" */}
+          <div className="text-center mb-2">
+            <span className="text-neutral-900 text-xs md:text-sm font-medium font-['Lora'] tracking-wide">
+              Cajas por 6 unidades
+            </span>
           </div>
-          <div className="flex-1 h-0 border-b border-neutral-400" />
+
+          <div className="flex justify-center items-center gap-2 md:gap-4">
+            <div className="flex-1 h-0 border-b border-neutral-400" />
+            <div className="flex justify-center items-center gap-1.5 md:gap-2.5">
+              <button
+                className="w-6 h-6 md:w-7 md:h-7 bg-neutral-900 rounded-[3px] border border-amber-300 flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                disabled={quantity <= 1}
+                onClick={decreaseQuantity}
+              >
+                <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
+                  -
+                </span>
+              </button>
+              <div className="w-8 h-8 md:w-9 md:h-9 bg-white rounded-[3px] border border-neutral-400 flex justify-center items-center">
+                <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
+                  {quantity}
+                </span>
+              </div>
+              <button
+                className="w-6 h-6 md:w-7 md:h-7 bg-neutral-900 rounded-[3px] border border-amber-300 flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                disabled={quantity >= wine.stock}
+                onClick={increaseQuantity}
+              >
+                <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
+                  +
+                </span>
+              </button>
+            </div>
+            <div className="flex-1 h-0 border-b border-neutral-400" />
+          </div>
         </div>
 
         {/* Add to Cart Button */}
