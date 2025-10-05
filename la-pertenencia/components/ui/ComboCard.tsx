@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { QuantitySelector } from "./QuantitySelector";
+
 import { Combo } from "@/types/combo";
 import { cn } from "@/lib/utils";
 
@@ -50,18 +51,18 @@ const ComboCard: React.FC<ComboCardProps> = ({
       {/* Background Image - Covers entire card */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <img
+          alt="Combo background"
           className="w-full h-full object-cover"
           src={combo.backgroundImage}
-          alt="Combo background"
         />
       </div>
 
       {/* Wine Bottles - Single Image with All Three Wines */}
       <div className="flex justify-center items-end relative z-10 h-44 sm:flex-none sm:w-1/2 sm:h-auto lg:h-80">
         <img
+          alt={combo.name}
           className="w-auto h-40 sm:w-80 sm:h-auto lg:w-84 lg:h-72 object-contain object-bottom"
           src={combo.image}
-          alt={combo.name}
         />
       </div>
 
@@ -108,8 +109,8 @@ const ComboCard: React.FC<ComboCardProps> = ({
 
         {/* Add to Cart Button */}
         <button
-          onClick={handleAddToCart}
           className="self-stretch px-6 sm:pl-12 sm:pr-10 py-2 bg-neutral-900 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-amber-300 inline-flex justify-center items-center gap-2 sm:gap-4 hover:bg-neutral-800 transition-colors"
+          onClick={handleAddToCart}
         >
           <div className="justify-start text-amber-300 text-sm sm:text-base font-medium font-['Lora'] uppercase tracking-[4px] sm:tracking-[8px]">
             agregar
@@ -118,8 +119,8 @@ const ComboCard: React.FC<ComboCardProps> = ({
             {/* Cart Icon - Using project's existing icon */}
             <svg
               className="w-5 h-5 sm:w-6 sm:h-6"
-              viewBox="0 0 19 17"
               fill="none"
+              viewBox="0 0 19 17"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path

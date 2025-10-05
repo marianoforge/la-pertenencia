@@ -85,7 +85,6 @@ const Cart = () => {
         );
       }
     } catch (error) {
-      console.error("Error during checkout:", error);
       alert("Error al procesar el pago. Por favor, intenta nuevamente.");
     } finally {
       setIsCheckingOut(false);
@@ -319,8 +318,8 @@ const Cart = () => {
                       <div className="mt-3 p-3 bg-green-50 border border-green-300 rounded-sm">
                         <p className="text-green-800 text-xs font-['Lora'] tracking-wide leading-relaxed">
                           No se encuentra dentro del área de distribución. Por
-                          favor, seleccione "Pago Personalizado" para coordinar
-                          el envío.
+                          favor, seleccione &quot;Pago Personalizado&quot; para
+                          coordinar el envío.
                         </p>
                       </div>
                     )}

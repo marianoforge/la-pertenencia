@@ -52,17 +52,7 @@ export default function WineDetailPage() {
   return (
     <DefaultLayout>
       <div className="bg-white min-h-screen">
-        <WineDetail
-          wine={wine}
-          onAddToCart={(wine, quantity) => {
-            console.log(
-              "Vino agregado al carrito:",
-              wine.marca,
-              "Cantidad:",
-              quantity,
-            );
-          }}
-        />
+        <WineDetail wine={wine} onAddToCart={() => {}} />
 
         {/* Contact Form Section */}
         <Contacto />

@@ -330,29 +330,29 @@ export default function ComboAdminPanel() {
 
             {/* Selección de vinos */}
             <div>
-              <label className="block text-sm font-medium mb-2">
+              <div className="block text-sm font-medium mb-2">
                 Seleccionar Vinos *
-              </label>
+              </div>
               <div className="max-h-60 overflow-y-auto border border-gray-300 rounded-md p-4 space-y-2">
                 {wines.map((wine) => (
                   <div key={wine.id} className="flex items-center space-x-2">
                     <input
-                      type="checkbox"
-                      id={`wine-${wine.id}`}
                       checked={comboForm.selectedWineIds.includes(wine.id)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                      id={`wine-${wine.id}`}
+                      type="checkbox"
                       onChange={(e) =>
                         handleWineSelection(wine.id, e.target.checked)
                       }
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                     />
                     <label
-                      htmlFor={`wine-${wine.id}`}
                       className="flex items-center space-x-2 cursor-pointer flex-1"
+                      htmlFor={`wine-${wine.id}`}
                     >
                       <img
-                        src={wine.image}
                         alt={wine.marca}
                         className="w-8 h-8 rounded object-cover"
+                        src={wine.image}
                       />
                       <span className="text-sm">
                         {wine.marca} - {wine.bodega} ({wine.tipo})
@@ -390,12 +390,16 @@ export default function ComboAdminPanel() {
                 onChange={(e) => handleInputChange("image", e.target.value)}
               />
               <div className="mt-2">
-                <label className="block text-sm font-medium mb-1">
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="combo-image-upload"
+                >
                   Subir Imagen de los Vinos
                 </label>
                 <input
                   accept="image/*"
                   className="w-full p-2 border border-gray-300 rounded-md"
+                  id="combo-image-upload"
                   type="file"
                   onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
                 />
@@ -503,19 +507,19 @@ export default function ComboAdminPanel() {
               {paginatedCombos.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5}
                     className="px-6 py-8 text-center text-gray-500"
+                    colSpan={5}
                   >
                     {searchTerm ? (
                       <>
-                        No se encontraron combos que coincidan con "{searchTerm}
-                        "
+                        No se encontraron combos que coincidan con &quot;
+                        {searchTerm}&quot;
                         <br />
                         <Button
+                          className="mt-2"
                           size="sm"
                           variant="light"
                           onPress={() => handleSearchChange("")}
-                          className="mt-2"
                         >
                           Limpiar búsqueda
                         </Button>
@@ -606,9 +610,9 @@ export default function ComboAdminPanel() {
 
               <div className="flex items-center gap-2">
                 <Button
+                  isDisabled={currentPage === 1}
                   size="sm"
                   variant="bordered"
-                  isDisabled={currentPage === 1}
                   onPress={() => setCurrentPage(currentPage - 1)}
                 >
                   Anterior
@@ -619,11 +623,11 @@ export default function ComboAdminPanel() {
                     (page) => (
                       <Button
                         key={page}
+                        className="min-w-[40px]"
+                        color={currentPage === page ? "primary" : "default"}
                         size="sm"
                         variant={currentPage === page ? "solid" : "light"}
-                        color={currentPage === page ? "primary" : "default"}
                         onPress={() => setCurrentPage(page)}
-                        className="min-w-[40px]"
                       >
                         {page}
                       </Button>
@@ -632,9 +636,9 @@ export default function ComboAdminPanel() {
                 </div>
 
                 <Button
+                  isDisabled={currentPage === totalPages}
                   size="sm"
                   variant="bordered"
-                  isDisabled={currentPage === totalPages}
                   onPress={() => setCurrentPage(currentPage + 1)}
                 >
                   Siguiente
