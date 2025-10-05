@@ -205,6 +205,13 @@ const WineDetail = ({ wine, onAddToCart }: WineDetailProps) => {
               <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
             </div>
             <div className="self-stretch flex-1 flex flex-col justify-end items-start gap-2.5">
+              {/* Label "Cajas por 6:" */}
+              <div className="w-64 text-center mb-1">
+                <span className="text-neutral-900 text-sm md:text-base font-medium font-['Lora'] tracking-wide">
+                  Cajas por 6 unidades
+                </span>
+              </div>
+
               <div className="w-64 py-2 inline-flex justify-center items-center gap-4">
                 <div className="flex-1 h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
                 <div className="flex justify-center items-center gap-2.5">
