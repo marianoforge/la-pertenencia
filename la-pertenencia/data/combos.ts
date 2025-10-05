@@ -29,6 +29,7 @@ export const combosData: Combo[] = [
     price: 72300,
     image: "/images/imagen-combos.png", // Imagen de los tres vinos juntos
     backgroundImage: "/images/fondo-combo.png",
+    featured: true, // Mostrar en carousel
   },
   {
     id: "combo-malbec",
@@ -54,6 +55,7 @@ export const combosData: Combo[] = [
     price: 55990,
     image: "/images/imagen-combos.png", // Imagen de los tres vinos juntos
     backgroundImage: "/images/fondo-combo.png",
+    featured: true, // Mostrar en carousel
   },
   {
     id: "combo-premium",
@@ -79,5 +81,6 @@ export const combosData: Combo[] = [
     price: 89500,
     image: "/images/imagen-combos.png", // Imagen de los tres vinos juntos
     backgroundImage: "/images/fondo-combo.png",
+    featured: false, // No mostrar en carousel por defecto
   },
 ];

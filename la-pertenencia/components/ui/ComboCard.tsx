@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+
 import { QuantitySelector } from "./QuantitySelector";
-import { Button } from "./Button";
 import { Combo } from "@/types/combo";
 import { cn } from "@/lib/utils";
 
@@ -38,12 +38,12 @@ const ComboCard: React.FC<ComboCardProps> = ({
       className={cn(
         // Base styles
         "relative bg-white rounded-[3px] overflow-hidden",
-        // Mobile: Stack vertically, smaller size
-        "flex flex-col gap-3 p-3 max-w-[95vw]",
-        // Tablet: Horizontal layout
-        "sm:flex-row sm:gap-5 sm:pl-3.5 sm:pr-5 sm:py-5 sm:max-w-none",
+        // Mobile: Stack vertically, fluid width
+        "flex flex-col gap-3 p-3 w-full h-[560px]",
+        // Tablet: Horizontal layout with fixed height
+        "sm:flex-row sm:gap-5 sm:pl-3.5 sm:pr-5 sm:py-5 sm:w-auto sm:h-[420px]",
         // Desktop: Full Figma design
-        "lg:inline-flex lg:justify-center lg:items-center",
+        "lg:inline-flex lg:justify-center lg:items-center lg:h-auto",
         className
       )}
     >
@@ -57,16 +57,16 @@ const ComboCard: React.FC<ComboCardProps> = ({
       </div>
 
       {/* Wine Bottles - Single Image with All Three Wines */}
-      <div className="flex justify-center items-center relative z-10 sm:h-64 lg:h-80">
+      <div className="flex justify-center items-end relative z-10 h-44 sm:flex-none sm:w-1/2 sm:h-auto lg:h-80">
         <img
-          className="w-48 h-20 sm:w-60 sm:h-48 lg:w-84 lg:h-72 object-contain"
+          className="w-auto h-40 sm:w-80 sm:h-auto lg:w-84 lg:h-72 object-contain object-bottom"
           src={combo.image}
           alt={combo.name}
         />
       </div>
 
       {/* Info Panel */}
-      <div className="p-3 sm:p-5 bg-white/70 inline-flex flex-col justify-center items-center gap-1 relative z-10">
+      <div className="p-3 sm:p-5 bg-white/70 inline-flex flex-col justify-center items-center gap-1 relative z-10 sm:flex-1 overflow-y-auto">
         {/* Title */}
         <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-1">
           <div className="self-stretch text-center justify-start text-black text-sm sm:text-base font-semibold font-['Lora'] uppercase tracking-[2px] sm:tracking-[4px]">

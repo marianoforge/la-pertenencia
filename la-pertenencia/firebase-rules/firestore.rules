@@ -18,6 +18,21 @@ service cloud.firestore {
     }
     
     // ===========================================
+    // COMBOS COLLECTION - Lectura pública, escritura autenticada
+    // ===========================================
+    match /combos/{comboId} {
+      // Cualquiera puede leer los combos (para el catálogo público)
+      allow read: if true;
+      
+      // Solo usuarios autenticados pueden crear/editar/eliminar combos
+      allow create, update, delete: if request.auth != null;
+      
+      // Validación de datos para escritura
+      allow write: if request.auth != null 
+        && validateComboData(request.resource.data);
+    }
+    
+    // ===========================================
     // USERS COLLECTION - Privado al dueño
     // ===========================================
     match /users/{userId} {
@@ -97,6 +112,20 @@ service cloud.firestore {
         && data.vintage is number
         && data.vintage >= 1900
         && data.vintage <= 2030;
+    }
+    
+    // Validar datos de combo
+    function validateComboData(data) {
+      return data.keys().hasAll(['name', 'wines', 'price', 'image', 'backgroundImage', 'featured'])
+        && data.name is string
+        && data.name.size() > 0
+        && data.wines is list
+        && data.wines.size() > 0
+        && data.price is number
+        && data.price > 0
+        && data.image is string
+        && data.backgroundImage is string
+        && data.featured is bool;
     }
     
     // Verificar si es administrador

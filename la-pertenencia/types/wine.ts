@@ -9,7 +9,8 @@ export interface Wine {
     | "Blend"
     | "Rosado"
     | "Espumante"
-    | "Naranjo";
+    | "Naranjo"
+    | "Combo";
   varietal: string;
   maridaje?: string;
   description?: string;

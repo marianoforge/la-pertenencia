@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -26,6 +26,47 @@ const Cart = () => {
     error: mpError,
   } = useMercadoPago();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [postalCode, setPostalCode] = useState("");
+  const [shippingCost, setShippingCost] = useState<number | null>(null);
+  const [shippingError, setShippingError] = useState(false);
+
+  const calculateShippingCost = (code: string): number | null => {
+    const postalCodeNum = parseInt(code, 10);
+
+    if (postalCodeNum >= 1000 && postalCodeNum <= 1439) return 100;
+    if (postalCodeNum >= 1600 && postalCodeNum <= 1670) return 200;
+    if (postalCodeNum >= 1672 && postalCodeNum <= 1778) return 300;
+    if (postalCodeNum >= 1800 && postalCodeNum <= 1899) return 400;
+
+    return null;
+  };
+
+  const handleCalculateShipping = () => {
+    const cost = calculateShippingCost(postalCode);
+
+    if (cost !== null) {
+      setShippingCost(cost);
+      setShippingError(false);
+    } else {
+      setShippingCost(null);
+      setShippingError(true);
+    }
+  };
+
+  // Reset shipping cost when cart is closed or items change
+  useEffect(() => {
+    if (!isOpen) {
+      setPostalCode("");
+      setShippingCost(null);
+      setShippingError(false);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    // Reset shipping when items change (quantity update, add, or remove)
+    setShippingCost(null);
+    setShippingError(false);
+  }, [items.length]);
 
   const handleMercadoPagoCheckout = async () => {
     if (items.length === 0) return;
@@ -40,7 +81,7 @@ const Cart = () => {
         redirectToCheckout(preference.initPoint);
       } else {
         alert(
-          "Error al crear la preferencia de pago. Por favor, intenta nuevamente.",
+          "Error al crear la preferencia de pago. Por favor, intenta nuevamente."
         );
       }
     } catch (error) {
@@ -251,6 +292,39 @@ const Cart = () => {
                       </div>
                     </div>
                   ))}
+
+                  {/* Shipping Cost Calculator */}
+                  <div className="mt-6 pt-6 border-t border-neutral-200">
+                    <h3 className="text-sm font-semibold font-['Lora'] text-neutral-900 mb-3 uppercase tracking-[1px]">
+                      Calcular costo de envío:
+                    </h3>
+                    <div className="flex gap-2">
+                      <input
+                        className="flex-1 px-4 py-2 border border-neutral-300 rounded-sm font-['Lora'] text-sm focus:outline-none focus:ring-2 focus:ring-yellow-700 focus:border-transparent"
+                        placeholder="Código Postal"
+                        type="text"
+                        value={postalCode}
+                        onChange={(e) => setPostalCode(e.target.value)}
+                      />
+                      <button
+                        className="px-6 py-2 bg-neutral-900 text-dorado-light font-['Lora'] text-sm font-semibold uppercase tracking-[2px] rounded-sm hover:bg-neutral-800 transition-colors"
+                        onClick={handleCalculateShipping}
+                      >
+                        Calcular
+                      </button>
+                    </div>
+
+                    {/* Error Message */}
+                    {shippingError && (
+                      <div className="mt-3 p-3 bg-green-50 border border-green-300 rounded-sm">
+                        <p className="text-green-800 text-xs font-['Lora'] tracking-wide leading-relaxed">
+                          No se encuentra dentro del área de distribución. Por
+                          favor, seleccione "Pago Personalizado" para coordinar
+                          el envío.
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -258,21 +332,35 @@ const Cart = () => {
             {/* Footer */}
             {items.length > 0 && (
               <div className="border-t border-neutral-200 p-6 space-y-6">
+                {/* Shipping Cost */}
+                {shippingCost !== null && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold font-['Lora'] text-neutral-900 uppercase tracking-[2px]">
+                      Costo de Envío:
+                    </span>
+                    <span className="text-lg font-bold font-['Lora'] text-neutral-900 tracking-wide">
+                      ${shippingCost.toLocaleString()}
+                    </span>
+                  </div>
+                )}
+
                 {/* Total */}
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-semibold font-['Lora'] text-neutral-900 uppercase tracking-[2px]">
                     Total:
                   </span>
                   <span className="text-xl font-bold font-['Lora'] text-yellow-700 tracking-wide">
-                    ${totalAmount.toLocaleString()}
+                    ${(totalAmount + (shippingCost || 0)).toLocaleString()}
                   </span>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
                   <Button
-                    className="w-full !tracking-[3px]"
-                    disabled={isCheckingOut || mpLoading}
+                    className="w-full !max-w-none !tracking-[3px] disabled:bg-amber-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                    disabled={
+                      isCheckingOut || mpLoading || shippingCost === null
+                    }
                     variant="primary"
                     onClick={handleMercadoPagoCheckout}
                   >
@@ -282,16 +370,16 @@ const Cart = () => {
                   </Button>
 
                   <Button
-                    className="w-full !tracking-[3px] bg-neutral-100 hover:bg-neutral-200"
+                    className="w-full !max-w-none !tracking-[3px] bg-neutral-100 hover:bg-neutral-200"
                     disabled={isCheckingOut}
                     variant="outline"
                     onClick={handleLegacyCheckout}
                   >
-                    PAGO TRADICIONAL
+                    PAGO PERSONALIZADO
                   </Button>
 
                   <Button
-                    className="w-full hover:bg-transparent text-sm font-medium font-['Lora'] text-neutral-600 hover:text-red-600 transition-colors py-2 uppercase tracking-[3px] disabled:opacity-50"
+                    className="w-full !max-w-none hover:bg-transparent text-sm font-medium font-['Lora'] text-neutral-600 hover:text-red-600 transition-colors py-2 uppercase tracking-[3px] disabled:opacity-50"
                     disabled={isCheckingOut}
                     variant="outline"
                     onClick={clearCart}

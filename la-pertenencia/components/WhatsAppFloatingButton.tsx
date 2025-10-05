@@ -4,7 +4,7 @@ const WhatsAppFloatingButton = () => {
   return (
     <a
       aria-label="Contactar por WhatsApp"
-      className="fixed bottom-6 right-6 z-50"
+      className="fixed bottom-6 right-6 z-30"
       href="https://wa.me/5491161525562?text=Hola!%20Me%20interesa%20obtener%20más%20información%20sobre%20La%20Pertenencia."
       rel="noopener noreferrer"
       target="_blank"
