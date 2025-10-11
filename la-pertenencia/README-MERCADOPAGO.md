@@ -1,21 +1,23 @@
 # Integración con Mercado Pago
 
-Esta aplicación está integrada con Mercado Pago Checkout API para procesar pagos de manera segura.
+Esta aplicación está integrada con Mercado Pago Checkout Pro para procesar pagos de manera segura.
 
-## Configuración
+## Configuración ✅ COMPLETADA
 
 ### 1. Variables de Entorno
 
-Crea un archivo `.env.local` en la raíz del proyecto con las siguientes variables:
+Ya se ha creado el archivo `.env.local` con las credenciales de **PRODUCCIÓN**:
 
 ```env
-# Mercado Pago Configuration (Test Environment)
-NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY=TEST-13c97350-0e1b-481b-a250-f875d1cebddb
-MERCADOPAGO_ACCESS_TOKEN=TEST-6184761466606372-061914-ab840461b0be4e079078ccde334a5bdd-5557772
+# Mercado Pago - Producción
+NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY=APP_USR-0a422721-e85f-4d4b-99b0-bdb5a9c59842
+MERCADOPAGO_ACCESS_TOKEN=APP_USR-4271422943587608-101112-39dfd49e6cdb7db7364a6099e1944c6d-2635395636
 
-# Base URL (opcional, por defecto usa localhost:3000)
+# URL Base (actualizar cuando subas a producción)
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
+
+**⚠️ IMPORTANTE**: Cuando subas la aplicación a producción, debes actualizar `NEXT_PUBLIC_BASE_URL` con tu dominio real (ej: `https://lapertenencia.com`)
 
 ### 2. Instalación de Dependencias
 
@@ -56,19 +58,23 @@ La aplicación incluye un webhook para recibir notificaciones de Mercado Pago:
 ## Archivos Principales
 
 ### APIs
+
 - `pages/api/mercadopago/create-preference.ts` - Crear preferencias de pago
 - `pages/api/mercadopago/webhook.ts` - Manejar notificaciones
 
 ### Páginas de Resultado
+
 - `pages/payment/success.tsx` - Pago exitoso
 - `pages/payment/failure.tsx` - Pago fallido
 - `pages/payment/pending.tsx` - Pago pendiente
 
 ### Hooks y Utilities
+
 - `hooks/useMercadoPago.ts` - Hook para manejar Mercado Pago
 - `lib/mercadopago.ts` - Configuración y utilities
 
 ### Componentes
+
 - `components/Cart.tsx` - Carrito actualizado con Mercado Pago
 
 ## Ambiente de Pruebas
@@ -85,14 +91,29 @@ Para probar pagos, usa estas tarjetas de prueba:
 - **Visa**: 4509 9535 6623 3704 (CVV: 123)
 - **Mastercard**: 5031 7557 3453 0604 (CVV: 123)
 
-## Producción
+## Producción ✅ CONFIGURADA
 
-Para usar en producción:
+Las credenciales de producción ya están configuradas. Solo faltan estos pasos:
 
-1. Crea una cuenta en [Mercado Pago Developers](https://www.mercadopago.com.ar/developers)
-2. Obtén tus credenciales de producción
-3. Actualiza las variables de entorno removiendo el prefijo `TEST-`
-4. Configura los webhooks en tu panel de Mercado Pago
+### Configurar Webhooks (PENDIENTE)
+
+Para recibir notificaciones de pagos en tiempo real, debes configurar el webhook en tu cuenta de Mercado Pago:
+
+1. Ve a tu aplicación en [Mercado Pago Developers](https://www.mercadopago.com.ar/developers/panel/app/4271422943587608)
+2. Busca la sección **"Webhooks"** o **"Notificaciones"**
+3. Agrega esta URL webhook:
+   - **Desarrollo**: `http://localhost:3000/api/mercadopago/webhook` (solo para pruebas locales con ngrok o similar)
+   - **Producción**: `https://TU-DOMINIO.com/api/mercadopago/webhook`
+4. Selecciona los eventos:
+   - ✅ `payment` - Notificaciones de pago
+   - ✅ `merchant_order` - Órdenes de comercio
+
+### Antes de Subir a Producción
+
+1. ✅ Credenciales configuradas
+2. ⚠️ Actualizar `NEXT_PUBLIC_BASE_URL` en `.env.local` con tu dominio real
+3. ⚠️ Configurar webhook con la URL de producción
+4. ⚠️ Probar el flujo completo de pago en el ambiente de producción
 
 ## Seguridad
 
@@ -102,4 +123,4 @@ Para usar en producción:
 
 ## Soporte
 
-Para más información consulta la [documentación oficial de Mercado Pago](https://www.mercadopago.com.ar/developers/es/reference). 
+Para más información consulta la [documentación oficial de Mercado Pago](https://www.mercadopago.com.ar/developers/es/reference).

@@ -27,12 +27,16 @@ export const getCombos = async (): Promise<Combo[]> => {
   try {
     const q = query(combosCollection, orderBy("createdAt", "desc"));
     const querySnapshot = await getDocs(q);
-    
+
     return querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-      updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      createdAt:
+        doc.data().createdAt?.toDate?.()?.toISOString() ||
+        new Date().toISOString(),
+      updatedAt:
+        doc.data().updatedAt?.toDate?.()?.toISOString() ||
+        new Date().toISOString(),
     })) as Combo[];
   } catch (error) {
     console.error("Error fetching combos:", error);
@@ -49,12 +53,16 @@ export const getFeaturedCombos = async (): Promise<Combo[]> => {
       orderBy("createdAt", "desc")
     );
     const querySnapshot = await getDocs(q);
-    
+
     return querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-      createdAt: doc.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-      updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+      createdAt:
+        doc.data().createdAt?.toDate?.()?.toISOString() ||
+        new Date().toISOString(),
+      updatedAt:
+        doc.data().updatedAt?.toDate?.()?.toISOString() ||
+        new Date().toISOString(),
     })) as Combo[];
   } catch (error) {
     console.error("Error fetching featured combos:", error);
@@ -72,8 +80,12 @@ export const getCombo = async (id: string): Promise<Combo | null> => {
       return {
         id: docSnap.id,
         ...docSnap.data(),
-        createdAt: docSnap.data().createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-        updatedAt: docSnap.data().updatedAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+        createdAt:
+          docSnap.data().createdAt?.toDate?.()?.toISOString() ||
+          new Date().toISOString(),
+        updatedAt:
+          docSnap.data().updatedAt?.toDate?.()?.toISOString() ||
+          new Date().toISOString(),
       } as Combo;
     }
 
@@ -85,7 +97,9 @@ export const getCombo = async (id: string): Promise<Combo | null> => {
 };
 
 // Crear un combo
-export const createCombo = async (comboData: CreateComboInput & { wines: any[] }): Promise<Combo> => {
+export const createCombo = async (
+  comboData: CreateComboInput & { wines: any[] }
+): Promise<Combo> => {
   try {
     const docRef = await addDoc(combosCollection, {
       ...comboData,
@@ -106,7 +120,10 @@ export const createCombo = async (comboData: CreateComboInput & { wines: any[] }
 };
 
 // Actualizar un combo
-export const updateCombo = async (id: string, comboData: Partial<Combo>): Promise<Combo> => {
+export const updateCombo = async (
+  id: string,
+  comboData: Partial<Combo>
+): Promise<Combo> => {
   try {
     const docRef = doc(db, "combos", id);
     await updateDoc(docRef, {
@@ -227,5 +244,3 @@ export function useDeleteCombo() {
     },
   });
 }
-
-
