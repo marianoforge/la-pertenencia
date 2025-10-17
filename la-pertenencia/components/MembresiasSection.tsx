@@ -30,13 +30,15 @@ export default function MembresiasSection() {
 
       {/* Content Section */}
       <Section className="lg:!px-0 lg:!py-16" variant="default">
+        {/* Título Principal */}
         <div className="w-full max-w-[1300px] flex flex-col justify-start items-start gap-5 italic">
-          <div className="w-full text-neutral-900 text-lg md:text-xl font-semibold font-['Lora'] leading-relaxed md:leading-loose tracking-wide">
+          <div className="w-full text-neutral-900 text-2xl md:text-[32px] font-semibold font-['Lora'] leading-relaxed tracking-wide">
             Una caja. Tres vinos. Cada mes.
           </div>
         </div>
 
-        <div className="w-full max-w-[1300px] flex flex-col justify-start items-start gap-2.5 italic">
+        {/* Descripción */}
+        <div className="w-full max-w-[1300px] flex flex-col justify-start items-start gap-2.5 mt-5 italic">
           <div className="w-full text-neutral-900 text-lg md:text-xl font-semibold font-['Lora'] leading-relaxed md:leading-loose tracking-tight">
             Vinos elegidos para vos, por quienes viven el vino como una
             experiencia de vida.
@@ -46,6 +48,7 @@ export default function MembresiasSection() {
             forma de formar parte de una comunidad que celebra el vino como
             excusa para encontrarse, aprender y disfrutar.
             <br />
+            <br />
             Cada mes seleccionamos 3 etiquetas especialmente pensadas para vos.
             Vinos con historia, con alma, con algo para contarte. Algunos serán
             conocidos, otros tal vez los descubras por primera vez. Todos van a
@@ -53,38 +56,60 @@ export default function MembresiasSection() {
           </div>
         </div>
 
-        <div className="w-full max-w-[1300px] py-5 flex flex-col lg:flex-row justify-center items-start gap-10 italic">
-          {/* Left Content */}
+        {/* Dos Columnas: Membresías + Imagen */}
+        <div className="w-full max-w-[1300px] py-10 flex flex-col lg:flex-row justify-start items-start gap-10 ">
+          {/* Columna Izquierda: Membresías */}
           <div
-            className="flex-1 w-full flex flex-col justify-start items-start gap-2.5"
+            className="flex-1 w-full lg:max-w-[630px] flex flex-col justify-start items-start gap-6"
             data-aos="fade-right"
             data-aos-delay="200"
           >
-            <div className="w-full text-yellow-700 text-lg md:text-xl font-medium font-['Lora'] uppercase tracking-[3px] md:tracking-[5px]">
-              Qué incluye:
+            {/* Título de membresías */}
+            <div className="w-full text-amber-700 text-lg md:text-xl font-medium font-['Lora'] uppercase tracking-[3px] md:tracking-[5px]">
+              dos tipos de membresías:
             </div>
-            <ul className="w-full text-neutral-900 text-base md:text-lg lg:text-xl font-normal font-['Lora'] leading-relaxed md:leading-loose tracking-tight list-disc pl-6 space-y-2">
-              <li>
-                3 botellas de vino seleccionadas por sommeliers y enólogos
-              </li>
-              <li>
-                Notas de cata, maridajes sugeridos y detalles de cada bodega
-              </li>
-              <li>Descuentos exclusivos en catas y experiencias</li>
-              <li>Acceso anticipado a lanzamientos y eventos de comunidad</li>
-            </ul>
 
-            <div className="w-full text-yellow-700 text-lg md:text-xl font-medium font-['Lora'] uppercase tracking-[3px] md:tracking-[5px] mt-4">
-              Planes flexibles:
+            {/* Tarjeta Membresía PLATA */}
+            <div className="w-full bg-neutral-100 rounded-sm p-5 md:p-6 flex flex-col gap-4">
+              <p className="text-neutral-900 text-base md:text-lg font-normal font-['Lora'] leading-relaxed italic">
+                <span className="font-semibold not-italic">
+                  Membresía PLATA:
+                </span>{" "}
+                Una selección de tres vinos especiales para descubrir nuevas
+                etiquetas cada mes.
+              </p>
+              <div className="w-full h-[1px] bg-neutral-300"></div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-baseline gap-2 sm:gap-3">
+                <span className="text-neutral-900 text-3xl md:text-[41px] font-bold font-['Lora']">
+                  $ 50.000
+                </span>
+                <span className="text-neutral-600 text-sm md:text-base font-normal font-['Lora'] italic">
+                  * Precio promocional el primer mes
+                </span>
+              </div>
             </div>
-            <ul className="w-full text-neutral-900 text-base md:text-lg lg:text-xl font-normal font-['Lora'] leading-relaxed md:leading-loose tracking-tight list-disc pl-6 space-y-2">
-              <li>Suscripción mensual sin permanencia</li>
-              <li>Envíos a todo el país</li>
-              <li>Atención personalizada</li>
-            </ul>
 
+            {/* Tarjeta Membresía ORO */}
+            <div className="w-full bg-neutral-100 rounded-sm p-5 md:p-6 flex flex-col gap-4">
+              <p className="text-neutral-900 text-base md:text-lg font-normal font-['Lora'] leading-relaxed italic">
+                <span className="font-semibold not-italic">Membresía ORO:</span>{" "}
+                Vinos de partidas limitadas y etiquetas de alta gama, elegidos
+                para paladares curiosos y coleccionistas.
+              </p>
+              <div className="w-full h-[1px] bg-neutral-300"></div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-baseline gap-2 sm:gap-3">
+                <span className="text-neutral-900 text-3xl md:text-[41px] font-bold font-['Lora']">
+                  $ 85.000
+                </span>
+                <span className="text-neutral-600 text-sm md:text-base font-normal font-['Lora'] italic">
+                  * Precio promocional el primer mes
+                </span>
+              </div>
+            </div>
+
+            {/* Botón CTA */}
             <a
-              className="px-8 md:px-12 py-4 bg-amber-300 rounded-sm outline outline-[0.50px] outline-offset-[-0.50px] outline-neutral-900 flex justify-center items-center gap-2.5 mt-6 hover:bg-amber-400 transition-colors"
+              className="w-full max-w-[350px] px-8 md:px-10 py-4 bg-amber-300 rounded-[4px] border border-neutral-900 flex justify-center items-center gap-2.5 mt-2 hover:bg-amber-400 transition-colors shadow-sm"
               href="https://wa.me/5491161525562?text=Hola!%20Quiero%20mi%20membresía"
               rel="noopener noreferrer"
               target="_blank"
@@ -95,20 +120,20 @@ export default function MembresiasSection() {
             </a>
           </div>
 
-          {/* Right Image */}
+          {/* Columna Derecha: Imagen */}
           <div
-            className="w-full lg:w-[674px] flex flex-col justify-center items-start gap-2.5 italic"
+            className="w-full lg:w-[630px] flex flex-col justify-start items-start gap-3 italic"
             data-aos="fade-left"
             data-aos-delay="400"
           >
-            <div className="w-full relative rounded-lg overflow-hidden flex justify-center items-center">
+            <div className="w-full h-[442px] relative rounded-lg overflow-hidden">
               <img
                 alt="Membresía - Cajas de vino"
-                className="w-[90%] h-[95%] object-cover rounded-lg"
+                className="w-full h-full object-cover"
                 src="/images/membresia_cajas.png"
               />
             </div>
-            <div className="w-full text-left pl-8">
+            <div className="w-full text-left">
               <span className="text-neutral-900 text-sm md:text-base font-semibold font-['Lora'] leading-tight tracking-tight">
                 Una caja. Tres vinos. Cada mes.
               </span>
