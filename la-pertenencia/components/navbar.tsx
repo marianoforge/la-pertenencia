@@ -6,10 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import CartButton from "@/components/CartButton";
 
 const experienciasItems = [
+  { name: "MEMBRESÍAS", href: "/membresias" },
+  { name: "CATAS", href: "/catas" },
   { name: "CREA TU VINO", href: "/crea-tu-vino" },
   // { name: "ESPACIO LA PERTENENCIA", href: "/espacio-la-pertenencia" },
-  { name: "CATAS", href: "/catas" },
-  { name: "MEMBRESÍAS", href: "/membresias" },
 ];
 
 const menuItems = [
