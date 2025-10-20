@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import { Section, SectionHeader, ComboCard, Button } from "../ui";
 
@@ -18,6 +19,10 @@ const Recomendados = ({
 }: CombosProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const { addItem } = useCartStore();
+  const router = useRouter();
+
+  // Verificar si estamos en la página de vinos
+  const isVinosPage = router.pathname.includes("/vinos");
 
   // Obtener combos destacados desde la base de datos
   const { data: featuredCombos = [], isLoading, error } = useFeaturedCombos();
@@ -261,18 +266,23 @@ const Recomendados = ({
           Nuestro deseo es simple: que cada combo te sorprenda, te emocione y te
           revele algo distinto. Todo comienza al abrir una botella.
         </div>
-        {/* Button for desktop - centered */}
-        <div className="min-[481px]:block hidden">
-          <Button size="lg" variant="primary">
-            <a href="/vinos#combos">ver todos</a>
-          </Button>
-        </div>
-        {/* Button for mobile - full width outside centered container */}
-        <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
-          <Button className="w-full" size="lg" variant="primary">
-            <a href="/vinos#combos">ver todos</a>
-          </Button>
-        </div>
+        {/* Mostrar botones "VER TODOS" solo si NO estamos en la página de vinos */}
+        {!isVinosPage && (
+          <>
+            {/* Button for desktop - centered */}
+            <div className="min-[481px]:block hidden">
+              <Button size="lg" variant="primary">
+                <a href="/vinos#combos">ver todos</a>
+              </Button>
+            </div>
+            {/* Button for mobile - full width outside centered container */}
+            <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
+              <Button className="w-full" size="lg" variant="primary">
+                <a href="/vinos#combos">ver todos</a>
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </Section>
   );

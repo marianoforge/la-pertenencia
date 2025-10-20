@@ -26,6 +26,7 @@ const COLLECTIONS = {
   ORDERS: "orders",
   USERS: "users",
   CATEGORIES: "categories",
+  SUSCRIPTOS: "suscriptos",
 } as const;
 
 /**
@@ -77,7 +78,7 @@ export const getWinesByCategory = async (category: string): Promise<Wine[]> => {
     const q = query(
       winesCollection,
       where("tipo", "==", category),
-      orderBy("marca"),
+      orderBy("marca")
     );
     const snapshot = await getDocs(q);
 
@@ -100,7 +101,7 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
       winesCollection,
       where("featured", "==", true),
       orderBy("marca"),
-      limit(6),
+      limit(6)
     );
     const snapshot = await getDocs(q);
 
@@ -117,7 +118,7 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
 
 // Add new wine
 export const addWine = async (
-  wineData: Omit<Wine, "id" | "createdAt" | "updatedAt">,
+  wineData: Omit<Wine, "id" | "createdAt" | "updatedAt">
 ): Promise<string | null> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
@@ -142,7 +143,7 @@ export const addWine = async (
 // Update wine
 export const updateWine = async (
   id: string,
-  wineData: Partial<Wine>,
+  wineData: Partial<Wine>
 ): Promise<boolean> => {
   try {
     const wineDoc = doc(db, COLLECTIONS.WINES, id);
@@ -182,7 +183,7 @@ export const deleteWine = async (id: string): Promise<boolean> => {
 // Reduce wine stock (transactional to prevent race conditions)
 export const reduceWineStock = async (
   wineId: string,
-  quantity: number,
+  quantity: number
 ): Promise<{ success: boolean; newStock?: number; error?: string }> => {
   try {
     const wineDoc = doc(db, COLLECTIONS.WINES, wineId);
@@ -199,7 +200,7 @@ export const reduceWineStock = async (
 
       if (currentStock < quantity) {
         throw new Error(
-          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`,
+          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`
         );
       }
 
@@ -215,7 +216,7 @@ export const reduceWineStock = async (
     });
 
     console.log(
-      `✅ Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`,
+      `✅ Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`
     );
 
     return { success: true, newStock: result };
@@ -230,7 +231,7 @@ export const reduceWineStock = async (
 
 // Search wines by name
 export const searchWinesByName = async (
-  searchTerm: string,
+  searchTerm: string
 ): Promise<Wine[]> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
@@ -246,7 +247,7 @@ export const searchWinesByName = async (
       (wine) =>
         wine.marca?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         wine.bodega?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        wine.description?.toLowerCase().includes(searchTerm.toLowerCase()),
+        wine.description?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   } catch (error) {
     console.error("Error searching wines:", error);
@@ -259,7 +260,7 @@ export const searchWinesByName = async (
  * 📦 Migration function to import initial wine data
  */
 export const migrateWineData = async (
-  wines: Omit<Wine, "id">[],
+  wines: Omit<Wine, "id">[]
 ): Promise<boolean> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
@@ -273,6 +274,98 @@ export const migrateWineData = async (
     return true;
   } catch (error) {
     console.error("❌ Error migrating wine data:", error);
+
+    return false;
+  }
+};
+
+/**
+ * 📧 Newsletter Subscription Functions
+ */
+
+export interface NewsletterSubscription {
+  id?: string;
+  email: string;
+  subscribedAt: string;
+  active: boolean;
+}
+
+// Add newsletter subscription
+export const addNewsletterSubscription = async (
+  email: string
+): Promise<{ success: boolean; error?: string }> => {
+  try {
+    const suscriptosCollection = collection(db, COLLECTIONS.SUSCRIPTOS);
+
+    // Add new subscription (sin verificar duplicados para evitar problemas de permisos)
+    const subscriptionData: Omit<NewsletterSubscription, "id"> = {
+      email,
+      subscribedAt: new Date().toISOString(),
+      active: true,
+    };
+
+    await addDoc(suscriptosCollection, subscriptionData);
+
+    console.log("✅ Newsletter subscription added:", email);
+
+    return { success: true };
+  } catch (error) {
+    console.error("❌ Error adding newsletter subscription:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Error al suscribirse";
+
+    return { success: false, error: errorMessage };
+  }
+};
+
+// Get all newsletter subscriptions
+export const getAllNewsletterSubscriptions = async (): Promise<
+  NewsletterSubscription[]
+> => {
+  try {
+    const suscriptosCollection = collection(db, COLLECTIONS.SUSCRIPTOS);
+    const q = query(suscriptosCollection, orderBy("subscribedAt", "desc"));
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as NewsletterSubscription[];
+  } catch (error) {
+    console.error("Error fetching newsletter subscriptions:", error);
+
+    return [];
+  }
+};
+
+// Unsubscribe from newsletter
+export const unsubscribeFromNewsletter = async (
+  email: string
+): Promise<boolean> => {
+  try {
+    const suscriptosCollection = collection(db, COLLECTIONS.SUSCRIPTOS);
+    const q = query(suscriptosCollection, where("email", "==", email));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      console.log("❌ Email not found in subscriptions");
+
+      return false;
+    }
+
+    // Update the active status to false
+    const subscriptionDoc = snapshot.docs[0];
+
+    await updateDoc(doc(db, COLLECTIONS.SUSCRIPTOS, subscriptionDoc.id), {
+      active: false,
+      unsubscribedAt: new Date().toISOString(),
+    });
+
+    console.log("✅ Unsubscribed:", email);
+
+    return true;
+  } catch (error) {
+    console.error("❌ Error unsubscribing:", error);
 
     return false;
   }

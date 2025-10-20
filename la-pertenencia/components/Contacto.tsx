@@ -12,6 +12,11 @@ const Contacto = () => {
   });
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   const motivosOptions = [
     "Consulta sobre vinos",
@@ -22,7 +27,7 @@ const Contacto = () => {
   ];
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
 
@@ -40,10 +45,49 @@ const Contacto = () => {
     setIsDropdownOpen(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Aquí puedes agregar la lógica para enviar el formulario
-    console.log("Form data:", formData);
+    setIsLoading(true);
+    setMessage(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setMessage({
+          type: "success",
+          text: "¡Mensaje enviado con éxito! Te responderemos pronto.",
+        });
+        // Limpiar formulario
+        setFormData({
+          nombre: "",
+          apellido: "",
+          email: "",
+          motivo: "",
+          consulta: "",
+        });
+      } else {
+        setMessage({
+          type: "error",
+          text: data.error || "Error al enviar el mensaje. Intenta nuevamente.",
+        });
+      }
+    } catch (error) {
+      setMessage({
+        type: "error",
+        text: "Error al enviar el mensaje. Verifica tu conexión.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -178,13 +222,27 @@ const Contacto = () => {
 
               {/* Submit Button */}
               <button
-                className="self-stretch h-9 px-7 py-3 bg-amber-300 rounded-sm outline outline-[0.36px] outline-offset-[-0.36px] outline-neutral-900 flex justify-center items-center gap-2 hover:bg-amber-400 transition-colors"
+                className="self-stretch h-9 px-7 py-3 bg-amber-300 rounded-sm outline outline-[0.36px] outline-offset-[-0.36px] outline-neutral-900 flex justify-center items-center gap-2 hover:bg-amber-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isLoading}
                 type="submit"
               >
                 <span className="text-neutral-900 text-sm font-medium font-['Lora'] uppercase tracking-[7px]">
-                  Enviar
+                  {isLoading ? "Enviando..." : "Enviar"}
                 </span>
               </button>
+
+              {/* Success/Error Message */}
+              {message && (
+                <div
+                  className={`self-stretch text-center text-sm md:text-base font-['Lora'] px-4 py-3 rounded ${
+                    message.type === "success"
+                      ? "bg-green-500/20 text-green-300 border border-green-500/50"
+                      : "bg-red-500/20 text-red-300 border border-red-500/50"
+                  }`}
+                >
+                  {message.text}
+                </div>
+              )}
             </div>
           </form>
         </div>

@@ -75,6 +75,19 @@ service cloud.firestore {
     }
     
     // ===========================================
+    // NEWSLETTER SUBSCRIPTIONS - Público crear, admin leer/editar
+    // ===========================================
+    match /suscriptos/{subscriptionId} {
+      // Cualquiera puede suscribirse (crear)
+      allow create: if true
+        && validateSubscriptionData(request.resource.data);
+      
+      // Solo admins pueden leer y editar suscripciones
+      allow read, update, delete: if request.auth != null 
+        && isAdmin(request.auth.uid);
+    }
+    
+    // ===========================================
     // CHAT/SUPPORT COLLECTIONS
     // ===========================================
     match /chat_responses/{responseId} {
@@ -126,6 +139,16 @@ service cloud.firestore {
         && data.image is string
         && data.backgroundImage is string
         && data.featured is bool;
+    }
+    
+    // Validar datos de suscripción
+    function validateSubscriptionData(data) {
+      return data.keys().hasAll(['email', 'subscribedAt', 'active'])
+        && data.email is string
+        && data.email.size() > 0
+        && data.email.matches('.*@.*\\..*') // Simple email validation
+        && data.subscribedAt is string
+        && data.active is bool;
     }
     
     // Verificar si es administrador

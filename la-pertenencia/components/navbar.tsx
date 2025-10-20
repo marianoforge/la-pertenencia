@@ -21,7 +21,7 @@ const menuItems = [
     hasDropdown: true,
     dropdownItems: experienciasItems,
   },
-  { name: "ACERCA DE NOSOTROS", href: "/about" },
+  // { name: "ACERCA DE NOSOTROS", href: "/about" },
   { name: "CONTACTO", href: "#contacto" },
 ];
 

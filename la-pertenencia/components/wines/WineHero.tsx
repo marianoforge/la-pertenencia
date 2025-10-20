@@ -107,12 +107,7 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
               </div>
             </div>
             <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-yellow-700" />
-            <div className="self-stretch bg-amber-300 inline-flex justify-center items-center gap-2.5 ">
-              <button className="max-[480px]:w-full w-64 h-8 text-center justify-center items-center text-black font-medium font-['Lora'] tracking-wide cursor-default">
-                PROXIMAMENTE
-              </button>
-            </div>
-            <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-yellow-700" />
+
             <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5 mt-4">
               <div className="w-64 text-center justify-start text-black text-base font-normal font-['Lora'] italic leading-normal tracking-wide">
                 Vinos creados para quienes disfrutan cada copa como una
