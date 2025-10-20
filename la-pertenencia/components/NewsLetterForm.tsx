@@ -1,10 +1,42 @@
 import React, { useState } from "react";
+import { addNewsletterSubscription } from "@/lib/firestore";
 
 const NewsLetterForm = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setMessage(null);
+
+    try {
+      const result = await addNewsletterSubscription(email);
+
+      if (result.success) {
+        setMessage({
+          type: "success",
+          text: "¡Gracias por suscribirte! Pronto recibirás nuestras novedades.",
+        });
+        setEmail("");
+      } else {
+        setMessage({
+          type: "error",
+          text: result.error || "Error al suscribirse. Intenta nuevamente.",
+        });
+      }
+    } catch (error) {
+      setMessage({
+        type: "error",
+        text: "Error al suscribirse. Intenta nuevamente.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -41,13 +73,25 @@ const NewsLetterForm = () => {
                 />
               </div>
               <button
-                className="self-stretch h-9 px-7 py-3 bg-amber-300 rounded-sm outline outline-[0.36px] outline-offset-[-0.36px] outline-neutral-900 inline-flex justify-center items-center gap-2"
+                className="self-stretch h-9 px-7 py-3 bg-amber-300 rounded-sm outline outline-[0.36px] outline-offset-[-0.36px] outline-neutral-900 inline-flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-amber-400 transition-colors"
                 type="submit"
+                disabled={isLoading}
               >
                 <div className="justify-start text-neutral-900 text-sm font-medium font-['Lora'] uppercase tracking-[7px]">
-                  suscribirse
+                  {isLoading ? "suscribiendo..." : "suscribirse"}
                 </div>
               </button>
+              {message && (
+                <div
+                  className={`self-stretch text-center text-sm font-['Lora'] ${
+                    message.type === "success"
+                      ? "text-green-400"
+                      : "text-red-400"
+                  }`}
+                >
+                  {message.text}
+                </div>
+              )}
             </form>
           </div>
         </div>

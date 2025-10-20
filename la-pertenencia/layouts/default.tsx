@@ -185,7 +185,7 @@ export default function DefaultLayout({
                 <div className="inline-flex justify-between items-center gap-4">
                   <a
                     className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
-                    href="https://facebook.com/lapertenencia"
+                    href="https://facebook.com/lapertenenciaok"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -197,7 +197,7 @@ export default function DefaultLayout({
                   </a>
                   <a
                     className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
-                    href="https://instagram.com/lapertenencia"
+                    href="@somoslapertenencia"
                     rel="noopener noreferrer"
                     target="_blank"
                   >

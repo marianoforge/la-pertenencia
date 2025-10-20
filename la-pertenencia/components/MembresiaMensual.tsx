@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { Section, SectionHeader, Button } from "./ui";
 
@@ -42,9 +43,11 @@ const MembresiaMensual = () => {
                 <li>Comunidad de miembros con acceso exclusivo</li>
               </ul>
             </div>
-            <Button className="min-[481px]:block hidden" variant="primary">
-              Quiero ser parte
-            </Button>
+            <Link href="/membresias">
+              <Button className="min-[481px]:block hidden" variant="primary">
+                Quiero ser parte
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -82,17 +85,21 @@ const MembresiaMensual = () => {
               </span>
             </div>
           </div>
-          <Button
-            className="lg:hidden min-[481px]:block hidden"
-            variant="primary"
-          >
-            Quiero ser parte
-          </Button>
+          <Link href="/membresias">
+            <Button
+              className="lg:hidden min-[481px]:block hidden"
+              variant="primary"
+            >
+              Quiero ser parte
+            </Button>
+          </Link>
         </div>
 
         {/* Button for mobile - outside containers to be full width */}
         <div className="w-full max-w-[1300px] max-[480px]:px-0 px-4 sm:px-0 max-[480px]:block hidden">
-          <Button variant="primary">Quiero ser parte</Button>
+          <Link href="/membresias">
+            <Button variant="primary">Quiero ser parte</Button>
+          </Link>
         </div>
       </div>
     </Section>
