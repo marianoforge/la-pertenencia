@@ -187,11 +187,11 @@ const WineDetail = ({ wine, onAddToCart }: WineDetailProps) => {
                     $ {Math.round(wine.price * 1.2).toLocaleString()}
                   </div>
                 </div>
-                <div className="px-4 py-2.5 outline outline-1 outline-offset-[-1px] outline-lime-700 inline-flex justify-start items-center gap-5 mt-1">
+                {/* <div className="px-4 py-2.5 outline outline-1 outline-offset-[-1px] outline-lime-700 inline-flex justify-start items-center gap-5 mt-1">
                   <div className="text-center justify-start text-lime-700 text-base font-normal font-['Lora'] leading-normal tracking-wide">
                     10% descuento extra por transferencia bancaria
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
               <div className="self-stretch inline-flex justify-start items-center gap-2.5">
