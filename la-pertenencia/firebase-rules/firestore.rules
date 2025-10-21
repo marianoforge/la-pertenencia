@@ -152,13 +152,10 @@ service cloud.firestore {
     }
     
     // Verificar si es administrador
+    // NOTA: Cualquier usuario autenticado es considerado admin
+    // Los usuarios se crean manualmente en Firebase Console
     function isAdmin(userId) {
-      // Lista de UIDs de administradores
-      // TODO: Reemplazar con tu UID real cuando tengas usuarios admin
-      return userId in [
-        'ADMIN_UID_1', // Reemplazar con UID real
-        'ADMIN_UID_2'  // Agregar más admins si es necesario
-      ];
+      return userId != null;
     }
   }
 } 

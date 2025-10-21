@@ -352,3 +352,5 @@ await resend.emails.send({
 ---
 
 **Desarrollado para La Pertenencia** 🍷
+
+

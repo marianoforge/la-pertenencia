@@ -291,7 +291,7 @@ const WineDetail = ({ wine, onAddToCart }: WineDetailProps) => {
                 Bodega:
               </div>
               <div className="text-center justify-start text-neutral-900 text-base font-normal font-['Lora'] tracking-wide">
-                {wine.winery}
+                {wine.bodega}
               </div>
             </div>
             <div className="self-stretch pb-[5px] inline-flex justify-start items-start gap-2.5">

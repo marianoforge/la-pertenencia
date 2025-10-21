@@ -103,13 +103,10 @@ service firebase.storage {
     }
     
     // Verificar si es administrador
+    // NOTA: Cualquier usuario autenticado es considerado admin
+    // Los usuarios se crean manualmente en Firebase Console
     function isAdmin() {
-      // Lista de UIDs de administradores
-      // TODO: Reemplazar con UIDs reales
-      return request.auth.uid in [
-        'ADMIN_UID_1',  // Reemplazar con UID real
-        'ADMIN_UID_2'   // Agregar más admins si es necesario
-      ];
+      return request.auth != null;
     }
   }
 } 
