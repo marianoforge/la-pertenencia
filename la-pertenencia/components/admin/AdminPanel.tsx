@@ -1,91 +1,86 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
 
 import { useAuth } from "@/hooks/useAuth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import WineAdminPanel from "./WineAdminPanel";
 import ComboAdminPanel from "./ComboAdminPanel";
+import SuscriptosAdminPanel from "./SuscriptosAdminPanel";
 
-type TabType = "wines" | "combos";
+type TabType = "wines" | "combos" | "suscriptos";
 
 export default function AdminPanel() {
-  const { user, logout, loading } = useAuth();
+  const { user, logout, loading: authLoading } = useAuth();
+  const { isAdmin, isLoading: adminLoading } = useIsAdmin();
   const [activeTab, setActiveTab] = useState<TabType>("wines");
+  const router = useRouter();
 
-  // Manejar login si no está autenticado
-  if (loading) {
+  // Redirigir al login si no está autenticado
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login");
+    }
+  }, [user, authLoading, router]);
+
+  // Manejar estados de carga
+  if (authLoading || adminLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Cargando...</div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <Card className="max-w-md p-8">
-          <h1 className="text-2xl font-bold mb-4">
-            🍷 Admin Panel - La Pertenencia
-          </h1>
-          <p className="text-gray-600 mb-4">
-            Debes iniciar sesión para acceder al panel de administración.
-          </p>
-          <div className="text-sm bg-blue-50 p-4 rounded">
-            💡 <strong>Para obtener tu UID:</strong>
-            <br />
-            1. Inicia sesión en tu app
-            <br />
-            2. Usa el componente GetMyUID
-            <br />
-            3. Actualiza las reglas de Firebase con tu UID
-          </div>
-        </Card>
-      </div>
-    );
-  }
-
-  // Mostrar UID para configurar como admin
-  const showUID = () => (
-    <Card className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-      <div className="flex">
-        <div className="ml-3">
-          <p className="text-sm text-yellow-700">
-            <strong>Tu UID para configurar como admin:</strong>
-          </p>
-          <code className="text-xs bg-gray-800 text-green-400 p-2 rounded block mt-2">
-            {user.uid}
-          </code>
-          <p className="text-xs text-yellow-600 mt-2">
-            Copia este UID y úsalo en las reglas de Firebase para obtener
-            permisos de administrador.
-          </p>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <div className="text-lg text-gray-700">Verificando permisos...</div>
         </div>
       </div>
-    </Card>
-  );
+    );
+  }
+
+  // Si no hay usuario (no debería llegar aquí por el useEffect)
+  if (!user) {
+    return null;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow">
+      <div className="bg-white shadow-md border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                🍷 Panel de Administración
-              </h1>
-              <p className="text-gray-600">
+              <div className="flex items-center gap-3">
+                <h1 className="text-3xl font-bold text-gray-900">
+                  🍷 Panel de Administración
+                </h1>
+                {isAdmin && (
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                    Admin Activo
+                  </span>
+                )}
+              </div>
+              <p className="text-gray-600 mt-1">
                 La Pertenencia - Gestión de Contenido
               </p>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">
-                {user.displayName || user.email}
-              </span>
-              <Button color="danger" size="sm" onClick={logout}>
+              <div className="text-right">
+                <p className="text-sm font-medium text-gray-700">
+                  {user.displayName || "Usuario"}
+                </p>
+                <p className="text-xs text-gray-500">{user.email}</p>
+              </div>
+              <Button
+                color="danger"
+                size="sm"
+                variant="flat"
+                onClick={async () => {
+                  await logout();
+                  router.push("/login");
+                }}
+              >
                 Cerrar Sesión
               </Button>
             </div>
@@ -94,11 +89,8 @@ export default function AdminPanel() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Mostrar UID para configurar admin */}
-        {showUID()}
-
         {/* Tabs de navegación */}
-        <Card className="mb-6">
+        <Card className="mb-6 shadow-sm">
           <div className="px-6 py-4">
             <div className="flex space-x-1">
               <Button
@@ -117,6 +109,14 @@ export default function AdminPanel() {
               >
                 📦 Combos
               </Button>
+              <Button
+                variant={activeTab === "suscriptos" ? "solid" : "light"}
+                color={activeTab === "suscriptos" ? "primary" : "default"}
+                onPress={() => setActiveTab("suscriptos")}
+                className="px-6"
+              >
+                📧 Suscriptores
+              </Button>
             </div>
           </div>
         </Card>
@@ -124,8 +124,8 @@ export default function AdminPanel() {
         {/* Contenido de las tabs */}
         {activeTab === "wines" && <WineAdminPanel />}
         {activeTab === "combos" && <ComboAdminPanel />}
+        {activeTab === "suscriptos" && <SuscriptosAdminPanel />}
       </div>
     </div>
   );
 }
-

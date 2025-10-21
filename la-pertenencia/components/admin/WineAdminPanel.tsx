@@ -14,6 +14,7 @@ import {
   useDeleteWine,
 } from "@/hooks/useWines";
 import { uploadWineImage, validateImageFile } from "@/lib/storage";
+import { generateWineId } from "@/lib/firestore";
 import { Wine } from "@/types/wine";
 
 interface WineForm {
@@ -291,8 +292,10 @@ export default function WineAdminPanel() {
           return;
         }
 
-        const tempId = editingWine?.id || `wine-${Date.now()}`;
-        const uploadedUrl = await uploadWineImage(selectedFile, tempId);
+        // Generar el ID usando el nuevo formato para el nombre de la imagen
+        const imageId =
+          editingWine?.id || generateWineId(wineForm.marca, wineForm.varietal);
+        const uploadedUrl = await uploadWineImage(selectedFile, imageId);
 
         if (uploadedUrl) {
           imageUrl = uploadedUrl;

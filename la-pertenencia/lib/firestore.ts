@@ -4,6 +4,7 @@ import {
   getDoc,
   doc,
   addDoc,
+  setDoc,
   updateDoc,
   deleteDoc,
   query,
@@ -16,6 +17,7 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
+import { deleteImageByUrl } from "@/lib/storage";
 
 // Importar el tipo Wine desde types/wine.ts para mantener consistencia
 import { Wine } from "@/types/wine";
@@ -32,6 +34,29 @@ const COLLECTIONS = {
 /**
  * 🍷 Wine Management Functions
  */
+
+// Helper function to generate custom wine ID: marca-varietal-uid
+export const generateWineId = (marca: string, varietal: string): string => {
+  const cleanMarca = marca
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remove accents
+    .replace(/[^a-z0-9]/g, "-") // Replace non-alphanumeric with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with single
+    .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
+
+  const cleanVarietal = varietal
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  const uid = Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+
+  return `${cleanMarca}-${cleanVarietal}-${uid}`;
+};
 
 // Get all wines
 export const getAllWines = async (): Promise<Wine[]> => {
@@ -116,23 +141,24 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
   }
 };
 
-// Add new wine
+// Add new wine with custom ID format: marca-varietal-uid
 export const addWine = async (
   wineData: Omit<Wine, "id" | "createdAt" | "updatedAt">
 ): Promise<string | null> => {
   try {
-    const winesCollection = collection(db, COLLECTIONS.WINES);
+    const customId = generateWineId(wineData.marca, wineData.varietal);
+    const wineDocRef = doc(db, COLLECTIONS.WINES, customId);
     const now = new Date().toISOString();
 
-    const docRef = await addDoc(winesCollection, {
+    await setDoc(wineDocRef, {
       ...wineData,
       createdAt: now,
       updatedAt: now,
     });
 
-    console.log("✅ Wine added with ID:", docRef.id);
+    console.log("✅ Wine added with ID:", customId);
 
-    return docRef.id;
+    return customId;
   } catch (error) {
     console.error("❌ Error adding wine:", error);
 
@@ -163,14 +189,39 @@ export const updateWine = async (
   }
 };
 
-// Delete wine
+// Delete wine and associated image from Storage
 export const deleteWine = async (id: string): Promise<boolean> => {
   try {
     const wineDoc = doc(db, COLLECTIONS.WINES, id);
 
-    await deleteDoc(wineDoc);
+    // Get wine data to retrieve image URL
+    const wineSnapshot = await getDoc(wineDoc);
 
-    console.log("✅ Wine deleted:", id);
+    if (wineSnapshot.exists()) {
+      const wineData = wineSnapshot.data() as Wine;
+
+      // Delete wine document
+      await deleteDoc(wineDoc);
+
+      console.log("✅ Wine document deleted:", id);
+
+      // Delete associated image from Storage if it exists and is not a placeholder
+      if (
+        wineData.image &&
+        wineData.image.includes("firebasestorage.googleapis.com")
+      ) {
+        try {
+          await deleteImageByUrl(wineData.image);
+          console.log("✅ Wine image deleted from Storage");
+        } catch (imageError) {
+          console.warn("⚠️ Could not delete image from Storage:", imageError);
+          // Continue even if image deletion fails
+        }
+      }
+    } else {
+      console.log("⚠️ Wine not found:", id);
+      return false;
+    }
 
     return true;
   } catch (error) {

@@ -1,39 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginForm() {
-  const { signIn, signInWithGoogle, loading, error } = useAuth();
+  const { signIn, signInWithGoogle, loading, error, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const router = useRouter();
+
+  // Redirigir al admin si ya está autenticado
+  useEffect(() => {
+    if (user && !loading) {
+      router.push("/admin");
+    }
+  }, [user, loading, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoginError(null);
 
     if (!email || !password) {
-      alert("Por favor, completa todos los campos");
-
+      setLoginError("Por favor, completa todos los campos");
       return;
     }
 
     const result = await signIn({ email, password });
 
     if (result.success) {
+      // La redirección se maneja en el useEffect
       console.log("Login exitoso");
     } else {
+      // Mejorar mensajes de error
+      const errorMessage = result.error || "Error al iniciar sesión";
+      if (
+        errorMessage.includes("invalid-credential") ||
+        errorMessage.includes("user-not-found")
+      ) {
+        setLoginError("Email o contraseña incorrectos");
+      } else if (errorMessage.includes("invalid-email")) {
+        setLoginError("El formato del email no es válido");
+      } else if (errorMessage.includes("too-many-requests")) {
+        setLoginError("Demasiados intentos. Por favor, intenta más tarde");
+      } else {
+        setLoginError("Error al iniciar sesión. Verifica tus credenciales");
+      }
       console.error("Error en login:", result.error);
     }
   };
 
   const handleGoogleSignIn = async () => {
+    setLoginError(null);
     const result = await signInWithGoogle();
 
     if (result.success) {
+      // La redirección se maneja en el useEffect
       console.log("Login con Google exitoso");
     } else {
+      setLoginError("Error al iniciar sesión con Google");
       console.error("Error en login con Google:", result.error);
     }
   };
@@ -90,9 +117,27 @@ export default function LoginForm() {
             </div>
           </div>
 
-          {error && (
+          {loginError && (
             <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-700">{error}</div>
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg
+                    className="h-5 w-5 text-red-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <div className="text-sm text-red-700">{loginError}</div>
+                </div>
+              </div>
             </div>
           )}
 

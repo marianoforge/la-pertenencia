@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev --turbo -p 3002",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3002",
     "lint": "eslint --fix",
     "migrate": "node scripts/migrate-to-firestore.js",
     "migrate-ts": "tsx scripts/migrate-to-firestore.ts",
@@ -15,6 +15,7 @@
     "test-security": "node scripts/test-security-rules.js",
     "check-project": "node scripts/check-firebase-project.js",
     "get-admin-uid": "tsx scripts/get-admin-uid.ts",
+    "verify-admin": "node scripts/verify-admin-setup.js",
     "firebase:setup": "echo 'Please create .env.local file with Firebase credentials'"
   },
   "dependencies": {
