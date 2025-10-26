@@ -120,10 +120,10 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
 
         {/* Quantity Selector */}
         <div className="mb-3 md:mb-4">
-          {/* Label "Cajas por 6:" */}
+          {/* Label "Cajas por X:" */}
           <div className="text-center mb-2">
             <span className="text-neutral-900 text-xs md:text-sm font-medium font-['Lora'] tracking-wide">
-              Cajas por 6 unidades
+              Cajas por {wine.boxSize || 6} unidades
             </span>
           </div>
 

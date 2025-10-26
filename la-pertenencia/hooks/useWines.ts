@@ -113,16 +113,21 @@ async function fetchWines(filters?: WineFilters): Promise<Wine[]> {
 
 async function fetchWineById(id: string): Promise<Wine> {
   try {
+    if (!id || id === "undefined") {
+      throw new Error("Invalid wine ID");
+    }
+
     const wine = await getWineById(id);
 
     if (!wine) {
+      console.warn(`Wine with ID "${id}" not found in Firestore`);
       throw new Error("Wine not found");
     }
 
     return wine as Wine;
   } catch (error) {
     console.error("Error fetching wine by ID:", error);
-    throw new Error("Failed to fetch wine from Firebase");
+    throw error;
   }
 }
 
@@ -199,9 +204,9 @@ export const useWine = (id: string) => {
   return useQuery({
     queryKey: ["wine", id],
     queryFn: () => fetchWineById(id),
-    enabled: !!id,
+    enabled: !!id && id !== "undefined", // Solo ejecutar si hay un ID válido
     staleTime: 2 * 60 * 1000, // 2 minutos
-    retry: 3,
+    retry: 2, // Reducir reintentos de 3 a 2
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 };

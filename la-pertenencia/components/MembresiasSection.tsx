@@ -78,7 +78,7 @@ export default function MembresiasSection() {
                 Una selección de tres vinos especiales para descubrir nuevas
                 etiquetas cada mes.
               </p>
-              <div className="w-full h-[1px] bg-neutral-300"></div>
+              {/* <div className="w-full h-[1px] bg-neutral-300"></div>
               <div className="flex flex-col sm:flex-row items-start sm:items-baseline gap-2 sm:gap-3">
                 <span className="text-neutral-900 text-3xl md:text-[41px] font-bold font-['Lora']">
                   $ 50.000
@@ -86,7 +86,7 @@ export default function MembresiasSection() {
                 <span className="text-neutral-600 text-sm md:text-base font-normal font-['Lora'] italic">
                   * Precio promocional el primer mes
                 </span>
-              </div>
+              </div> */}
             </div>
 
             {/* Tarjeta Membresía ORO */}
@@ -96,7 +96,7 @@ export default function MembresiasSection() {
                 Vinos de partidas limitadas y etiquetas de alta gama, elegidos
                 para paladares curiosos y coleccionistas.
               </p>
-              <div className="w-full h-[1px] bg-neutral-300"></div>
+              {/* <div className="w-full h-[1px] bg-neutral-300"></div>
               <div className="flex flex-col sm:flex-row items-start sm:items-baseline gap-2 sm:gap-3">
                 <span className="text-neutral-900 text-3xl md:text-[41px] font-bold font-['Lora']">
                   $ 85.000
@@ -104,12 +104,12 @@ export default function MembresiasSection() {
                 <span className="text-neutral-600 text-sm md:text-base font-normal font-['Lora'] italic">
                   * Precio promocional el primer mes
                 </span>
-              </div>
+              </div> */}
             </div>
 
             {/* Botón CTA */}
             <a
-              className="w-full max-w-[350px] px-8 md:px-10 py-4 bg-amber-300 rounded-[4px] border border-neutral-900 flex justify-center items-center gap-2.5 mt-2 hover:bg-amber-400 transition-colors shadow-sm"
+              className="w-full max-w-[350px] px-8 md:px-10 py-4 bg-amber-300 rounded-[4px] border border-neutral-900 flex justify-center items-center gap-2.5 mt-2 md:mt-28 hover:bg-amber-400 transition-colors shadow-sm"
               href="https://wa.me/5491161525562?text=Hola!%20Quiero%20mi%20membresía"
               rel="noopener noreferrer"
               target="_blank"
