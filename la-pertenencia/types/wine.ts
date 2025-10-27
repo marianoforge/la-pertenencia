@@ -24,6 +24,7 @@ export interface Wine {
   image: string;
   featured: boolean;
   winery: string;
+  boxSize?: number; // Tamaño de caja (por defecto 6 unidades)
   createdAt: string;
   updatedAt: string;
 }
@@ -52,6 +53,7 @@ export interface CreateWineInput {
   image: string;
   featured: boolean;
   winery: string;
+  boxSize?: number;
 }
 
 export interface UpdateWineInput extends Partial<CreateWineInput> {

@@ -241,3 +241,7 @@ El diseño es completamente responsive y se adapta a:
 ---
 
 **Tip:** Toma screenshots en cada paso para tu documentación interna! 📸
+
+
+
+

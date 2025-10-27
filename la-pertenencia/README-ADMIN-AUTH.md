@@ -298,3 +298,7 @@ Si tienes problemas con la autenticación:
 
 **Última actualización:** Octubre 2025
 **Autor:** Sistema de Autenticación La Pertenencia
+
+
+
+

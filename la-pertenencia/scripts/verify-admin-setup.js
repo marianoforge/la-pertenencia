@@ -271,3 +271,7 @@ if (errorsFound === 0 && warningsFound === 0) {
 console.log("═══════════════════════════════════════════════════════════");
 
 process.exit(errorsFound > 0 ? 1 : 0);
+
+
+
+

@@ -121,3 +121,7 @@ Usuario autenticado
 - ⚠️ **No compartas las credenciales de admin**
 - ⚠️ **Habilita autenticación de dos factores si es posible**
 - ⚠️ **Revisa periódicamente los usuarios con acceso**
+
+
+
+
