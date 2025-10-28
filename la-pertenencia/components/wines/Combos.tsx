@@ -7,6 +7,7 @@ import { Wine } from "@/types/wine";
 import { Combo } from "@/types/combo";
 import { useFeaturedCombos } from "@/hooks/useCombos";
 import { useCartStore } from "@/stores/useCartStore";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface CombosProps {
   title?: string;
@@ -20,6 +21,7 @@ const Recomendados = ({
   const [currentPage, setCurrentPage] = useState(0);
   const { addItem } = useCartStore();
   const router = useRouter();
+  const { width } = useWindowSize();
 
   // Verificar si estamos en la página de vinos
   const isVinosPage = router.pathname.includes("/vinos");
@@ -30,8 +32,9 @@ const Recomendados = ({
   // Usar combos destacados, si no hay ninguno usar todos los combos disponibles
   const displayCombos = featuredCombos;
 
-  // Calcular combos por página basado en el tamaño de pantalla (2 combos por página)
-  const combosPerPage = 2;
+  // Calcular combos por página basado en el tamaño de pantalla
+  // Mobile (< 1024px): 1 combo, Desktop (>= 1024px): 2 combos
+  const combosPerPage = width < 1024 ? 1 : 2;
 
   // Calcular el total de páginas basado en los combos
   const totalPages = Math.ceil(displayCombos.length / combosPerPage);
@@ -42,6 +45,11 @@ const Recomendados = ({
       setCurrentPage(Math.max(0, totalPages - 1));
     }
   }, [totalPages, currentPage]);
+
+  // Resetear página cuando cambia el tamaño de pantalla
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [combosPerPage]);
 
   // Handle combo add to cart - agregar como una unidad
   const handleAddComboToCart = (combo: Combo, quantity: number) => {

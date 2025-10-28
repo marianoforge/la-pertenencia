@@ -75,10 +75,6 @@ export default function VinosPage() {
     }
   };
 
-  const handleFiltersChange = (newFilters: WineFilters) => {
-    setLocalFilters({ ...localFilters, ...newFilters });
-  };
-
   // Obtener vino destacado para el hero
   const featuredWine = useMemo(() => {
     if (!wines.length) return undefined;
@@ -98,8 +94,10 @@ export default function VinosPage() {
         return winesCopy.sort((a, b) => a.price - b.price);
       case "price-desc":
         return winesCopy.sort((a, b) => b.price - a.price);
-      case "name":
+      case "name-asc":
         return winesCopy.sort((a, b) => a.marca.localeCompare(b.marca));
+      case "name-desc":
+        return winesCopy.sort((a, b) => b.marca.localeCompare(a.marca));
       case "newest":
         return winesCopy.sort(
           (a, b) =>
@@ -140,6 +138,48 @@ export default function VinosPage() {
 
   const goToNextPage = () => {
     setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+  };
+
+  // Generar array de páginas a mostrar con elipsis
+  const generatePaginationPages = () => {
+    const pages: (number | "ellipsis")[] = [];
+    const maxPagesToShow = 7; // Máximo de páginas antes de usar elipsis
+
+    if (totalPages <= maxPagesToShow) {
+      // Mostrar todas las páginas si son pocas
+      return Array.from({ length: totalPages }, (_, i) => i);
+    }
+
+    // Siempre mostrar primera página
+    pages.push(0);
+
+    if (currentPage <= 3) {
+      // Cerca del inicio: 1, 2, 3, 4, 5, ..., última
+      for (let i = 1; i <= Math.min(5, totalPages - 2); i++) {
+        pages.push(i);
+      }
+      if (totalPages > 6) {
+        pages.push("ellipsis");
+      }
+      pages.push(totalPages - 1);
+    } else if (currentPage >= totalPages - 4) {
+      // Cerca del final: 1, ..., últimas 5 páginas
+      pages.push("ellipsis");
+      for (let i = totalPages - 6; i < totalPages - 1; i++) {
+        if (i > 0) pages.push(i);
+      }
+      pages.push(totalPages - 1);
+    } else {
+      // En medio: 1, ..., actual-1, actual, actual+1, ..., última
+      pages.push("ellipsis");
+      pages.push(currentPage - 1);
+      pages.push(currentPage);
+      pages.push(currentPage + 1);
+      pages.push("ellipsis");
+      pages.push(totalPages - 1);
+    }
+
+    return pages;
   };
 
   return (
@@ -209,18 +249,7 @@ export default function VinosPage() {
 
         {/* Wine Hero Section */}
         <div data-aos="fade-up">
-          <WineHero
-            featuredWine={featuredWine}
-            onAddToCart={(wine, quantity) => {
-              // Los componentes ya manejan la funcionalidad del carrito
-              console.log(
-                "Vino agregado al carrito:",
-                wine.marca,
-                "Cantidad:",
-                quantity
-              );
-            }}
-          />
+          <WineHero featuredWine={featuredWine} />
         </div>
 
         {/* Filter Bar Section */}
@@ -240,7 +269,7 @@ export default function VinosPage() {
         >
           <div className="w-full bg-amber-300 py-3 px-6 flex justify-center items-center gap-4 rounded-sm relative">
             {/* Left exclamation icon */}
-            <div className="absolute left-4 flex-shrink-0 w-7 h-7 md:w-8 md:h-8 bg-neutral-900 rounded-full flex items-center justify-center">
+            <div className="absolute left-1 flex-shrink-0 w-6 h-6 md:w-8 md:h-8 bg-neutral-900 rounded-full flex items-center justify-center">
               <span className="text-amber-300 text-lg md:text-xl font-bold font-['Lora']">
                 !
               </span>
@@ -252,7 +281,7 @@ export default function VinosPage() {
             </p>
 
             {/* Right exclamation icon */}
-            <div className="absolute right-4 flex-shrink-0 w-7 h-7 md:w-8 md:h-8 bg-neutral-900 rounded-full flex items-center justify-center">
+            <div className="absolute right-1 flex-shrink-0 w-6 h-6 md:w-8 md:h-8 bg-neutral-900 rounded-full flex items-center justify-center">
               <span className="text-amber-300 text-lg md:text-xl font-bold font-['Lora']">
                 !
               </span>
@@ -338,59 +367,99 @@ export default function VinosPage() {
                 data-aos-delay="400"
               >
                 {currentWines.map((wine: Wine) => (
-                  <WineGridCard
-                    key={wine.id}
-                    wine={wine}
-                    onAddToCart={(wine, quantity) => {
-                      // Los componentes ya manejan la funcionalidad del carrito
-                      console.log(
-                        "Vino agregado al carrito:",
-                        wine.marca,
-                        "Cantidad:",
-                        quantity
-                      );
-                    }}
-                  />
+                  <WineGridCard key={wine.id} wine={wine} />
                 ))}
               </div>
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
                 <div
-                  className="flex justify-center items-center gap-4 mt-8 mb-4"
+                  className="flex justify-center items-center gap-2 sm:gap-4 mt-8 mb-4 px-4"
                   data-aos="fade-up"
                   data-aos-delay="500"
                 >
+                  {/* Botón Anterior */}
                   <button
-                    className="px-6 py-2 bg-neutral-900 text-dorado-light rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
+                    aria-label="Página anterior"
+                    className="p-2 sm:px-6 sm:py-2 bg-neutral-900 text-dorado-light rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors flex items-center justify-center min-w-[40px] sm:min-w-auto"
                     disabled={currentPage === 0}
                     onClick={goToPreviousPage}
                   >
-                    Anterior
+                    {/* Flecha en mobile, texto en desktop */}
+                    <span className="sm:hidden">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M15 19l-7-7 7-7"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                        />
+                      </svg>
+                    </span>
+                    <span className="hidden sm:inline">Anterior</span>
                   </button>
 
-                  <div className="flex items-center gap-2">
-                    {Array.from({ length: totalPages }, (_, index) => (
-                      <button
-                        key={index}
-                        className={`w-10 h-10 rounded-sm font-['Lora'] font-medium text-sm transition-colors ${
-                          currentPage === index
-                            ? "bg-amber-300 text-neutral-900"
-                            : "bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-100"
-                        }`}
-                        onClick={() => setCurrentPage(index)}
-                      >
-                        {index + 1}
-                      </button>
-                    ))}
+                  {/* Números de página con elipsis */}
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    {generatePaginationPages().map((page, index) => {
+                      if (page === "ellipsis") {
+                        return (
+                          <span
+                            key={`ellipsis-${index}`}
+                            className="w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center text-neutral-600 font-['Lora']"
+                          >
+                            ...
+                          </span>
+                        );
+                      }
+
+                      return (
+                        <button
+                          key={page}
+                          className={`w-8 sm:w-10 h-8 sm:h-10 rounded-sm font-['Lora'] font-medium text-xs sm:text-sm transition-colors ${
+                            currentPage === page
+                              ? "bg-amber-300 text-neutral-900"
+                              : "bg-white text-neutral-900 border border-neutral-300 hover:bg-neutral-100"
+                          }`}
+                          onClick={() => setCurrentPage(page)}
+                        >
+                          {page + 1}
+                        </button>
+                      );
+                    })}
                   </div>
 
+                  {/* Botón Siguiente */}
                   <button
-                    className="px-6 py-2 bg-neutral-900 text-dorado-light rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors"
+                    aria-label="Página siguiente"
+                    className="p-2 sm:px-6 sm:py-2 bg-neutral-900 text-dorado-light rounded-sm font-['Lora'] font-medium uppercase tracking-[2px] text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-neutral-800 transition-colors flex items-center justify-center min-w-[40px] sm:min-w-auto"
                     disabled={currentPage === totalPages - 1}
                     onClick={goToNextPage}
                   >
-                    Siguiente
+                    {/* Flecha en mobile, texto en desktop */}
+                    <span className="sm:hidden">
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9 5l7 7-7 7"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                        />
+                      </svg>
+                    </span>
+                    <span className="hidden sm:inline">Siguiente</span>
                   </button>
                 </div>
               )}
@@ -398,7 +467,7 @@ export default function VinosPage() {
           )}
         </div>
       </section>
-      <Combos title="nuestros combos" subtitle="Combinaciones únicas" />
+      <Combos subtitle="Combinaciones únicas" title="nuestros combos" />
       <Contacto />
       <FilterPanel />
     </DefaultLayout>
