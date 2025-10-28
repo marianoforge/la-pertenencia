@@ -197,7 +197,7 @@ export default function DefaultLayout({
                   </a>
                   <a
                     className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
-                    href="@somoslapertenencia"
+                    href="https://instagram.com/somoslapertenencia"
                     rel="noopener noreferrer"
                     target="_blank"
                   >

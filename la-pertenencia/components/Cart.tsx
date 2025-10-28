@@ -398,8 +398,7 @@ const Cart = () => {
 
                 {/* Info */}
                 <p className="text-xs text-center text-neutral-600 font-['Lora'] tracking-wide leading-relaxed">
-                  Los precios incluyen IVA. Te contactaremos para coordinar la
-                  entrega.
+                  Los precios incluyen IVA.
                 </p>
               </div>
             )}
