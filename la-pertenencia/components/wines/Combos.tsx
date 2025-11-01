@@ -115,7 +115,7 @@ const Recomendados = ({
   if (isLoading) {
     return (
       <Section className="!px-0 !py-16" id="combos" variant="default">
-        <div data-aos="fade-up">
+        <div>
           <SectionHeader subtitle={subtitle} title={title} />
         </div>
         <div className="flex justify-center items-center py-16">
@@ -129,7 +129,7 @@ const Recomendados = ({
   if (error) {
     return (
       <Section className="!px-0 !py-16" id="combos" variant="default">
-        <div data-aos="fade-up">
+        <div>
           <SectionHeader subtitle={subtitle} title={title} />
         </div>
         <div className="flex justify-center items-center py-16">
@@ -146,7 +146,7 @@ const Recomendados = ({
 
   return (
     <Section className="!px-0 !py-16" id="combos" variant="default">
-      <div data-aos="fade-up">
+      <div>
         <SectionHeader subtitle={subtitle} title={title} />
       </div>
 
@@ -164,9 +164,6 @@ const Recomendados = ({
                 <div
                   key={combo.id}
                   className="flex justify-center w-full px-4 sm:px-0"
-                  data-aos="fade-up"
-                  data-aos-delay={300 + index * 100}
-                  data-aos-once="true"
                 >
                   <ComboCard
                     className="w-full sm:w-auto"

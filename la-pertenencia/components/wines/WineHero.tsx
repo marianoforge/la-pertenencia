@@ -72,9 +72,9 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
   return (
     <>
       {/* Desktop/Tablet Version */}
-      <div className="max-[480px]:hidden w-[1300px] h-[400px] relative bg-neutral-900 flex flex-col mx-auto overflow-hidden mt-6 rounded-lg">
+      <div className="max-[720px]:hidden w-[1300px] h-[400px] relative bg-neutral-900 flex flex-col mx-auto overflow-hidden mt-6">
         <div className="relative">
-          <div data-aos="fade-up" data-aos-delay="100">
+          <div>
             <Image
               alt="Back Hero Inside"
               className="absolute w-[620px] h-[361px] bg-neutral-900 rounded-sm top-5 left-8 z-10"
@@ -83,7 +83,7 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
               width={620}
             />
           </div>
-          <div data-aos="zoom-in" data-aos-delay="300">
+          <div>
             <Image
               alt="Botella Vinos"
               className="absolute rounded-sm top-10 left-14 z-10"
@@ -93,11 +93,7 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
             />
           </div>
 
-          <div
-            className="absolute top-16 left-[280px] z-20 self-stretch px-7 py-2 inline-flex flex-col justify-center items-center gap-1"
-            data-aos="fade-left"
-            data-aos-delay="500"
-          >
+          <div className="absolute top-16 left-[280px] z-20 self-stretch px-7 py-2 inline-flex flex-col justify-center items-center gap-1">
             <div className="self-stretch pb-2.5 flex flex-col justify-start items-start gap-4">
               <div className="self-stretch text-center justify-start text-black text-xl font-semibold font-['Lora'] uppercase tracking-[5px]">
                 la pertenencia
@@ -128,12 +124,14 @@ const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
       </div>
 
       {/* Mobile Version */}
-      <div className="min-[481px]:hidden w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden mx-auto mt-6">
-        <img
-          alt="Vinos - Background Mobile"
-          className="w-full h-full object-cover object-[75%_center] absolute inset-0"
-          src="/images/bg-hero-mobile-vinos.png"
-        />
+      <div className="min-[721px]:hidden w-full max-w-[1300px] mx-auto mt-6">
+        <div className="w-full wine-banner-container relative">
+          <img
+            alt="Vinos - Background Mobile"
+            className="wine-banner-mobile w-full"
+            src="/images/bannerMobileVinos.png"
+          />
+        </div>
       </div>
     </>
   );
