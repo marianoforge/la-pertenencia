@@ -258,4 +258,29 @@ body {
       overflow: visible;
     }
   }
+  
+  /* Wine banner mobile - show full image between 360px and 720px */
+  .wine-banner-container {
+    height: 24rem; /* h-96 */
+    overflow: hidden;
+  }
+  
+  .wine-banner-mobile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 75% center;
+  }
+  
+  @media (min-width: 360px) and (max-width: 720px) {
+    .wine-banner-container {
+      height: auto;
+    }
+    
+    .wine-banner-mobile {
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
 }
