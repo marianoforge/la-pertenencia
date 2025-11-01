@@ -211,41 +211,9 @@ export default function VinosPage() {
               </li>
             </ol>
           </nav>
-
-          {/* Search Input */}
-          <div className="w-full sm:w-72 pl-3 pr-2.5 py-1.5 bg-white rounded-sm outline outline-1 outline-offset-[-1px] outline-neutral-400 flex justify-between items-center">
-            <input
-              className="flex-1 outline-none text-black text-sm md:text-base font-normal font-['Lora'] tracking-wide bg-transparent"
-              placeholder="Buscar vinos..."
-              type="text"
-              value={searchTerm}
-              onChange={(e) => handleSearch(e.target.value)}
-            />
-            <div className="w-5 h-5 relative overflow-hidden flex-shrink-0">
-              <div className="w-[0.70px] h-[0.56px] left-[10.06px] top-[19.29px] absolute" />
-              <div className="w-4 h-4 left-[1.67px] top-[1.67px] absolute">
-                <svg
-                  fill="none"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.333 12.667A5.333 5.333 0 1 0 7.333 2a5.333 5.333 0 0 0 0 10.667ZM14 14l-2.9-2.9"
-                    stroke="black"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.33"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <section className="max-w-[1300px] mx-auto flex flex-col gap-4 md:gap-8 py-4 ">
-        {/* Breadcrumb and Search Section */}
+      <section className="max-w-[1300px] mx-auto flex flex-col gap-4 md:gap-8 py-4 ">{/* Breadcrumb Section */}
 
         {/* Wine Hero Section */}
         <div data-aos="fade-up">
@@ -258,7 +226,10 @@ export default function VinosPage() {
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          <FilterBar />
+          <FilterBar 
+            searchTerm={searchTerm}
+            onSearchChange={handleSearch}
+          />
         </div>
 
         {/* Minimum Sale Banner */}

@@ -6,6 +6,8 @@ import { useFilterStore } from "@/stores/useFilterStore";
 
 interface FilterBarProps {
   onSortChange?: (sortBy: string) => void;
+  searchTerm?: string;
+  onSearchChange?: (value: string) => void;
 }
 
 const sortOptions = [
@@ -16,7 +18,11 @@ const sortOptions = [
   { value: "name-desc", label: "Nombre: Z-A" },
 ];
 
-const FilterBar = ({ onSortChange }: FilterBarProps) => {
+const FilterBar = ({
+  onSortChange,
+  searchTerm = "",
+  onSearchChange,
+}: FilterBarProps) => {
   const { toggleFilters, sortBy, updateSort } = useFilterStore();
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({
@@ -30,6 +36,7 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
     (value: string) => {
       updateSort(value);
       setShowSortDropdown(false);
+
       if (onSortChange) {
         onSortChange(value);
       }
@@ -60,11 +67,13 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
+
       if (buttonRef.current && !buttonRef.current.contains(target)) {
         // Check if click is not on a dropdown button
         const isDropdownButton = (target as HTMLElement).closest(
           '[data-dropdown-option="true"]'
         );
+
         if (!isDropdownButton) {
           setShowSortDropdown(false);
         }
@@ -162,46 +171,135 @@ const FilterBar = ({ onSortChange }: FilterBarProps) => {
 
   return (
     <>
-      <div className="self-stretch py-5 rounded-sm border-t border-neutral-400 flex justify-between items-center gap-3 relative z-[9997]">
-        <button
-          className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors max-[480px]:hidden"
-          onClick={toggleFilters}
-        >
-          <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide max-[480px]:hidden">
-            Filtrar por:
-          </span>
-          <FilterIcon />
-        </button>
-        {/* Right side - Sort dropdown */}
-        <div className="flex items-center gap-3">
-          <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
-            Ordenar por:
-          </span>
+      <div className="self-stretch py-5 rounded-sm border-t border-neutral-400 relative z-[9997]">
+        {/* Desktop Layout */}
+        <div className="hidden md:flex justify-between items-center gap-3">
+          {/* Left side - Filter button */}
+          <button
+            className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors"
+            onClick={toggleFilters}
+          >
+            <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
+              Filtrar por:
+            </span>
+            <FilterIcon />
+          </button>
 
-          <div className="relative z-[9998]">
+          {/* Center - Search Input */}
+          <div className="flex-1 max-w-md mx-4 pl-3 pr-2.5 py-1.5 bg-white rounded-sm outline outline-1 outline-offset-[-1px] outline-neutral-400 flex justify-between items-center">
+            <input
+              className="flex-1 outline-none text-black text-sm md:text-base font-normal font-['Lora'] tracking-wide bg-transparent"
+              placeholder="Buscar vinos..."
+              type="text"
+              value={searchTerm}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+            />
+            <div className="w-5 h-5 relative overflow-hidden flex-shrink-0">
+              <div className="w-[0.70px] h-[0.56px] left-[10.06px] top-[19.29px] absolute" />
+              <div className="w-4 h-4 left-[1.67px] top-[1.67px] absolute">
+                <svg
+                  fill="none"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.333 12.667A5.333 5.333 0 1 0 7.333 2a5.333 5.333 0 0 0 0 10.667ZM14 14l-2.9-2.9"
+                    stroke="black"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.33"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Right side - Sort dropdown */}
+          <div className="flex items-center gap-3">
+            <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide">
+              Ordenar por:
+            </span>
+
+            <div className="relative z-[9998]">
+              <button
+                ref={buttonRef}
+                className="flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors min-w-[120px]"
+                onClick={handleDropdownToggle}
+              >
+                <span className="text-neutral-900 font-['Lora'] text-sm flex-1">
+                  {sortOptions.find((option) => option.value === sortBy)
+                    ?.label || "Más relevantes"}
+                </span>
+                <DropdownIcon />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout - Stacked */}
+        <div className="flex md:hidden flex-col gap-3">
+          {/* Search Input */}
+          <div className="w-full pl-3 pr-2.5 py-1.5 bg-white rounded-sm outline outline-1 outline-offset-[-1px] outline-neutral-400 flex justify-between items-center">
+            <input
+              className="flex-1 outline-none text-black text-sm font-normal font-['Lora'] tracking-wide bg-transparent"
+              placeholder="Buscar vinos..."
+              type="text"
+              value={searchTerm}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+            />
+            <div className="w-5 h-5 relative overflow-hidden flex-shrink-0">
+              <div className="w-[0.70px] h-[0.56px] left-[10.06px] top-[19.29px] absolute" />
+              <div className="w-4 h-4 left-[1.67px] top-[1.67px] absolute">
+                <svg
+                  fill="none"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.333 12.667A5.333 5.333 0 1 0 7.333 2a5.333 5.333 0 0 0 0 10.667ZM14 14l-2.9-2.9"
+                    stroke="black"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.33"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Sort dropdown */}
+          <div className="flex items-center gap-3 justify-end">
+            <span className="text-neutral-900 text-sm font-normal font-['Lora'] tracking-wide">
+              Ordenar por:
+            </span>
+
+            <div className="relative z-[9998] flex-1">
+              <button
+                ref={buttonRef}
+                className="w-full flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors"
+                onClick={handleDropdownToggle}
+              >
+                <span className="text-neutral-900 font-['Lora'] text-sm flex-1">
+                  {sortOptions.find((option) => option.value === sortBy)
+                    ?.label || "Más relevantes"}
+                </span>
+                <DropdownIcon />
+              </button>
+            </div>
+
+            {/* Filter button */}
             <button
-              ref={buttonRef}
-              className="flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors min-w-[120px] max-[480px]:min-w-[100px]"
-              onClick={handleDropdownToggle}
+              className="flex items-center gap-2 px-3 py-2 hover:bg-neutral-100 rounded-sm transition-colors"
+              onClick={toggleFilters}
             >
-              <span className="text-neutral-900 font-['Lora'] text-sm flex-1">
-                {sortOptions.find((option) => option.value === sortBy)?.label ||
-                  "Más relevantes"}
-              </span>
-              <DropdownIcon />
+              <FilterIcon />
             </button>
           </div>
         </div>
-        {/* Left side - Filter button */}
-        <button
-          className="flex items-center gap-3 px-4 py-2 hover:bg-neutral-100 rounded-sm transition-colors min-[480px]:hidden"
-          onClick={toggleFilters}
-        >
-          <span className="text-neutral-900 text-sm md:text-base font-normal font-['Lora'] tracking-wide max-[480px]:hidden">
-            Filtrar por:
-          </span>
-          <FilterIcon />
-        </button>
       </div>
       {renderDropdownPortal()}
     </>
