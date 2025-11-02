@@ -30,7 +30,33 @@ const FilterBar = ({
     left: 0,
     width: 0,
   });
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const desktopButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileButtonRef = useRef<HTMLButtonElement>(null);
+
+  const calculateDropdownPosition = useCallback(() => {
+    // Use the visible button ref based on screen size
+    const activeButton = window.innerWidth >= 768 
+      ? desktopButtonRef.current 
+      : mobileButtonRef.current;
+    
+    if (activeButton) {
+      const rect = activeButton.getBoundingClientRect();
+      
+      console.log('Button position:', {
+        top: rect.bottom,
+        left: rect.left,
+        width: rect.width,
+        right: rect.right,
+        bottom: rect.bottom
+      });
+
+      setDropdownPosition({
+        top: rect.bottom,
+        left: rect.left,
+        width: rect.width,
+      });
+    }
+  }, []);
 
   const handleSortChange = useCallback(
     (value: string) => {
@@ -44,31 +70,20 @@ const FilterBar = ({
     [updateSort, onSortChange]
   );
 
-  const calculateDropdownPosition = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
-        width: rect.width,
-      });
-    }
-  };
-
-  const handleDropdownToggle = () => {
-    if (!showSortDropdown) {
-      calculateDropdownPosition();
-    }
+  const handleDropdownToggle = useCallback(() => {
     setShowSortDropdown(!showSortDropdown);
-  };
+  }, [showSortDropdown]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
 
-      if (buttonRef.current && !buttonRef.current.contains(target)) {
+      // Check if click is outside both buttons
+      const isOutsideDesktop = desktopButtonRef.current && !desktopButtonRef.current.contains(target);
+      const isOutsideMobile = mobileButtonRef.current && !mobileButtonRef.current.contains(target);
+
+      if (isOutsideDesktop && isOutsideMobile) {
         // Check if click is not on a dropdown button
         const isDropdownButton = (target as HTMLElement).closest(
           '[data-dropdown-option="true"]'
@@ -92,11 +107,37 @@ const FilterBar = ({
     };
   }, [showSortDropdown]);
 
+  // Calculate position when dropdown opens
+  useEffect(() => {
+    if (showSortDropdown) {
+      calculateDropdownPosition();
+    }
+  }, [showSortDropdown, calculateDropdownPosition]);
+
+  // Recalculate position on scroll/resize
+  useEffect(() => {
+    if (!showSortDropdown) return;
+
+    const handleReposition = () => {
+      calculateDropdownPosition();
+    };
+
+    window.addEventListener("scroll", handleReposition, true);
+    window.addEventListener("resize", handleReposition);
+
+    return () => {
+      window.removeEventListener("scroll", handleReposition, true);
+      window.removeEventListener("resize", handleReposition);
+    };
+  }, [showSortDropdown, calculateDropdownPosition]);
+
   // Render dropdown portal
   const renderDropdownPortal = () => {
     if (typeof window === "undefined") {
       return null;
     }
+
+    console.log('Rendering dropdown with position:', dropdownPosition);
 
     return ReactDOM.createPortal(
       <AnimatePresence mode="wait">
@@ -109,8 +150,8 @@ const FilterBar = ({
             initial={{ opacity: 0, y: -10 }}
             style={{
               position: "fixed",
-              top: dropdownPosition.top,
-              left: dropdownPosition.left,
+              top: `${dropdownPosition.top}px`,
+              left: `${dropdownPosition.left}px`,
               width: Math.max(dropdownPosition.width, 180),
               zIndex: 99999,
               backgroundColor: "white",
@@ -224,7 +265,7 @@ const FilterBar = ({
 
             <div className="relative z-[9998]">
               <button
-                ref={buttonRef}
+                ref={desktopButtonRef}
                 className="flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors min-w-[120px]"
                 onClick={handleDropdownToggle}
               >
@@ -279,7 +320,7 @@ const FilterBar = ({
 
             <div className="relative z-[9998] flex-1">
               <button
-                ref={buttonRef}
+                ref={mobileButtonRef}
                 className="w-full flex items-center gap-2 px-4 py-2 border border-neutral-400 rounded-sm text-left hover:border-neutral-600 transition-colors"
                 onClick={handleDropdownToggle}
               >
