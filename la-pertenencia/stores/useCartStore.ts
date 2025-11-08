@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import { Wine } from "../types/wine";
-import { CartItem, CartState, CartActions } from "../types/cart";
+import { CartItem, CartState, CartActions, ShippingInfo } from "../types/cart";
 
 interface CartStore extends CartState, CartActions {
   // Notification state
@@ -24,6 +24,11 @@ export const useCartStore = create<CartStore>()(
       isOpen: false,
       totalItems: 0,
       totalAmount: 0,
+      shippingInfo: {
+        address: "",
+        phone: "",
+        postalCode: "",
+      },
       showNotification: false,
       notificationMessage: "",
 
@@ -150,6 +155,15 @@ export const useCartStore = create<CartStore>()(
         return item ? item.quantity : 0;
       },
 
+      setShippingInfo: (info: Partial<ShippingInfo>) => {
+        set((state) => ({
+          shippingInfo: {
+            ...state.shippingInfo,
+            ...info,
+          },
+        }));
+      },
+
       setNotification: (message: string) => {
         set({ showNotification: true, notificationMessage: message });
       },
@@ -164,6 +178,7 @@ export const useCartStore = create<CartStore>()(
         items: state.items,
         totalItems: state.totalItems,
         totalAmount: state.totalAmount,
+        shippingInfo: state.shippingInfo,
       }),
     },
   ),

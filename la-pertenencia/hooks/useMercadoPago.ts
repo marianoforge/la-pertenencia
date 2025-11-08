@@ -45,6 +45,7 @@ export const useMercadoPago = () => {
   const createPreference = async (
     cartItems: CartItem[],
     payerInfo?: PayerInfo,
+    shippingCost?: number,
   ): Promise<CreatePreferenceResponse | null> => {
     setLoading(true);
     setError(null);
@@ -58,6 +59,17 @@ export const useMercadoPago = () => {
         quantity: item.quantity,
         unit_price: item.priceAtTimeOfAdd,
       }));
+
+      // Agregar costo de envío como un item si existe
+      if (shippingCost && shippingCost > 0) {
+        items.push({
+          id: "shipping",
+          title: "Costo de Envío",
+          description: "Envío a domicilio",
+          quantity: 1,
+          unit_price: shippingCost,
+        });
+      }
 
       const response = await fetch("/api/mercadopago/create-preference", {
         method: "POST",
