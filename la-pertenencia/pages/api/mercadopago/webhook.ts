@@ -34,12 +34,42 @@ export default async function handler(
       // Obtener los detalles del pago
       const paymentInfo = await payment.get({ id: paymentId });
 
-      console.log("Payment webhook received:", {
-        id: paymentInfo.id,
-        status: paymentInfo.status,
-        external_reference: paymentInfo.external_reference,
-        transaction_amount: paymentInfo.transaction_amount,
-      });
+      console.log("\n🔔 ===== NUEVO PAGO RECIBIDO =====");
+      console.log("💰 Payment ID:", paymentInfo.id);
+      console.log("📋 Order ID:", paymentInfo.external_reference || "Sin referencia");
+      console.log("💵 Monto:", `$${paymentInfo.transaction_amount}`);
+      console.log("✅ Estado:", paymentInfo.status);
+
+      // Mostrar información de envío del cliente
+      if (paymentInfo.metadata && paymentInfo.metadata.shipping_info) {
+        console.log("\n📦 INFORMACIÓN DE ENVÍO:");
+        console.log("   📍 Dirección:", paymentInfo.metadata.shipping_info.address);
+        console.log("   📞 Teléfono:", paymentInfo.metadata.shipping_info.phone);
+        console.log("   📮 CP:", paymentInfo.metadata.shipping_info.postal_code);
+      }
+
+      // Mostrar información del comprador (payer)
+      if (paymentInfo.payer) {
+        console.log("\n👤 INFORMACIÓN DEL COMPRADOR:");
+        console.log("   📧 Email:", paymentInfo.payer.email);
+        if (paymentInfo.payer.phone) {
+          console.log("   📞 Teléfono:", `${paymentInfo.payer.phone.area_code}-${paymentInfo.payer.phone.number}`);
+        }
+        const fullName = `${paymentInfo.payer.first_name || ""} ${paymentInfo.payer.last_name || ""}`.trim();
+        if (fullName) {
+          console.log("   👤 Nombre:", fullName);
+        }
+      }
+
+      // Mostrar items del pedido
+      if (paymentInfo.metadata && paymentInfo.metadata.items) {
+        console.log("\n🍷 PRODUCTOS:");
+        paymentInfo.metadata.items.forEach((item: any, index: number) => {
+          console.log(`   ${index + 1}. Wine ID: ${item.wine_id} - Cantidad: ${item.quantity}`);
+        });
+      }
+      
+      console.log("================================\n");
 
       // Aquí puedes agregar lógica adicional como:
       // - Actualizar el estado del pedido en tu base de datos

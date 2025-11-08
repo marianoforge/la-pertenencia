@@ -6,11 +6,18 @@ export interface CartItem {
   priceAtTimeOfAdd: number; // Precio con IVA al momento de agregar
 }
 
+export interface ShippingInfo {
+  address: string;
+  phone: string;
+  postalCode: string;
+}
+
 export interface CartState {
   items: CartItem[];
   isOpen: boolean;
   totalItems: number;
   totalAmount: number;
+  shippingInfo: ShippingInfo;
 }
 
 export interface CartActions {
@@ -20,4 +27,5 @@ export interface CartActions {
   clearCart: () => void;
   toggleCart: () => void;
   getItemQuantity: (wineId: string) => number;
+  setShippingInfo: (info: Partial<ShippingInfo>) => void;
 }

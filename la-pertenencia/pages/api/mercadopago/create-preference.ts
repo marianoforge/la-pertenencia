@@ -13,7 +13,7 @@ export default async function handler(
   }
 
   try {
-    const { items } = req.body;
+    const { items, payer } = req.body;
 
     // Detectar si usar credenciales de TEST o producción
     const useTestCredentials = !!process.env.MERCADOPAGO_ACCESS_TOKEN_TEST;
@@ -46,6 +46,9 @@ export default async function handler(
         }
       : returnUrls;
 
+    // Generar un ID único para la orden
+    const orderId = `ORDER-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+
     // Crear la preferencia de pago
     const preferenceData = {
       items: items.map((item: any) => ({
@@ -57,17 +60,58 @@ export default async function handler(
         currency_id: "ARS",
       })),
       back_urls: validReturnUrls,
+      external_reference: orderId,
       // Solo agregar notification_url si no es localhost
       ...(isLocalhost
         ? {}
         : { notification_url: `${baseUrl}/api/mercadopago/webhook` }),
+      // Agregar información del comprador si existe
+      ...(payer &&
+        (payer.phone || payer.address) && {
+          payer: {
+            ...(payer.phone && {
+              phone: {
+                area_code: payer.phone.area_code || "",
+                number: payer.phone.number || "",
+              },
+            }),
+            ...(payer.address && {
+              address: {
+                street_name: payer.address.street_name || "",
+                street_number: payer.address.street_number || "",
+                zip_code: payer.address.zip_code || "",
+              },
+            }),
+          },
+        }),
       metadata: {
+        order_id: orderId,
+        order_date: new Date().toISOString(),
         items: items.map((item: any) => ({
           wine_id: item.id,
           quantity: item.quantity,
         })),
+        // Agregar información de envío al metadata para que esté disponible
+        ...(payer &&
+          (payer.phone || payer.address) && {
+            shipping_info: {
+              phone: payer.phone
+                ? `${payer.phone.area_code}${payer.phone.number}`
+                : "",
+              address: payer.address ? payer.address.street_name : "",
+              postal_code: payer.address ? payer.address.zip_code : "",
+            },
+          }),
       },
     };
+
+    // Log para debugging - ver qué datos se están enviando
+    console.log("📦 Creando preferencia de pago:", {
+      order_id: orderId,
+      total_items: items.length,
+      shipping_info: preferenceData.metadata.shipping_info || "No incluida",
+      payer_info: preferenceData.payer || "No incluido",
+    });
 
     const result = await preference.create({ body: preferenceData });
 

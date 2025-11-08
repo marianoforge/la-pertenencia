@@ -13,10 +13,12 @@ const Cart = () => {
     isOpen,
     totalItems,
     totalAmount,
+    shippingInfo,
     toggleCart,
     updateQuantity,
     removeItem,
     clearCart,
+    setShippingInfo,
   } = useCartStore();
 
   const {
@@ -47,6 +49,8 @@ const Cart = () => {
     if (cost !== null) {
       setShippingCost(cost);
       setShippingError(false);
+      // Guardar el código postal en el store
+      setShippingInfo({ postalCode });
     } else {
       setShippingCost(null);
       setShippingError(true);
@@ -74,7 +78,28 @@ const Cart = () => {
     setIsCheckingOut(true);
 
     try {
-      const preference = await createPreference(items);
+      // Parsear el teléfono para area_code y number
+      const phoneNumber = shippingInfo.phone.replace(/\D/g, "");
+      const areaCode = phoneNumber.substring(0, 2) || "11";
+      const number = phoneNumber.substring(2) || phoneNumber;
+
+      // Preparar información del comprador
+      const payerInfo = {
+        phone: {
+          area_code: areaCode,
+          number: number,
+        },
+        address: {
+          street_name: shippingInfo.address,
+          zip_code: shippingInfo.postalCode,
+        },
+      };
+
+      const preference = await createPreference(
+        items,
+        payerInfo,
+        shippingCost || 0
+      );
 
       if (preference) {
         // El endpoint ya devuelve el initPoint correcto según las credenciales
@@ -324,6 +349,74 @@ const Cart = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Shipping Information */}
+                  <div className="mt-6 pt-6 border-t border-neutral-200">
+                    <h3 className="text-sm font-semibold font-['Lora'] text-neutral-900 mb-3 uppercase tracking-[1px]">
+                      Información de envío:
+                    </h3>
+                    <div className="space-y-3">
+                      <div>
+                        <label
+                          className="block text-xs font-medium font-['Lora'] text-neutral-700 mb-1 tracking-wide"
+                          htmlFor="address"
+                        >
+                          Dirección completa *
+                        </label>
+                        <input
+                          required
+                          className="w-full px-4 py-2 border border-neutral-300 rounded-sm font-['Lora'] text-sm focus:outline-none focus:ring-2 focus:ring-yellow-700 focus:border-transparent"
+                          id="address"
+                          placeholder="Calle, número, piso, depto., localidad"
+                          type="text"
+                          value={shippingInfo.address}
+                          onChange={(e) =>
+                            setShippingInfo({ address: e.target.value })
+                          }
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="block text-xs font-medium font-['Lora'] text-neutral-700 mb-1 tracking-wide"
+                          htmlFor="phone"
+                        >
+                          Número de teléfono *
+                        </label>
+                        <input
+                          required
+                          className="w-full px-4 py-2 border border-neutral-300 rounded-sm font-['Lora'] text-sm focus:outline-none focus:ring-2 focus:ring-yellow-700 focus:border-transparent"
+                          id="phone"
+                          placeholder="+54 9 11 XXXX-XXXX"
+                          type="tel"
+                          value={shippingInfo.phone}
+                          onChange={(e) =>
+                            setShippingInfo({ phone: e.target.value })
+                          }
+                        />
+                      </div>
+                      <div>
+                        <label
+                          className="block text-xs font-medium font-['Lora'] text-neutral-700 mb-1 tracking-wide"
+                          htmlFor="postalCodeShipping"
+                        >
+                          Código Postal *
+                        </label>
+                        <input
+                          disabled
+                          required
+                          className="w-full px-4 py-2 border border-neutral-200 bg-neutral-50 rounded-sm font-['Lora'] text-sm text-neutral-600 cursor-not-allowed"
+                          id="postalCodeShipping"
+                          placeholder="Calcular envío primero"
+                          type="text"
+                          value={shippingInfo.postalCode}
+                          readOnly
+                        />
+                        <p className="text-xs text-neutral-500 font-['Lora'] mt-1 tracking-wide">
+                          Se completa automáticamente al calcular el envío
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -358,7 +451,12 @@ const Cart = () => {
                   <Button
                     className="w-full !max-w-none !tracking-[3px] disabled:bg-amber-200 disabled:opacity-60 disabled:cursor-not-allowed"
                     disabled={
-                      isCheckingOut || mpLoading || shippingCost === null
+                      isCheckingOut ||
+                      mpLoading ||
+                      shippingCost === null ||
+                      !shippingInfo.address.trim() ||
+                      !shippingInfo.phone.trim() ||
+                      !shippingInfo.postalCode.trim()
                     }
                     variant="primary"
                     onClick={handleMercadoPagoCheckout}
