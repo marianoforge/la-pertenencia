@@ -109,7 +109,7 @@ const Cart = () => {
           "Error al crear la preferencia de pago. Por favor, intenta nuevamente."
         );
       }
-    } catch (error) {
+    } catch {
       alert("Error al procesar el pago. Por favor, intenta nuevamente.");
     } finally {
       setIsCheckingOut(false);
@@ -317,39 +317,6 @@ const Cart = () => {
                     </div>
                   ))}
 
-                  {/* Shipping Cost Calculator */}
-                  <div className="mt-6 pt-6 border-t border-neutral-200">
-                    <h3 className="text-sm font-semibold font-['Lora'] text-neutral-900 mb-3 uppercase tracking-[1px]">
-                      Calcular costo de envío:
-                    </h3>
-                    <div className="flex gap-2">
-                      <input
-                        className="flex-1 px-4 py-2 border border-neutral-300 rounded-sm font-['Lora'] text-sm focus:outline-none focus:ring-2 focus:ring-yellow-700 focus:border-transparent"
-                        placeholder="Código Postal"
-                        type="text"
-                        value={postalCode}
-                        onChange={(e) => setPostalCode(e.target.value)}
-                      />
-                      <button
-                        className="px-6 py-2 bg-neutral-900 text-dorado-light font-['Lora'] text-sm font-semibold uppercase tracking-[2px] rounded-sm hover:bg-neutral-800 transition-colors"
-                        onClick={handleCalculateShipping}
-                      >
-                        Calcular
-                      </button>
-                    </div>
-
-                    {/* Error Message */}
-                    {shippingError && (
-                      <div className="mt-3 p-3 bg-green-50 border border-green-300 rounded-sm">
-                        <p className="text-green-800 text-xs font-['Lora'] tracking-wide leading-relaxed">
-                          No se encuentra dentro del área de distribución. Por
-                          favor, seleccione &quot;Pago Personalizado&quot; para
-                          coordinar el envío.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
                   {/* Shipping Information */}
                   <div className="mt-6 pt-6 border-t border-neutral-200">
                     <h3 className="text-sm font-semibold font-['Lora'] text-neutral-900 mb-3 uppercase tracking-[1px]">
@@ -361,7 +328,7 @@ const Cart = () => {
                           className="block text-xs font-medium font-['Lora'] text-neutral-700 mb-1 tracking-wide"
                           htmlFor="address"
                         >
-                          Dirección completa *
+                          Dirección *
                         </label>
                         <input
                           required
@@ -397,23 +364,38 @@ const Cart = () => {
                       <div>
                         <label
                           className="block text-xs font-medium font-['Lora'] text-neutral-700 mb-1 tracking-wide"
-                          htmlFor="postalCodeShipping"
+                          htmlFor="postalCode"
                         >
                           Código Postal *
                         </label>
-                        <input
-                          disabled
-                          required
-                          className="w-full px-4 py-2 border border-neutral-200 bg-neutral-50 rounded-sm font-['Lora'] text-sm text-neutral-600 cursor-not-allowed"
-                          id="postalCodeShipping"
-                          placeholder="Calcular envío primero"
-                          type="text"
-                          value={shippingInfo.postalCode}
-                          readOnly
-                        />
-                        <p className="text-xs text-neutral-500 font-['Lora'] mt-1 tracking-wide">
-                          Se completa automáticamente al calcular el envío
-                        </p>
+                        <div className="flex gap-2">
+                          <input
+                            required
+                            className="w-1/2 px-4 py-2 border border-neutral-300 rounded-sm font-['Lora'] text-sm focus:outline-none focus:ring-2 focus:ring-yellow-700 focus:border-transparent"
+                            id="postalCode"
+                            placeholder="Código Postal"
+                            type="text"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
+                          />
+                          <button
+                            className="flex-1 px-4 py-2 bg-neutral-900 text-dorado-light font-['Lora'] text-xs font-semibold uppercase tracking-[1px] rounded-sm hover:bg-neutral-800 transition-colors"
+                            onClick={handleCalculateShipping}
+                          >
+                            Calcular envío
+                          </button>
+                        </div>
+
+                        {/* Error Message */}
+                        {shippingError && (
+                          <div className="mt-3 p-3 bg-green-50 border border-green-300 rounded-sm">
+                            <p className="text-green-800 text-xs font-['Lora'] tracking-wide leading-relaxed">
+                              No se encuentra dentro del área de distribución.
+                              Por favor, seleccione &quot;Pago
+                              Personalizado&quot; para coordinar el envío.
+                            </p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
