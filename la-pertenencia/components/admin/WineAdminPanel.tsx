@@ -75,7 +75,7 @@ const WINE_VARIETALS = [
 ] as const;
 
 export default function WineAdminPanel() {
-  const { user, logout, loading } = useAuth();
+  const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [editingWine, setEditingWine] = useState<Wine | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -181,37 +181,9 @@ export default function WineAdminPanel() {
     };
   };
 
-  // Manejar login si no está autenticado
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Cargando...</div>
-      </div>
-    );
-  }
-
+  // El AdminPanel padre ya maneja autenticación y loading
   if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <Card className="max-w-md p-8">
-          <h1 className="text-2xl font-bold mb-4">
-            🍷 Admin Panel - La Pertenencia
-          </h1>
-          <p className="text-gray-600 mb-4">
-            Debes iniciar sesión para acceder al panel de administración.
-          </p>
-          <div className="text-sm bg-blue-50 p-4 rounded">
-            💡 <strong>Para obtener tu UID:</strong>
-            <br />
-            1. Inicia sesión en tu app
-            <br />
-            2. Usa el componente GetMyUID
-            <br />
-            3. Actualiza las reglas de Firebase con tu UID
-          </div>
-        </Card>
-      </div>
-    );
+    return null;
   }
 
   // Mostrar UID para configurar como admin
@@ -416,30 +388,7 @@ export default function WineAdminPanel() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                🍷 Panel de Administración
-              </h1>
-              <p className="text-gray-600">La Pertenencia - Gestión de Vinos</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-500">
-                {user.displayName || user.email}
-              </span>
-              <Button color="danger" size="sm" onClick={logout}>
-                Cerrar Sesión
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div>
         {/* Mostrar UID para configurar admin */}
         {showUID()}
 
@@ -929,7 +878,6 @@ export default function WineAdminPanel() {
             </table>
           </div>
         </Card>
-      </div>
     </div>
   );
 }
