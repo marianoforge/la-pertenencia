@@ -80,7 +80,7 @@ const Contacto = () => {
           text: data.error || "Error al enviar el mensaje. Intenta nuevamente.",
         });
       }
-    } catch (error) {
+    } catch {
       setMessage({
         type: "error",
         text: "Error al enviar el mensaje. Verifica tu conexión.",

@@ -389,495 +389,489 @@ export default function WineAdminPanel() {
 
   return (
     <div>
-        {/* Mostrar UID para configurar admin */}
-        {showUID()}
+      {/* Mostrar UID para configurar admin */}
+      {showUID()}
 
-        {/* Botón agregar vino */}
-        <div className="mb-6">
-          <Button
-            color="primary"
-            size="lg"
-            startContent={<span>+</span>}
-            onPress={() => setShowForm(true)}
-          >
-            Agregar Nuevo Vino
-          </Button>
-        </div>
+      {/* Botón agregar vino */}
+      <div className="mb-6">
+        <Button
+          color="primary"
+          size="lg"
+          startContent={<span>+</span>}
+          onPress={() => setShowForm(true)}
+        >
+          Agregar Nuevo Vino
+        </Button>
+      </div>
 
-        {/* Formulario de vino */}
-        {showForm && (
-          <Card className="p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">
-              {editingWine ? "Editar Vino" : "Agregar Nuevo Vino"}
-            </h2>
+      {/* Formulario de vino */}
+      {showForm && (
+        <Card className="p-6 mb-8">
+          <h2 className="text-xl font-semibold mb-4">
+            {editingWine ? "Editar Vino" : "Agregar Nuevo Vino"}
+          </h2>
 
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  isRequired
-                  errorMessage={errors.marca}
-                  isInvalid={!!errors.marca}
-                  label="Marca"
-                  placeholder="Ej: Casa de Toro"
-                  value={wineForm.marca}
-                  onChange={(e) => handleInputChange("marca", e.target.value)}
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                isRequired
+                errorMessage={errors.marca}
+                isInvalid={!!errors.marca}
+                label="Marca"
+                placeholder="Ej: Casa de Toro"
+                value={wineForm.marca}
+                onChange={(e) => handleInputChange("marca", e.target.value)}
+              />
+
+              <Input
+                isRequired
+                errorMessage={errors.bodega}
+                isInvalid={!!errors.bodega}
+                label="Bodega"
+                placeholder="Ej: Bodega Finca Los Andes"
+                value={wineForm.bodega}
+                onChange={(e) => handleInputChange("bodega", e.target.value)}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="varietal"
+                >
+                  Varietal
+                </label>
+                <select
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  id="varietal"
+                  value={wineForm.varietal}
+                  onChange={(e) =>
+                    handleInputChange("varietal", e.target.value)
+                  }
+                >
+                  {WINE_VARIETALS.map((varietal) => (
+                    <option key={varietal} value={varietal}>
+                      {varietal}
+                    </option>
+                  ))}
+                </select>
+                {errors.varietal && (
+                  <p className="text-red-500 text-xs mt-1">{errors.varietal}</p>
+                )}
+              </div>
+              <div>
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="tipo"
+                >
+                  Tipo
+                </label>
+                <select
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  id="tipo"
+                  value={wineForm.tipo}
+                  onChange={(e) =>
+                    handleInputChange(
+                      "tipo",
+                      e.target.value as
+                        | "Tinto"
+                        | "Blanco"
+                        | "Red"
+                        | "Blend"
+                        | "Rosado"
+                        | "Espumante"
+                        | "Naranjo"
+                        | "Combo",
+                    )
+                  }
+                >
+                  {WINE_TYPES.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4">
+              <div>
+                <label
+                  className="block text-sm font-medium mb-1"
+                  htmlFor="maridaje"
+                >
+                  Maridaje
+                </label>
+                <textarea
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  id="maridaje"
+                  placeholder="Ej: Ideal para carnes rojas, quesos curados..."
+                  rows={3}
+                  value={wineForm.maridaje}
+                  onChange={(e) =>
+                    handleInputChange("maridaje", e.target.value)
+                  }
                 />
-
-                <Input
-                  isRequired
-                  errorMessage={errors.bodega}
-                  isInvalid={!!errors.bodega}
-                  label="Bodega"
-                  placeholder="Ej: Bodega Finca Los Andes"
-                  value={wineForm.bodega}
-                  onChange={(e) => handleInputChange("bodega", e.target.value)}
-                />
+                {errors.maridaje && (
+                  <p className="text-red-500 text-xs mt-1">{errors.maridaje}</p>
+                )}
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="varietal"
-                  >
-                    Varietal
-                  </label>
-                  <select
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="varietal"
-                    value={wineForm.varietal}
-                    onChange={(e) =>
-                      handleInputChange("varietal", e.target.value)
-                    }
-                  >
-                    {WINE_VARIETALS.map((varietal) => (
-                      <option key={varietal} value={varietal}>
-                        {varietal}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.varietal && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {errors.varietal}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="tipo"
-                  >
-                    Tipo
-                  </label>
-                  <select
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="tipo"
-                    value={wineForm.tipo}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "tipo",
-                        e.target.value as
-                          | "Tinto"
-                          | "Blanco"
-                          | "Red"
-                          | "Blend"
-                          | "Rosado"
-                          | "Espumante"
-                          | "Naranjo"
-                          | "Combo"
-                      )
-                    }
-                  >
-                    {WINE_TYPES.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+            <div>
+              <label
+                className="block text-sm font-medium mb-1"
+                htmlFor="description"
+              >
+                Descripción
+              </label>
+              <textarea
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                id="description"
+                placeholder="Describe las características del vino..."
+                rows={3}
+                value={wineForm.description}
+                onChange={(e) =>
+                  handleInputChange("description", e.target.value)
+                }
+              />
+              {errors.description && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.description}
+                </p>
+              )}
+            </div>
 
-              <div className="grid grid-cols-1 gap-4">
-                <div>
-                  <label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="maridaje"
-                  >
-                    Maridaje
-                  </label>
-                  <textarea
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="maridaje"
-                    placeholder="Ej: Ideal para carnes rojas, quesos curados..."
-                    rows={3}
-                    value={wineForm.maridaje}
-                    onChange={(e) =>
-                      handleInputChange("maridaje", e.target.value)
-                    }
-                  />
-                  {errors.maridaje && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {errors.maridaje}
-                    </p>
-                  )}
+            {/* Sección de Costos y Precios */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                isRequired
+                errorMessage={errors.cost}
+                isInvalid={!!errors.cost}
+                label="Costo del Vino"
+                placeholder="1200"
+                startContent={<span className="text-gray-500">$</span>}
+                type="number"
+                value={wineForm.cost.toString()}
+                onChange={(e) =>
+                  handleInputChange("cost", Number(e.target.value))
+                }
+              />
+
+              <Input
+                isRequired
+                endContent={<span className="text-gray-500">%</span>}
+                errorMessage={errors.iva}
+                isInvalid={!!errors.iva}
+                label="IVA (%)"
+                placeholder="21"
+                step="0.1"
+                type="number"
+                value={wineForm.iva.toString()}
+                onChange={(e) =>
+                  handleInputChange("iva", Number(e.target.value))
+                }
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Input
+                isRequired
+                errorMessage={errors.price}
+                isInvalid={!!errors.price}
+                label="Precio de Venta"
+                placeholder="2500"
+                startContent={<span className="text-gray-500">$</span>}
+                type="number"
+                value={wineForm.price.toString()}
+                onChange={(e) =>
+                  handleInputChange("price", Number(e.target.value))
+                }
+              />
+
+              <Input
+                isRequired
+                errorMessage={errors.stock}
+                isInvalid={!!errors.stock}
+                label="Stock"
+                placeholder="50"
+                type="number"
+                value={wineForm.stock.toString()}
+                onChange={(e) =>
+                  handleInputChange("stock", Number(e.target.value))
+                }
+              />
+
+              <Input
+                isRequired
+                errorMessage={errors.vintage}
+                isInvalid={!!errors.vintage}
+                label="Año (Vintage)"
+                placeholder="2023"
+                type="number"
+                value={wineForm.vintage.toString()}
+                onChange={(e) =>
+                  handleInputChange("vintage", Number(e.target.value))
+                }
+              />
+            </div>
+
+            {/* Sección de Ganancia calculada */}
+            {(wineForm.price > 0 || wineForm.cost > 0) && (
+              <Card className="bg-gray-50 p-4">
+                <h3 className="text-sm font-medium text-gray-700 mb-2">
+                  💰 Análisis de Ganancia
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <span className="text-gray-500">Precio con IVA:</span>
+                    <div className="font-medium text-blue-600">
+                      ${profitData.priceWithTax.toFixed(2)}
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Ganancia:</span>
+                    <div
+                      className={`font-medium ${profitData.profit >= 0 ? "text-green-600" : "text-red-600"}`}
+                    >
+                      ${profitData.profit.toFixed(2)}
+                    </div>
+                  </div>
+                  <div>
+                    <span className="text-gray-500">Margen (%):</span>
+                    <div
+                      className={`font-medium ${profitData.profitPercentage >= 0 ? "text-green-600" : "text-red-600"}`}
+                    >
+                      {profitData.profitPercentage.toFixed(1)}%
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </Card>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                isRequired
+                errorMessage={errors.region}
+                isInvalid={!!errors.region}
+                label="Región"
+                placeholder="Ej: Mendoza"
+                value={wineForm.region}
+                onChange={(e) => handleInputChange("region", e.target.value)}
+              />
+
+              <Input
+                isRequired
+                endContent={<span className="text-gray-500">%</span>}
+                errorMessage={errors.alcohol}
+                isInvalid={!!errors.alcohol}
+                label="Graduación Alcohólica (%)"
+                placeholder="14.5"
+                step="0.1"
+                type="number"
+                value={wineForm.alcohol.toString()}
+                onChange={(e) =>
+                  handleInputChange("alcohol", Number(e.target.value))
+                }
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input
+                label="URL de la Imagen"
+                placeholder="/images/wine.jpg"
+                value={wineForm.image}
+                onChange={(e) => handleInputChange("image", e.target.value)}
+              />
 
               <div>
                 <label
                   className="block text-sm font-medium mb-1"
-                  htmlFor="description"
+                  htmlFor="wine-image-file"
                 >
-                  Descripción
+                  Subir Imagen
                 </label>
-                <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  id="description"
-                  placeholder="Describe las características del vino..."
-                  rows={3}
-                  value={wineForm.description}
-                  onChange={(e) =>
-                    handleInputChange("description", e.target.value)
-                  }
-                />
-                {errors.description && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.description}
-                  </p>
-                )}
-              </div>
-
-              {/* Sección de Costos y Precios */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  isRequired
-                  errorMessage={errors.cost}
-                  isInvalid={!!errors.cost}
-                  label="Costo del Vino"
-                  placeholder="1200"
-                  startContent={<span className="text-gray-500">$</span>}
-                  type="number"
-                  value={wineForm.cost.toString()}
-                  onChange={(e) =>
-                    handleInputChange("cost", Number(e.target.value))
-                  }
-                />
-
-                <Input
-                  isRequired
-                  endContent={<span className="text-gray-500">%</span>}
-                  errorMessage={errors.iva}
-                  isInvalid={!!errors.iva}
-                  label="IVA (%)"
-                  placeholder="21"
-                  step="0.1"
-                  type="number"
-                  value={wineForm.iva.toString()}
-                  onChange={(e) =>
-                    handleInputChange("iva", Number(e.target.value))
-                  }
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Input
-                  isRequired
-                  errorMessage={errors.price}
-                  isInvalid={!!errors.price}
-                  label="Precio de Venta"
-                  placeholder="2500"
-                  startContent={<span className="text-gray-500">$</span>}
-                  type="number"
-                  value={wineForm.price.toString()}
-                  onChange={(e) =>
-                    handleInputChange("price", Number(e.target.value))
-                  }
-                />
-
-                <Input
-                  isRequired
-                  errorMessage={errors.stock}
-                  isInvalid={!!errors.stock}
-                  label="Stock"
-                  placeholder="50"
-                  type="number"
-                  value={wineForm.stock.toString()}
-                  onChange={(e) =>
-                    handleInputChange("stock", Number(e.target.value))
-                  }
-                />
-
-                <Input
-                  isRequired
-                  errorMessage={errors.vintage}
-                  isInvalid={!!errors.vintage}
-                  label="Año (Vintage)"
-                  placeholder="2023"
-                  type="number"
-                  value={wineForm.vintage.toString()}
-                  onChange={(e) =>
-                    handleInputChange("vintage", Number(e.target.value))
-                  }
-                />
-              </div>
-
-              {/* Sección de Ganancia calculada */}
-              {(wineForm.price > 0 || wineForm.cost > 0) && (
-                <Card className="bg-gray-50 p-4">
-                  <h3 className="text-sm font-medium text-gray-700 mb-2">
-                    💰 Análisis de Ganancia
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <span className="text-gray-500">Precio con IVA:</span>
-                      <div className="font-medium text-blue-600">
-                        ${profitData.priceWithTax.toFixed(2)}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Ganancia:</span>
-                      <div
-                        className={`font-medium ${profitData.profit >= 0 ? "text-green-600" : "text-red-600"}`}
-                      >
-                        ${profitData.profit.toFixed(2)}
-                      </div>
-                    </div>
-                    <div>
-                      <span className="text-gray-500">Margen (%):</span>
-                      <div
-                        className={`font-medium ${profitData.profitPercentage >= 0 ? "text-green-600" : "text-red-600"}`}
-                      >
-                        {profitData.profitPercentage.toFixed(1)}%
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  isRequired
-                  errorMessage={errors.region}
-                  isInvalid={!!errors.region}
-                  label="Región"
-                  placeholder="Ej: Mendoza"
-                  value={wineForm.region}
-                  onChange={(e) => handleInputChange("region", e.target.value)}
-                />
-
-                <Input
-                  isRequired
-                  endContent={<span className="text-gray-500">%</span>}
-                  errorMessage={errors.alcohol}
-                  isInvalid={!!errors.alcohol}
-                  label="Graduación Alcohólica (%)"
-                  placeholder="14.5"
-                  step="0.1"
-                  type="number"
-                  value={wineForm.alcohol.toString()}
-                  onChange={(e) =>
-                    handleInputChange("alcohol", Number(e.target.value))
-                  }
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  label="URL de la Imagen"
-                  placeholder="/images/wine.jpg"
-                  value={wineForm.image}
-                  onChange={(e) => handleInputChange("image", e.target.value)}
-                />
-
-                <div>
-                  <label
-                    className="block text-sm font-medium mb-1"
-                    htmlFor="wine-image-file"
-                  >
-                    Subir Imagen
-                  </label>
-                  <input
-                    accept="image/*"
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                    id="wine-image-file"
-                    type="file"
-                    onChange={(e) =>
-                      setSelectedFile(e.target.files?.[0] || null)
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-2">
                 <input
-                  checked={wineForm.featured}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  id="featured"
-                  type="checkbox"
-                  onChange={(e) =>
-                    handleInputChange("featured", e.target.checked)
-                  }
+                  accept="image/*"
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                  id="wine-image-file"
+                  type="file"
+                  onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
                 />
-                <label
-                  className="text-sm font-medium text-gray-700"
-                  htmlFor="featured"
-                >
-                  Vino destacado
-                </label>
               </div>
+            </div>
 
-              <Spacer y={1} />
+            <div className="flex items-center space-x-2">
+              <input
+                checked={wineForm.featured}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                id="featured"
+                type="checkbox"
+                onChange={(e) =>
+                  handleInputChange("featured", e.target.checked)
+                }
+              />
+              <label
+                className="text-sm font-medium text-gray-700"
+                htmlFor="featured"
+              >
+                Vino destacado
+              </label>
+            </div>
 
-              <div className="flex gap-2 justify-end">
-                <Button color="default" variant="bordered" onPress={resetForm}>
-                  Cancelar
-                </Button>
-                <Button
-                  color="primary"
-                  isDisabled={
-                    uploading ||
-                    createWineMutation.isPending ||
-                    updateWineMutation.isPending
-                  }
-                  isLoading={
-                    uploading ||
-                    createWineMutation.isPending ||
-                    updateWineMutation.isPending
-                  }
-                  type="submit"
-                >
-                  {uploading
-                    ? "Procesando..."
-                    : editingWine
-                      ? "Actualizar Vino"
-                      : "Crear Vino"}
-                </Button>
-              </div>
-            </form>
-          </Card>
-        )}
+            <Spacer y={1} />
 
-        {/* Lista de vinos */}
-        <Card>
-          <div className="px-6 py-4 border-b">
-            <h2 className="text-xl font-semibold">Vinos ({wines.length})</h2>
-          </div>
+            <div className="flex gap-2 justify-end">
+              <Button color="default" variant="bordered" onPress={resetForm}>
+                Cancelar
+              </Button>
+              <Button
+                color="primary"
+                isDisabled={
+                  uploading ||
+                  createWineMutation.isPending ||
+                  updateWineMutation.isPending
+                }
+                isLoading={
+                  uploading ||
+                  createWineMutation.isPending ||
+                  updateWineMutation.isPending
+                }
+                type="submit"
+              >
+                {uploading
+                  ? "Procesando..."
+                  : editingWine
+                    ? "Actualizar Vino"
+                    : "Crear Vino"}
+              </Button>
+            </div>
+          </form>
+        </Card>
+      )}
 
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Vino
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Categoría
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Precio
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Costo
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Ganancia
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Stock
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Destacado
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Acciones
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {wines.map((wine) => {
-                  const profit = wine.price - wine.cost;
-                  const profitPercentage =
-                    wine.cost > 0 ? (profit / wine.cost) * 100 : 0;
+      {/* Lista de vinos */}
+      <Card>
+        <div className="px-6 py-4 border-b">
+          <h2 className="text-xl font-semibold">Vinos ({wines.length})</h2>
+        </div>
 
-                  return (
-                    <tr key={wine.id}>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <img
-                            alt={wine.marca}
-                            className="h-12 w-12 rounded object-cover mr-4"
-                            src={wine.image}
-                          />
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">
-                              {wine.marca}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {wine.region} {wine.vintage}
-                            </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Vino
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Categoría
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Precio
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Costo
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Ganancia
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Stock
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Destacado
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {wines.map((wine) => {
+                const profit = wine.price - wine.cost;
+                const profitPercentage =
+                  wine.cost > 0 ? (profit / wine.cost) * 100 : 0;
+
+                return (
+                  <tr key={wine.id}>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center">
+                        <img
+                          alt={wine.marca}
+                          className="h-12 w-12 rounded object-cover mr-4"
+                          src={wine.image}
+                        />
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {wine.marca}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {wine.region} {wine.vintage}
                           </div>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        {wine.tipo}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        ${wine.price}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        ${wine.cost}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        <div
-                          className={`font-medium ${profit >= 0 ? "text-green-600" : "text-red-600"}`}
-                        >
-                          ${profit.toFixed(2)}
-                        </div>
-                        <div
-                          className={`text-xs ${profitPercentage >= 0 ? "text-green-500" : "text-red-500"}`}
-                        >
-                          {profitPercentage.toFixed(1)}%
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        {wine.stock}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        {wine.featured ? (
-                          <span className="text-yellow-500">⭐</span>
-                        ) : (
-                          <span className="text-gray-300">☆</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-sm space-x-2">
-                        <Button
-                          color="primary"
-                          isDisabled={deleteWineMutation.isPending}
-                          size="sm"
-                          variant="light"
-                          onPress={() => handleEdit(wine)}
-                        >
-                          Editar
-                        </Button>
-                        <Button
-                          color="danger"
-                          isDisabled={deleteWineMutation.isPending}
-                          isLoading={deleteWineMutation.isPending}
-                          size="sm"
-                          variant="light"
-                          onPress={() => handleDelete(wine)}
-                        >
-                          Eliminar
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </Card>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {wine.tipo}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      ${wine.price}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      ${wine.cost}
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      <div
+                        className={`font-medium ${profit >= 0 ? "text-green-600" : "text-red-600"}`}
+                      >
+                        ${profit.toFixed(2)}
+                      </div>
+                      <div
+                        className={`text-xs ${profitPercentage >= 0 ? "text-green-500" : "text-red-500"}`}
+                      >
+                        {profitPercentage.toFixed(1)}%
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {wine.stock}
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      {wine.featured ? (
+                        <span className="text-yellow-500">⭐</span>
+                      ) : (
+                        <span className="text-gray-300">☆</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-sm space-x-2">
+                      <Button
+                        color="primary"
+                        isDisabled={deleteWineMutation.isPending}
+                        size="sm"
+                        variant="light"
+                        onPress={() => handleEdit(wine)}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        color="danger"
+                        isDisabled={deleteWineMutation.isPending}
+                        isLoading={deleteWineMutation.isPending}
+                        size="sm"
+                        variant="light"
+                        onPress={() => handleDelete(wine)}
+                      >
+                        Eliminar
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginForm() {
-  const { signIn, signInWithGoogle, loading, error, user } = useAuth();
+  const { signIn, signInWithGoogle, loading, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);

@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { reduceWineStockServerSide } from "@/lib/firestore-server";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Método no permitido" });
@@ -29,12 +28,12 @@ export default async function handler(
     for (const item of items) {
       const result = await reduceWineStockServerSide(
         item.wine_id,
-        item.quantity
+        item.quantity,
       );
 
       if (result.success) {
         console.log(
-          `✅ Stock reduced for wine ${item.wine_id}: ${item.quantity} units. New stock: ${result.newStock}`
+          `✅ Stock reduced for wine ${item.wine_id}: ${item.quantity} units. New stock: ${result.newStock}`,
         );
         results.push({
           wine_id: item.wine_id,
@@ -44,7 +43,7 @@ export default async function handler(
         });
       } else {
         console.error(
-          `❌ Failed to reduce stock for wine ${item.wine_id}: ${result.error}`
+          `❌ Failed to reduce stock for wine ${item.wine_id}: ${result.error}`,
         );
         results.push({
           wine_id: item.wine_id,

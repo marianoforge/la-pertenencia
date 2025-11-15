@@ -29,7 +29,7 @@ const NewsLetterForm = () => {
           text: result.error || "Error al suscribirse. Intenta nuevamente.",
         });
       }
-    } catch (error) {
+    } catch {
       setMessage({
         type: "error",
         text: "Error al suscribirse. Intenta nuevamente.",

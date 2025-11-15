@@ -99,7 +99,7 @@ const Cart = () => {
       const preference = await createPreference(
         items,
         payerInfo,
-        shippingCost || 0
+        shippingCost || 0,
       );
 
       if (preference) {
@@ -129,7 +129,7 @@ const Cart = () => {
         redirectToCheckout(preference.initPoint);
       } else {
         alert(
-          "Error al crear la preferencia de pago. Por favor, intenta nuevamente."
+          "Error al crear la preferencia de pago. Por favor, intenta nuevamente.",
         );
       }
     } catch {
@@ -160,7 +160,7 @@ const Cart = () => {
 
       if (orderResult.success) {
         alert(
-          `¡Pedido realizado con éxito! Número de orden: ${orderResult.orderNumber}. Te contactaremos pronto.`
+          `¡Pedido realizado con éxito! Número de orden: ${orderResult.orderNumber}. Te contactaremos pronto.`,
         );
         clearCart();
         toggleCart();

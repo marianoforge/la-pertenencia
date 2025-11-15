@@ -104,7 +104,7 @@ export const getWinesByCategory = async (category: string): Promise<Wine[]> => {
     const q = query(
       winesCollection,
       where("tipo", "==", category),
-      orderBy("marca")
+      orderBy("marca"),
     );
     const snapshot = await getDocs(q);
 
@@ -127,7 +127,7 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
       winesCollection,
       where("featured", "==", true),
       orderBy("marca"),
-      limit(6)
+      limit(6),
     );
     const snapshot = await getDocs(q);
 
@@ -144,7 +144,7 @@ export const getFeaturedWines = async (): Promise<Wine[]> => {
 
 // Add new wine with custom ID format: marca-varietal-uid
 export const addWine = async (
-  wineData: Omit<Wine, "id" | "createdAt" | "updatedAt">
+  wineData: Omit<Wine, "id" | "createdAt" | "updatedAt">,
 ): Promise<string | null> => {
   try {
     const customId = generateWineId(wineData.marca, wineData.varietal);
@@ -157,8 +157,6 @@ export const addWine = async (
       updatedAt: now,
     });
 
-    console.log("✅ Wine added with ID:", customId);
-
     return customId;
   } catch (error) {
     console.error("❌ Error adding wine:", error);
@@ -170,7 +168,7 @@ export const addWine = async (
 // Update wine
 export const updateWine = async (
   id: string,
-  wineData: Partial<Wine>
+  wineData: Partial<Wine>,
 ): Promise<boolean> => {
   try {
     const wineDoc = doc(db, COLLECTIONS.WINES, id);
@@ -179,8 +177,6 @@ export const updateWine = async (
       ...wineData,
       updatedAt: new Date().toISOString(),
     });
-
-    console.log("✅ Wine updated:", id);
 
     return true;
   } catch (error) {
@@ -204,8 +200,6 @@ export const deleteWine = async (id: string): Promise<boolean> => {
       // Delete wine document
       await deleteDoc(wineDoc);
 
-      console.log("✅ Wine document deleted:", id);
-
       // Delete associated image from Storage if it exists and is not a placeholder
       if (
         wineData.image &&
@@ -213,14 +207,11 @@ export const deleteWine = async (id: string): Promise<boolean> => {
       ) {
         try {
           await deleteImageByUrl(wineData.image);
-          console.log("✅ Wine image deleted from Storage");
-        } catch (imageError) {
-          console.warn("⚠️ Could not delete image from Storage:", imageError);
+        } catch {
           // Continue even if image deletion fails
         }
       }
     } else {
-      console.log("⚠️ Wine not found:", id);
       return false;
     }
 
@@ -235,7 +226,7 @@ export const deleteWine = async (id: string): Promise<boolean> => {
 // Reduce wine stock (transactional to prevent race conditions)
 export const reduceWineStock = async (
   wineId: string,
-  quantity: number
+  quantity: number,
 ): Promise<{ success: boolean; newStock?: number; error?: string }> => {
   try {
     const wineDoc = doc(db, COLLECTIONS.WINES, wineId);
@@ -252,7 +243,7 @@ export const reduceWineStock = async (
 
       if (currentStock < quantity) {
         throw new Error(
-          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`
+          `Insufficient stock. Available: ${currentStock}, Requested: ${quantity}`,
         );
       }
 
@@ -267,10 +258,6 @@ export const reduceWineStock = async (
       return newStock;
     });
 
-    console.log(
-      `✅ Stock reduced for wine ${wineId}: ${quantity} units. New stock: ${result}`
-    );
-
     return { success: true, newStock: result };
   } catch (error) {
     console.error("❌ Error reducing wine stock:", error);
@@ -283,7 +270,7 @@ export const reduceWineStock = async (
 
 // Search wines by name
 export const searchWinesByName = async (
-  searchTerm: string
+  searchTerm: string,
 ): Promise<Wine[]> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
@@ -299,7 +286,7 @@ export const searchWinesByName = async (
       (wine) =>
         wine.marca?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         wine.bodega?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        wine.description?.toLowerCase().includes(searchTerm.toLowerCase())
+        wine.description?.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   } catch (error) {
     console.error("Error searching wines:", error);
@@ -312,7 +299,7 @@ export const searchWinesByName = async (
  * 📦 Migration function to import initial wine data
  */
 export const migrateWineData = async (
-  wines: Omit<Wine, "id">[]
+  wines: Omit<Wine, "id">[],
 ): Promise<boolean> => {
   try {
     const winesCollection = collection(db, COLLECTIONS.WINES);
@@ -344,7 +331,7 @@ export interface NewsletterSubscription {
 
 // Add newsletter subscription
 export const addNewsletterSubscription = async (
-  email: string
+  email: string,
 ): Promise<{ success: boolean; error?: string }> => {
   try {
     const suscriptosCollection = collection(db, COLLECTIONS.SUSCRIPTOS);
@@ -357,8 +344,6 @@ export const addNewsletterSubscription = async (
     };
 
     await addDoc(suscriptosCollection, subscriptionData);
-
-    console.log("✅ Newsletter subscription added:", email);
 
     return { success: true };
   } catch (error) {
@@ -392,7 +377,7 @@ export const getAllNewsletterSubscriptions = async (): Promise<
 
 // Unsubscribe from newsletter
 export const unsubscribeFromNewsletter = async (
-  email: string
+  email: string,
 ): Promise<boolean> => {
   try {
     const suscriptosCollection = collection(db, COLLECTIONS.SUSCRIPTOS);
@@ -400,8 +385,6 @@ export const unsubscribeFromNewsletter = async (
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      console.log("❌ Email not found in subscriptions");
-
       return false;
     }
 
@@ -412,8 +395,6 @@ export const unsubscribeFromNewsletter = async (
       active: false,
       unsubscribedAt: new Date().toISOString(),
     });
-
-    console.log("✅ Unsubscribed:", email);
 
     return true;
   } catch (error) {
@@ -439,8 +420,13 @@ const generateOrderNumber = (): string => {
 
 // Create new order
 export const createOrder = async (
-  orderData: Omit<Order, "id" | "orderNumber" | "createdAt">
-): Promise<{ success: boolean; orderId?: string; orderNumber?: string; error?: string }> => {
+  orderData: Omit<Order, "id" | "orderNumber" | "createdAt">,
+): Promise<{
+  success: boolean;
+  orderId?: string;
+  orderNumber?: string;
+  error?: string;
+}> => {
   try {
     const ordersCollection = collection(db, COLLECTIONS.ORDERS);
     const orderNumber = generateOrderNumber();
@@ -454,8 +440,6 @@ export const createOrder = async (
     };
 
     const docRef = await addDoc(ordersCollection, newOrder);
-
-    console.log("✅ Order created:", docRef.id, orderNumber);
 
     return {
       success: true,
@@ -514,7 +498,7 @@ export const getOrderById = async (id: string): Promise<Order | null> => {
 export const updateOrderStatus = async (
   orderId: string,
   status: Order["status"],
-  mercadoPagoData?: Order["mercadoPagoData"]
+  mercadoPagoData?: Order["mercadoPagoData"],
 ): Promise<boolean> => {
   try {
     const orderDoc = doc(db, COLLECTIONS.ORDERS, orderId);
@@ -528,8 +512,6 @@ export const updateOrderStatus = async (
     }
 
     await updateDoc(orderDoc, updateData);
-
-    console.log("✅ Order status updated:", orderId, status);
 
     return true;
   } catch (error) {
@@ -545,8 +527,6 @@ export const deleteOrder = async (orderId: string): Promise<boolean> => {
     const orderDoc = doc(db, COLLECTIONS.ORDERS, orderId);
 
     await deleteDoc(orderDoc);
-
-    console.log("✅ Order deleted:", orderId);
 
     return true;
   } catch (error) {

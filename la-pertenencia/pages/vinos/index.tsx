@@ -35,7 +35,7 @@ export default function VinosPage() {
       ...storeFilters,
       ...localFilters, // Local filters (search) should override store filters
     }),
-    [localFilters, storeFilters]
+    [localFilters, storeFilters],
   );
 
   const { data: wines = [], isLoading, error } = useWines(combinedFilters);
@@ -101,7 +101,7 @@ export default function VinosPage() {
       case "newest":
         return winesCopy.sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
       case "relevance":
       default:
@@ -213,7 +213,8 @@ export default function VinosPage() {
           </nav>
         </div>
       </div>
-      <section className="max-w-[1300px] mx-auto flex flex-col gap-4 md:gap-8 py-4 ">{/* Breadcrumb Section */}
+      <section className="max-w-[1300px] mx-auto flex flex-col gap-4 md:gap-8 py-4 ">
+        {/* Breadcrumb Section */}
 
         {/* Wine Hero Section */}
         <div data-aos="fade-up">
@@ -226,10 +227,7 @@ export default function VinosPage() {
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          <FilterBar 
-            searchTerm={searchTerm}
-            onSearchChange={handleSearch}
-          />
+          <FilterBar searchTerm={searchTerm} onSearchChange={handleSearch} />
         </div>
 
         {/* Minimum Sale Banner */}

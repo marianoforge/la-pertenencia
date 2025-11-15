@@ -532,7 +532,7 @@ export default function WineAdminPanel() {
                           | "Blend"
                           | "Rosado"
                           | "Espumante"
-                          | "Naranjo"
+                          | "Naranjo",
                       )
                     }
                   >
