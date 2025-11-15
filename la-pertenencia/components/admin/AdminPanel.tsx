@@ -10,8 +10,9 @@ import { useIsAdmin } from "@/hooks/useIsAdmin";
 import WineAdminPanel from "./WineAdminPanel";
 import ComboAdminPanel from "./ComboAdminPanel";
 import SuscriptosAdminPanel from "./SuscriptosAdminPanel";
+import OrdersAdminPanel from "./OrdersAdminPanel";
 
-type TabType = "wines" | "combos" | "suscriptos";
+type TabType = "wines" | "combos" | "suscriptos" | "orders";
 
 export default function AdminPanel() {
   const { user, logout, loading: authLoading } = useAuth();
@@ -117,6 +118,14 @@ export default function AdminPanel() {
               >
                 📧 Suscriptores
               </Button>
+              <Button
+                variant={activeTab === "orders" ? "solid" : "light"}
+                color={activeTab === "orders" ? "primary" : "default"}
+                onPress={() => setActiveTab("orders")}
+                className="px-6"
+              >
+                🛒 Pedidos
+              </Button>
             </div>
           </div>
         </Card>
@@ -125,6 +134,7 @@ export default function AdminPanel() {
         {activeTab === "wines" && <WineAdminPanel />}
         {activeTab === "combos" && <ComboAdminPanel />}
         {activeTab === "suscriptos" && <SuscriptosAdminPanel />}
+        {activeTab === "orders" && <OrdersAdminPanel />}
       </div>
     </div>
   );

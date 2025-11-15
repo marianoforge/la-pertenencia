@@ -21,6 +21,7 @@ import { deleteImageByUrl } from "@/lib/storage";
 
 // Importar el tipo Wine desde types/wine.ts para mantener consistencia
 import { Wine } from "@/types/wine";
+import { Order } from "@/types/order";
 
 // Collection names
 const COLLECTIONS = {
@@ -417,6 +418,139 @@ export const unsubscribeFromNewsletter = async (
     return true;
   } catch (error) {
     console.error("❌ Error unsubscribing:", error);
+
+    return false;
+  }
+};
+
+/**
+ * 🛒 Orders Management Functions
+ */
+
+// Generate order number
+const generateOrderNumber = (): string => {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000)
+    .toString()
+    .padStart(3, "0");
+
+  return `ORD-${timestamp}-${random}`;
+};
+
+// Create new order
+export const createOrder = async (
+  orderData: Omit<Order, "id" | "orderNumber" | "createdAt">
+): Promise<{ success: boolean; orderId?: string; orderNumber?: string; error?: string }> => {
+  try {
+    const ordersCollection = collection(db, COLLECTIONS.ORDERS);
+    const orderNumber = generateOrderNumber();
+    const now = new Date().toISOString();
+
+    const newOrder: Omit<Order, "id"> = {
+      ...orderData,
+      orderNumber,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const docRef = await addDoc(ordersCollection, newOrder);
+
+    console.log("✅ Order created:", docRef.id, orderNumber);
+
+    return {
+      success: true,
+      orderId: docRef.id,
+      orderNumber,
+    };
+  } catch (error) {
+    console.error("❌ Error creating order:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Error al crear la orden";
+
+    return { success: false, error: errorMessage };
+  }
+};
+
+// Get all orders
+export const getAllOrders = async (): Promise<Order[]> => {
+  try {
+    const ordersCollection = collection(db, COLLECTIONS.ORDERS);
+    const q = query(ordersCollection, orderBy("createdAt", "desc"));
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Order[];
+  } catch (error) {
+    console.error("❌ Error fetching orders:", error);
+
+    return [];
+  }
+};
+
+// Get order by ID
+export const getOrderById = async (id: string): Promise<Order | null> => {
+  try {
+    const orderDoc = doc(db, COLLECTIONS.ORDERS, id);
+    const snapshot = await getDoc(orderDoc);
+
+    if (snapshot.exists()) {
+      return {
+        id: snapshot.id,
+        ...snapshot.data(),
+      } as Order;
+    }
+
+    return null;
+  } catch (error) {
+    console.error("❌ Error fetching order:", error);
+
+    return null;
+  }
+};
+
+// Update order status
+export const updateOrderStatus = async (
+  orderId: string,
+  status: Order["status"],
+  mercadoPagoData?: Order["mercadoPagoData"]
+): Promise<boolean> => {
+  try {
+    const orderDoc = doc(db, COLLECTIONS.ORDERS, orderId);
+    const updateData: Partial<Order> = {
+      status,
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (mercadoPagoData) {
+      updateData.mercadoPagoData = mercadoPagoData;
+    }
+
+    await updateDoc(orderDoc, updateData);
+
+    console.log("✅ Order status updated:", orderId, status);
+
+    return true;
+  } catch (error) {
+    console.error("❌ Error updating order status:", error);
+
+    return false;
+  }
+};
+
+// Delete order
+export const deleteOrder = async (orderId: string): Promise<boolean> => {
+  try {
+    const orderDoc = doc(db, COLLECTIONS.ORDERS, orderId);
+
+    await deleteDoc(orderDoc);
+
+    console.log("✅ Order deleted:", orderId);
+
+    return true;
+  } catch (error) {
+    console.error("❌ Error deleting order:", error);
 
     return false;
   }

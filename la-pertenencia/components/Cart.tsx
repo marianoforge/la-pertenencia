@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { useCartStore } from "../stores/useCartStore";
 import { useMercadoPago } from "../hooks/useMercadoPago";
+import { createOrder } from "../lib/firestore";
 
 import { Button } from "./ui/Button";
 
@@ -102,6 +103,28 @@ const Cart = () => {
       );
 
       if (preference) {
+        // Guardar la orden en Firestore
+        const orderResult = await createOrder({
+          items,
+          totalAmount,
+          shippingCost: shippingCost || 0,
+          finalAmount: totalAmount + (shippingCost || 0),
+          shippingInfo: {
+            address: shippingInfo.address,
+            phone: shippingInfo.phone,
+            postalCode: shippingInfo.postalCode,
+          },
+          mercadoPagoData: {
+            preferenceId: preference.preferenceId,
+          },
+          status: "pending",
+          paymentMethod: "mercadopago",
+        });
+
+        if (orderResult.success) {
+          // Orden guardada exitosamente
+        }
+
         // El endpoint ya devuelve el initPoint correcto según las credenciales
         redirectToCheckout(preference.initPoint);
       } else {
@@ -118,12 +141,37 @@ const Cart = () => {
 
   const handleLegacyCheckout = async () => {
     setIsCheckingOut(true);
-    // Simular proceso de checkout
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    alert("¡Pedido realizado con éxito! Te contactaremos pronto.");
-    clearCart();
-    toggleCart();
-    setIsCheckingOut(false);
+
+    try {
+      // Guardar la orden en Firestore
+      const orderResult = await createOrder({
+        items,
+        totalAmount,
+        shippingCost: shippingCost || 0,
+        finalAmount: totalAmount + (shippingCost || 0),
+        shippingInfo: {
+          address: shippingInfo.address,
+          phone: shippingInfo.phone,
+          postalCode: shippingInfo.postalCode,
+        },
+        status: "pending",
+        paymentMethod: "custom",
+      });
+
+      if (orderResult.success) {
+        alert(
+          `¡Pedido realizado con éxito! Número de orden: ${orderResult.orderNumber}. Te contactaremos pronto.`
+        );
+        clearCart();
+        toggleCart();
+      } else {
+        alert("Error al procesar el pedido. Por favor, intenta nuevamente.");
+      }
+    } catch {
+      alert("Error al procesar el pedido. Por favor, intenta nuevamente.");
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   return (
