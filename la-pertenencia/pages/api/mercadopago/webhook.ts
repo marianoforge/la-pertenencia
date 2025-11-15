@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { NextApiRequest, NextApiResponse } from "next";
 import { MercadoPagoConfig, Payment } from "mercadopago";
 
@@ -19,7 +18,7 @@ const payment = new Payment(client);
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Método no permitido" });
@@ -36,16 +35,28 @@ export default async function handler(
 
       console.log("\n🔔 ===== NUEVO PAGO RECIBIDO =====");
       console.log("💰 Payment ID:", paymentInfo.id);
-      console.log("📋 Order ID:", paymentInfo.external_reference || "Sin referencia");
+      console.log(
+        "📋 Order ID:",
+        paymentInfo.external_reference || "Sin referencia"
+      );
       console.log("💵 Monto:", `$${paymentInfo.transaction_amount}`);
       console.log("✅ Estado:", paymentInfo.status);
 
       // Mostrar información de envío del cliente
       if (paymentInfo.metadata && paymentInfo.metadata.shipping_info) {
         console.log("\n📦 INFORMACIÓN DE ENVÍO:");
-        console.log("   📍 Dirección:", paymentInfo.metadata.shipping_info.address);
-        console.log("   📞 Teléfono:", paymentInfo.metadata.shipping_info.phone);
-        console.log("   📮 CP:", paymentInfo.metadata.shipping_info.postal_code);
+        console.log(
+          "   📍 Dirección:",
+          paymentInfo.metadata.shipping_info.address
+        );
+        console.log(
+          "   📞 Teléfono:",
+          paymentInfo.metadata.shipping_info.phone
+        );
+        console.log(
+          "   📮 CP:",
+          paymentInfo.metadata.shipping_info.postal_code
+        );
       }
 
       // Mostrar información del comprador (payer)
@@ -53,9 +64,13 @@ export default async function handler(
         console.log("\n👤 INFORMACIÓN DEL COMPRADOR:");
         console.log("   📧 Email:", paymentInfo.payer.email);
         if (paymentInfo.payer.phone) {
-          console.log("   📞 Teléfono:", `${paymentInfo.payer.phone.area_code}-${paymentInfo.payer.phone.number}`);
+          console.log(
+            "   📞 Teléfono:",
+            `${paymentInfo.payer.phone.area_code}-${paymentInfo.payer.phone.number}`
+          );
         }
-        const fullName = `${paymentInfo.payer.first_name || ""} ${paymentInfo.payer.last_name || ""}`.trim();
+        const fullName =
+          `${paymentInfo.payer.first_name || ""} ${paymentInfo.payer.last_name || ""}`.trim();
         if (fullName) {
           console.log("   👤 Nombre:", fullName);
         }
@@ -65,10 +80,12 @@ export default async function handler(
       if (paymentInfo.metadata && paymentInfo.metadata.items) {
         console.log("\n🍷 PRODUCTOS:");
         paymentInfo.metadata.items.forEach((item: any, index: number) => {
-          console.log(`   ${index + 1}. Wine ID: ${item.wine_id} - Cantidad: ${item.quantity}`);
+          console.log(
+            `   ${index + 1}. Wine ID: ${item.wine_id} - Cantidad: ${item.quantity}`
+          );
         });
       }
-      
+
       console.log("================================\n");
 
       // Aquí puedes agregar lógica adicional como:
@@ -94,16 +111,16 @@ export default async function handler(
               for (const item of items) {
                 const result = await reduceWineStockServerSide(
                   item.wine_id,
-                  item.quantity,
+                  item.quantity
                 );
 
                 if (result.success) {
                   console.log(
-                    `✅ Stock reduced for wine ${item.wine_id}: ${item.quantity} units. New stock: ${result.newStock}`,
+                    `✅ Stock reduced for wine ${item.wine_id}: ${item.quantity} units. New stock: ${result.newStock}`
                   );
                 } else {
                   console.error(
-                    `❌ Failed to reduce stock for wine ${item.wine_id}: ${result.error}`,
+                    `❌ Failed to reduce stock for wine ${item.wine_id}: ${result.error}`
                   );
 
                   // En un caso real, aquí podrías implementar lógica adicional como:
@@ -117,7 +134,7 @@ export default async function handler(
             }
           } else {
             console.warn(
-              "No metadata.items found in payment, cannot reduce stock",
+              "No metadata.items found in payment, cannot reduce stock"
             );
           }
 

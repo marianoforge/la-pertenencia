@@ -160,7 +160,7 @@ const Recomendados = ({
                 currentPage * combosPerPage,
                 currentPage * combosPerPage + combosPerPage
               )
-              .map((combo, index) => (
+              .map((combo) => (
                 <div
                   key={combo.id}
                   className="flex justify-center w-full px-4 sm:px-0"

@@ -1,74 +1,13 @@
-import { useState } from "react";
 import Image from "next/image";
 
 import { Wine } from "@/types/wine";
-import { useCartStore } from "@/stores/useCartStore";
 
 interface WineHeroProps {
   featuredWine?: Wine;
   onAddToCart?: (wine: Wine, quantity: number) => void;
 }
 
-const WineHero = ({ featuredWine, onAddToCart }: WineHeroProps) => {
-  const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCartStore();
-
-  // Usar vino por defecto si no se proporciona uno
-  const defaultWine: Wine = {
-    id: "hero-wine",
-    marca: "La Pertenencia",
-    bodega: "Bodega La Pertenencia",
-    tipo: "Tinto",
-    varietal: "Malbec y Cabernet Franc",
-    maridaje:
-      "Armoniza con todo tipo de carnes en diferentes cocciones, bondiola braseada, diversos tipos de risottos.",
-    description:
-      "Un Malbec que equilibra fruta, elegancia y un legado único...",
-    price: 15300,
-    cost: 7500,
-    iva: 21,
-    stock: 25,
-    region: "Mendoza",
-    vintage: 2021,
-    alcohol: 14.5,
-    image: "/images/botellaHeroVinos.png",
-    featured: true,
-    winery: "La Pertenencia",
-    createdAt: "2024-01-15T10:00:00Z",
-    updatedAt: "2024-01-15T10:00:00Z",
-  };
-
-  const wine = featuredWine || defaultWine;
-
-  const handleAddToCart = () => {
-    // Add to cart store
-    addItem(wine, quantity);
-
-    // Reset quantity to 1 for next add
-    setQuantity(1);
-
-    // Call parent callback if provided
-    if (onAddToCart) {
-      onAddToCart(wine, quantity);
-    }
-  };
-
-  const increaseQuantity = () => {
-    if (quantity < wine.stock) {
-      setQuantity((prev) => prev + 1);
-    }
-  };
-
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-    }
-  };
-
-  const formatPrice = (price: number) => {
-    return price.toLocaleString("es-AR");
-  };
-
+const WineHero = ({ featuredWine }: WineHeroProps) => {
   return (
     <>
       {/* Desktop/Tablet Version */}

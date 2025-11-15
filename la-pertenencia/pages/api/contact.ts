@@ -21,7 +21,7 @@ type ResponseData = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<ResponseData>,
 ) {
   // Solo aceptar POST requests
   if (req.method !== "POST") {
@@ -175,7 +175,6 @@ export default async function handler(
     });
 
     if (error) {
-      // eslint-disable-next-line no-console
       console.error("❌ Error sending email:", error);
 
       return res.status(500).json({
@@ -184,7 +183,6 @@ export default async function handler(
       });
     }
 
-    // eslint-disable-next-line no-console
     console.log("✅ Email sent successfully:", data);
 
     return res.status(200).json({
@@ -192,7 +190,6 @@ export default async function handler(
       message: "Mensaje enviado correctamente",
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("❌ Error in contact API:", error);
 
     return res.status(500).json({

@@ -29,7 +29,7 @@ export default function OrdersAdminPanel() {
   const handleDeleteOrder = async (orderId: string) => {
     if (
       !confirm(
-        "¿Estás seguro de que quieres eliminar este pedido? Esta acción no se puede deshacer."
+        "¿Estás seguro de que quieres eliminar este pedido? Esta acción no se puede deshacer.",
       )
     ) {
       return;
@@ -46,14 +46,17 @@ export default function OrdersAdminPanel() {
     }
   };
 
-  const handleUpdateStatus = async (orderId: string, newStatus: Order["status"]) => {
+  const handleUpdateStatus = async (
+    orderId: string,
+    newStatus: Order["status"],
+  ) => {
     const success = await updateOrderStatus(orderId, newStatus);
 
     if (success) {
       setOrders(
         orders.map((order) =>
-          order.id === orderId ? { ...order, status: newStatus } : order
-        )
+          order.id === orderId ? { ...order, status: newStatus } : order,
+        ),
       );
       if (selectedOrder?.id === orderId) {
         setSelectedOrder({ ...selectedOrder, status: newStatus });
@@ -223,7 +226,10 @@ export default function OrdersAdminPanel() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {filteredOrders.map((order) => (
-            <Card key={order.id} className="p-6 shadow-sm hover:shadow-md transition-shadow">
+            <Card
+              key={order.id}
+              className="p-6 shadow-sm hover:shadow-md transition-shadow"
+            >
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-lg font-bold text-gray-900">
@@ -351,11 +357,16 @@ export default function OrdersAdminPanel() {
 
       {/* Modal de detalles */}
       {selectedOrder && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+        <button
+          type="button"
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 border-0 cursor-pointer"
           onClick={() => setSelectedOrder(null)}
+          onKeyDown={(e) => e.key === "Escape" && setSelectedOrder(null)}
+          aria-label="Cerrar modal de detalles del pedido"
         >
           <div
+            role="dialog"
+            aria-modal="true"
             className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
@@ -587,9 +598,8 @@ export default function OrdersAdminPanel() {
               </div>
             </div>
           </div>
-        </div>
+        </button>
       )}
     </div>
   );
 }
-

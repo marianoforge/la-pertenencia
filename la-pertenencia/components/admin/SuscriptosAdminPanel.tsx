@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
-import { Table } from "@heroui/table";
 import {
   getAllNewsletterSubscriptions,
   unsubscribeFromNewsletter,
@@ -293,18 +292,3 @@ export default function SuscriptosAdminPanel() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

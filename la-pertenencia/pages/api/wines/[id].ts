@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { UpdateWineInput } from "../../../types/wine";

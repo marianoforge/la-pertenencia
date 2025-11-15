@@ -15,8 +15,7 @@ import {
 } from "@/hooks/useCombos";
 import { useWines } from "@/hooks/useWines";
 import { uploadWineImage, validateImageFile } from "@/lib/storage";
-import { Combo, CreateComboInput } from "@/types/combo";
-import { Wine } from "@/types/wine";
+import { Combo } from "@/types/combo";
 
 interface ComboForm {
   name: string;
