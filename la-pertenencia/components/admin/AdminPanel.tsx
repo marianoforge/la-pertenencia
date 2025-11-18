@@ -11,8 +11,9 @@ import WineAdminPanel from "./WineAdminPanel";
 import ComboAdminPanel from "./ComboAdminPanel";
 import SuscriptosAdminPanel from "./SuscriptosAdminPanel";
 import OrdersAdminPanel from "./OrdersAdminPanel";
+import OtrosAdminPanel from "./OtrosAdminPanel";
 
-type TabType = "wines" | "combos" | "suscriptos" | "orders";
+type TabType = "wines" | "combos" | "suscriptos" | "orders" | "otros";
 
 export default function AdminPanel() {
   const { user, logout, loading: authLoading } = useAuth();
@@ -126,6 +127,14 @@ export default function AdminPanel() {
               >
                 🛒 Pedidos
               </Button>
+              <Button
+                variant={activeTab === "otros" ? "solid" : "light"}
+                color={activeTab === "otros" ? "primary" : "default"}
+                onPress={() => setActiveTab("otros")}
+                className="px-6"
+              >
+                ⚙️ Otros
+              </Button>
             </div>
           </div>
         </Card>
@@ -135,6 +144,7 @@ export default function AdminPanel() {
         {activeTab === "combos" && <ComboAdminPanel />}
         {activeTab === "suscriptos" && <SuscriptosAdminPanel />}
         {activeTab === "orders" && <OrdersAdminPanel />}
+        {activeTab === "otros" && <OtrosAdminPanel />}
       </div>
     </div>
   );

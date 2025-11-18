@@ -120,18 +120,3 @@ firebase deploy --only firestore:rules
 ---
 
 **Tip:** Guarda los UIDs de los administradores en un lugar seguro (ej: 1Password, LastPass).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
