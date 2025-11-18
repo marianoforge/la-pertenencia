@@ -30,6 +30,7 @@ const COLLECTIONS = {
   USERS: "users",
   CATEGORIES: "categories",
   SUSCRIPTOS: "suscriptos",
+  SETTINGS: "settings",
 } as const;
 
 /**
@@ -399,6 +400,58 @@ export const unsubscribeFromNewsletter = async (
     return true;
   } catch (error) {
     console.error("❌ Error unsubscribing:", error);
+
+    return false;
+  }
+};
+
+/**
+ * ⚙️ Site Settings Functions
+ */
+
+export interface SiteSettings {
+  shippingEnabled: boolean;
+  shippingCost: number;
+}
+
+// Get site settings
+export const getSiteSettings = async (): Promise<SiteSettings> => {
+  try {
+    const settingsRef = doc(db, COLLECTIONS.SETTINGS, "site");
+    const settingsDoc = await getDoc(settingsRef);
+
+    if (settingsDoc.exists()) {
+      return settingsDoc.data() as SiteSettings;
+    }
+
+    // Return default settings if document doesn't exist
+    return {
+      shippingEnabled: true,
+      shippingCost: 500,
+    };
+  } catch (error) {
+    console.error("Error fetching site settings:", error);
+
+    // Return default settings on error
+    return {
+      shippingEnabled: true,
+      shippingCost: 500,
+    };
+  }
+};
+
+// Update site settings
+export const updateSiteSettings = async (
+  settings: Partial<SiteSettings>,
+): Promise<boolean> => {
+  try {
+    const settingsRef = doc(db, COLLECTIONS.SETTINGS, "site");
+
+    await setDoc(settingsRef, settings, { merge: true });
+
+    return true;
+  } catch (error) {
+    console.error("❌ Error updating site settings:", error);
 
     return false;
   }

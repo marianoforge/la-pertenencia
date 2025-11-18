@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { useCartStore } from "../stores/useCartStore";
 import { useMercadoPago } from "../hooks/useMercadoPago";
-import { createOrder } from "../lib/firestore";
+import { createOrder, getSiteSettings } from "../lib/firestore";
 
 import { Button } from "./ui/Button";
 
@@ -31,31 +31,43 @@ const Cart = () => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [postalCode, setPostalCode] = useState("");
   const [shippingCost, setShippingCost] = useState<number | null>(null);
-  const [shippingError, setShippingError] = useState(false);
+  const [shippingEnabled, setShippingEnabled] = useState(true);
+  const [configuredShippingCost, setConfiguredShippingCost] = useState(500);
+  const [loadingSettings, setLoadingSettings] = useState(true);
 
-  const calculateShippingCost = (code: string): number | null => {
-    const postalCodeNum = parseInt(code, 10);
+  // Load shipping settings
+  useEffect(() => {
+    const loadShippingSettings = async () => {
+      try {
+        const settings = await getSiteSettings();
+        setShippingEnabled(settings.shippingEnabled ?? true);
+        setConfiguredShippingCost(settings.shippingCost ?? 500);
+      } catch (error) {
+        console.error("Error loading shipping settings:", error);
+        // Set defaults on error
+        setShippingEnabled(true);
+        setConfiguredShippingCost(500);
+      } finally {
+        setLoadingSettings(false);
+      }
+    };
 
-    if (postalCodeNum >= 1000 && postalCodeNum <= 1439) return 100;
-    if (postalCodeNum >= 1600 && postalCodeNum <= 1670) return 200;
-    if (postalCodeNum >= 1672 && postalCodeNum <= 1778) return 300;
-    if (postalCodeNum >= 1800 && postalCodeNum <= 1899) return 400;
+    loadShippingSettings();
+  }, []);
 
-    return null;
+  const calculateShippingCost = (): number => {
+    // If shipping is disabled, return 0 (free shipping)
+    if (!shippingEnabled) return 0;
+
+    // Return the configured fixed shipping cost
+    return configuredShippingCost;
   };
 
   const handleCalculateShipping = () => {
-    const cost = calculateShippingCost(postalCode);
-
-    if (cost !== null) {
-      setShippingCost(cost);
-      setShippingError(false);
-      // Guardar el código postal en el store
-      setShippingInfo({ postalCode });
-    } else {
-      setShippingCost(null);
-      setShippingError(true);
-    }
+    const cost = calculateShippingCost();
+    setShippingCost(cost);
+    // Guardar el código postal en el store
+    setShippingInfo({ postalCode });
   };
 
   // Reset shipping cost when cart is closed or items change
@@ -63,14 +75,12 @@ const Cart = () => {
     if (!isOpen) {
       setPostalCode("");
       setShippingCost(null);
-      setShippingError(false);
     }
   }, [isOpen]);
 
   useEffect(() => {
     // Reset shipping when items change (quantity update, add, or remove)
     setShippingCost(null);
-    setShippingError(false);
   }, [items.length]);
 
   const handleMercadoPagoCheckout = async () => {
@@ -433,17 +443,6 @@ const Cart = () => {
                             Calcular envío
                           </button>
                         </div>
-
-                        {/* Error Message */}
-                        {shippingError && (
-                          <div className="mt-3 p-3 bg-green-50 border border-green-300 rounded-sm">
-                            <p className="text-green-800 text-xs font-['Lora'] tracking-wide leading-relaxed">
-                              No se encuentra dentro del área de distribución.
-                              Por favor, seleccione &quot;Pago
-                              Personalizado&quot; para coordinar el envío.
-                            </p>
-                          </div>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -460,9 +459,15 @@ const Cart = () => {
                     <span className="text-sm font-semibold font-['Lora'] text-neutral-900 uppercase tracking-[2px]">
                       Costo de Envío:
                     </span>
-                    <span className="text-lg font-bold font-['Lora'] text-neutral-900 tracking-wide">
-                      ${shippingCost.toLocaleString()}
-                    </span>
+                    {!shippingEnabled || shippingCost === 0 ? (
+                      <span className="text-lg font-bold font-['Lora'] text-green-700 tracking-wide">
+                        Envío Gratis
+                      </span>
+                    ) : (
+                      <span className="text-lg font-bold font-['Lora'] text-neutral-900 tracking-wide">
+                        ${(shippingCost || 0).toLocaleString()}
+                      </span>
+                    )}
                   </div>
                 )}
 
