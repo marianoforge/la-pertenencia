@@ -57,6 +57,7 @@ export default async function handler(
         quantity: item.quantity,
         unit_price: item.unit_price,
         currency_id: "ARS",
+        category_id: "MLA1403", // Alimentos y Bebidas (Argentina) - mejora aprobación
       })),
       back_urls: validReturnUrls,
       external_reference: orderId,
