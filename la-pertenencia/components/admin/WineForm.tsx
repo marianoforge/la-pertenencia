@@ -100,7 +100,7 @@ export default function WineAdminPanel() {
     description: "",
     price: 0,
     cost: 0,
-    iva: 21,
+    iva: 0,
     region: "Mendoza",
     vintage: new Date().getFullYear(),
     alcohol: 14.0,
@@ -244,7 +244,7 @@ export default function WineAdminPanel() {
       description: "",
       price: 0,
       cost: 0,
-      iva: 21,
+      iva: 0,
       region: "Mendoza",
       vintage: new Date().getFullYear(),
       alcohol: 14.0,
@@ -359,7 +359,7 @@ export default function WineAdminPanel() {
       description: wine.description || "",
       price: wine.price,
       cost: wine.cost,
-      iva: wine.iva || 21,
+      iva: wine.iva !== undefined ? wine.iva : 0,
       region: wine.region,
       vintage: wine.vintage,
       alcohol: wine.alcohol,
@@ -611,20 +611,20 @@ export default function WineAdminPanel() {
                   }
                 />
 
-                <Input
-                  isRequired
-                  endContent={<span className="text-gray-500">%</span>}
-                  errorMessage={errors.iva}
-                  isInvalid={!!errors.iva}
-                  label="IVA (%)"
-                  placeholder="21"
-                  step="0.1"
-                  type="number"
-                  value={wineForm.iva.toString()}
-                  onChange={(e) =>
-                    handleInputChange("iva", Number(e.target.value))
-                  }
-                />
+              <Input
+                isRequired
+                endContent={<span className="text-gray-500">%</span>}
+                errorMessage={errors.iva}
+                isInvalid={!!errors.iva}
+                label="IVA (%)"
+                placeholder="0"
+                step="0.1"
+                type="number"
+                value={wineForm.iva.toString()}
+                onChange={(e) =>
+                  handleInputChange("iva", Number(e.target.value))
+                }
+              />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
