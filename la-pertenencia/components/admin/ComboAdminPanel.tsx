@@ -4,7 +4,13 @@ import { useState } from "react";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Card } from "@heroui/card";
-import { Spacer } from "@heroui/spacer";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@heroui/modal";
 
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -153,17 +159,30 @@ export default function ComboAdminPanel() {
     }
   };
 
-  // Manejar selección de vinos
-  const handleWineSelection = (wineId: string, isSelected: boolean) => {
-    if (isSelected) {
+  // Manejar selección de vinos con cantidad
+  const getWineQuantity = (wineId: string): number => {
+    return comboForm.selectedWineIds.filter((id) => id === wineId).length;
+  };
+
+  const handleAddWine = (wineId: string) => {
+    setComboForm((prev) => ({
+      ...prev,
+      selectedWineIds: [...prev.selectedWineIds, wineId],
+    }));
+    // Limpiar error cuando se selecciona un vino
+    if (errors.wines) {
+      setErrors((prev) => ({ ...prev, wines: "" }));
+    }
+  };
+
+  const handleRemoveWine = (wineId: string) => {
+    const index = comboForm.selectedWineIds.indexOf(wineId);
+    if (index > -1) {
+      const newSelectedWineIds = [...comboForm.selectedWineIds];
+      newSelectedWineIds.splice(index, 1);
       setComboForm((prev) => ({
         ...prev,
-        selectedWineIds: [...prev.selectedWineIds, wineId],
-      }));
-    } else {
-      setComboForm((prev) => ({
-        ...prev,
-        selectedWineIds: prev.selectedWineIds.filter((id) => id !== wineId),
+        selectedWineIds: newSelectedWineIds,
       }));
     }
   };
@@ -198,14 +217,18 @@ export default function ComboAdminPanel() {
         }
       }
 
-      // Obtener los vinos seleccionados
-      const selectedWines = wines
-        .filter((wine) => comboForm.selectedWineIds.includes(wine.id))
-        .map((wine) => ({
+      // Obtener los vinos seleccionados (permitiendo duplicados)
+      const selectedWines = comboForm.selectedWineIds.map((wineId) => {
+        const wine = wines.find((w) => w.id === wineId);
+        if (!wine) {
+          throw new Error(`Vino con ID ${wineId} no encontrado`);
+        }
+        return {
           id: wine.id,
           marca: wine.marca,
           image: wine.image,
-        }));
+        };
+      });
 
       // Crear objeto del combo
       const comboData = {
@@ -308,129 +331,156 @@ export default function ComboAdminPanel() {
         </Button>
       </div>
 
-      {/* Formulario de combo */}
-      {showForm && (
-        <Card className="p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">
-            {editingCombo ? "Editar Combo" : "Agregar Nuevo Combo"}
-          </h2>
-
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* Nombre del combo */}
-            <Input
-              isRequired
-              errorMessage={errors.name}
-              isInvalid={!!errors.name}
-              label="Nombre del Combo"
-              placeholder="Ej: COMBO PREMIUM"
-              value={comboForm.name}
-              onChange={(e) => handleInputChange("name", e.target.value)}
-            />
-
-            {/* Selección de vinos */}
-            <div>
-              <div className="block text-sm font-medium mb-2">
-                Seleccionar Vinos *
-              </div>
-              <div className="max-h-60 overflow-y-auto border border-gray-300 rounded-md p-4 space-y-2">
-                {wines.map((wine) => (
-                  <div key={wine.id} className="flex items-center space-x-2">
-                    <input
-                      checked={comboForm.selectedWineIds.includes(wine.id)}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                      id={`wine-${wine.id}`}
-                      type="checkbox"
-                      onChange={(e) =>
-                        handleWineSelection(wine.id, e.target.checked)
-                      }
-                    />
-                    <label
-                      className="flex items-center space-x-2 cursor-pointer flex-1"
-                      htmlFor={`wine-${wine.id}`}
-                    >
-                      <img
-                        alt={wine.marca}
-                        className="w-8 h-8 rounded object-cover"
-                        src={wine.image}
-                      />
-                      <span className="text-sm">
-                        {wine.marca} - {wine.bodega} ({wine.tipo})
-                      </span>
-                    </label>
-                  </div>
-                ))}
-              </div>
-              {errors.wines && (
-                <p className="text-red-500 text-xs mt-1">{errors.wines}</p>
-              )}
-            </div>
-
-            {/* Precio */}
-            <Input
-              isRequired
-              errorMessage={errors.price}
-              isInvalid={!!errors.price}
-              label="Precio del Combo"
-              placeholder="55990"
-              startContent={<span className="text-gray-500">$</span>}
-              type="number"
-              value={comboForm.price.toString()}
-              onChange={(e) =>
-                handleInputChange("price", Number(e.target.value))
-              }
-            />
-
-            {/* Imagen de los vinos */}
-            <div>
-              <Input
-                label="URL de la Imagen de los Vinos"
-                placeholder="/images/imagen-combos.png"
-                value={comboForm.image}
-                onChange={(e) => handleInputChange("image", e.target.value)}
-              />
-              <div className="mt-2">
-                <label
-                  className="block text-sm font-medium mb-1"
-                  htmlFor="combo-image-upload"
-                >
-                  Subir Imagen de los Vinos
-                </label>
-                <input
-                  accept="image/*"
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  id="combo-image-upload"
-                  type="file"
-                  onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+      {/* Modal de formulario de combo */}
+      <Modal
+        isDismissable={false}
+        isOpen={showForm}
+        scrollBehavior="inside"
+        size="3xl"
+        onClose={resetForm}
+      >
+        <ModalContent>
+          <form onSubmit={handleSubmit}>
+            <ModalHeader className="flex flex-col gap-1">
+              {editingCombo ? "Editar Combo" : "Agregar Nuevo Combo"}
+            </ModalHeader>
+            <ModalBody>
+              <div className="space-y-4">
+                {/* Nombre del combo */}
+                <Input
+                  isRequired
+                  errorMessage={errors.name}
+                  isInvalid={!!errors.name}
+                  label="Nombre del Combo"
+                  placeholder="Ej: COMBO PREMIUM"
+                  value={comboForm.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
                 />
-                <p className="text-xs text-gray-500 mt-1">
-                  Esta imagen se mostrará en el combo. El fondo es fijo y
-                  siempre será el mismo.
-                </p>
+
+                {/* Selección de vinos con cantidad */}
+                <div>
+                  <div className="block text-sm font-medium mb-2">
+                    Seleccionar Vinos *
+                  </div>
+                  <div className="text-xs text-gray-500 mb-2">
+                    Puedes agregar el mismo vino múltiples veces
+                  </div>
+                  <div className="max-h-64 overflow-y-auto border border-gray-300 rounded-md p-4 space-y-3">
+                    {wines.map((wine) => {
+                      const quantity = getWineQuantity(wine.id);
+                      return (
+                        <div
+                          key={wine.id}
+                          className="flex items-center justify-between space-x-2 p-2 rounded hover:bg-gray-50"
+                        >
+                          <div className="flex items-center space-x-2 flex-1 min-w-0">
+                            <img
+                              alt={wine.marca}
+                              className="w-10 h-10 rounded object-cover flex-shrink-0"
+                              src={wine.image}
+                            />
+                            <span className="text-sm truncate">
+                              {wine.marca} - {wine.bodega} ({wine.tipo})
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-2 flex-shrink-0">
+                            <Button
+                              isIconOnly
+                              color="danger"
+                              isDisabled={quantity === 0}
+                              size="sm"
+                              variant="flat"
+                              onPress={() => handleRemoveWine(wine.id)}
+                            >
+                              -
+                            </Button>
+                            <span className="text-sm font-semibold min-w-[2ch] text-center">
+                              {quantity}
+                            </span>
+                            <Button
+                              isIconOnly
+                              color="primary"
+                              size="sm"
+                              variant="flat"
+                              onPress={() => handleAddWine(wine.id)}
+                            >
+                              +
+                            </Button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {errors.wines && (
+                    <p className="text-red-500 text-xs mt-1">{errors.wines}</p>
+                  )}
+                </div>
+
+                {/* Precio */}
+                <Input
+                  isRequired
+                  errorMessage={errors.price}
+                  isInvalid={!!errors.price}
+                  label="Precio del Combo"
+                  placeholder="55990"
+                  startContent={<span className="text-gray-500">$</span>}
+                  type="number"
+                  value={comboForm.price.toString()}
+                  onChange={(e) =>
+                    handleInputChange("price", Number(e.target.value))
+                  }
+                />
+
+                {/* Imagen de los vinos */}
+                <div>
+                  <Input
+                    label="URL de la Imagen de los Vinos"
+                    placeholder="/images/imagen-combos.png"
+                    value={comboForm.image}
+                    onChange={(e) => handleInputChange("image", e.target.value)}
+                  />
+                  <div className="mt-2">
+                    <label
+                      className="block text-sm font-medium mb-1"
+                      htmlFor="combo-image-upload"
+                    >
+                      Subir Imagen de los Vinos
+                    </label>
+                    <input
+                      accept="image/*"
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      id="combo-image-upload"
+                      type="file"
+                      onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Esta imagen se mostrará en el combo. El fondo es fijo y
+                      siempre será el mismo.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Destacado */}
+                <div className="flex items-center space-x-2">
+                  <input
+                    checked={comboForm.featured}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                    id="featured"
+                    type="checkbox"
+                    onChange={(e) =>
+                      handleInputChange("featured", e.target.checked)
+                    }
+                  />
+                  <label
+                    className="text-sm font-medium text-gray-700"
+                    htmlFor="featured"
+                  >
+                    Mostrar en carousel de combos
+                  </label>
+                </div>
               </div>
-            </div>
-
-            {/* Destacado */}
-            <div className="flex items-center space-x-2">
-              <input
-                checked={comboForm.featured}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                id="featured"
-                type="checkbox"
-                onChange={(e) =>
-                  handleInputChange("featured", e.target.checked)
-                }
-              />
-              <label
-                className="text-sm font-medium text-gray-700"
-                htmlFor="featured"
-              >
-                Mostrar en carousel de combos
-              </label>
-            </div>
-
-            <Spacer y={1} />
-
-            <div className="flex gap-2 justify-end">
+            </ModalBody>
+            <ModalFooter>
               <Button color="default" variant="bordered" onPress={resetForm}>
                 Cancelar
               </Button>
@@ -454,10 +504,10 @@ export default function ComboAdminPanel() {
                     ? "Actualizar Combo"
                     : "Crear Combo"}
               </Button>
-            </div>
+            </ModalFooter>
           </form>
-        </Card>
-      )}
+        </ModalContent>
+      </Modal>
 
       {/* Lista de combos */}
       <Card>
