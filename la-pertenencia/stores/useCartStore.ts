@@ -1,25 +1,34 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { Wine } from "../types/wine";
-import { CartItem, CartState, CartActions, ShippingInfo } from "../types/cart";
+import { Wine } from "@/types/wine";
+import { CartItem, CartState, CartActions, ShippingInfo } from "@/types/cart";
+import { CART_NOTIFICATION_DURATION } from "./constants";
 
 interface CartStore extends CartState, CartActions {
-  // Notification state
   showNotification: boolean;
   notificationMessage: string;
   setNotification: (message: string) => void;
   hideNotification: () => void;
 }
 
-const calculateFinalPrice = (wine: Wine) => {
+const calculateFinalPrice = (wine: Wine): number => {
   return wine.price + (wine.price * wine.iva) / 100;
+};
+
+const calculateCartTotals = (items: CartItem[]) => {
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalAmount = items.reduce(
+    (sum, item) => sum + item.priceAtTimeOfAdd * item.quantity,
+    0
+  );
+  
+  return { totalItems, totalAmount };
 };
 
 export const useCartStore = create<CartStore>()(
   persist(
     (set, get) => ({
-      // Estado inicial
       items: [],
       isOpen: false,
       totalItems: 0,
@@ -32,7 +41,6 @@ export const useCartStore = create<CartStore>()(
       showNotification: false,
       notificationMessage: "",
 
-      // Acciones
       addItem: (wine: Wine, quantity = 1) => {
         const currentItems = get().items;
         const existingItemIndex = currentItems.findIndex(
@@ -43,14 +51,12 @@ export const useCartStore = create<CartStore>()(
         let newItems: CartItem[];
 
         if (existingItemIndex >= 0) {
-          // Si el item ya existe, actualizar cantidad
           newItems = currentItems.map((item, index) =>
             index === existingItemIndex
               ? { ...item, quantity: item.quantity + quantity }
               : item,
           );
         } else {
-          // Si es un item nuevo, agregarlo
           const newItem: CartItem = {
             wine,
             quantity,
@@ -60,17 +66,8 @@ export const useCartStore = create<CartStore>()(
           newItems = [...currentItems, newItem];
         }
 
-        // Recalcular totales
-        const totalItems = newItems.reduce(
-          (sum, item) => sum + item.quantity,
-          0,
-        );
-        const totalAmount = newItems.reduce(
-          (sum, item) => sum + item.priceAtTimeOfAdd * item.quantity,
-          0,
-        );
+        const { totalItems, totalAmount } = calculateCartTotals(newItems);
 
-        // Mostrar notificación
         const message = `✅ ${wine.marca} agregado al carrito (${quantity})`;
 
         set({
@@ -81,60 +78,32 @@ export const useCartStore = create<CartStore>()(
           notificationMessage: message,
         });
 
-        // Auto-hide notification after 3 seconds
         setTimeout(() => {
           get().hideNotification();
-        }, 3000);
+        }, CART_NOTIFICATION_DURATION);
       },
 
       removeItem: (wineId: string) => {
         const currentItems = get().items;
         const newItems = currentItems.filter((item) => item.wine.id !== wineId);
+        const { totalItems, totalAmount } = calculateCartTotals(newItems);
 
-        // Recalcular totales
-        const totalItems = newItems.reduce(
-          (sum, item) => sum + item.quantity,
-          0,
-        );
-        const totalAmount = newItems.reduce(
-          (sum, item) => sum + item.priceAtTimeOfAdd * item.quantity,
-          0,
-        );
-
-        set({
-          items: newItems,
-          totalItems,
-          totalAmount,
-        });
+        set({ items: newItems, totalItems, totalAmount });
       },
 
       updateQuantity: (wineId: string, quantity: number) => {
         if (quantity <= 0) {
           get().removeItem(wineId);
-
           return;
         }
 
         const currentItems = get().items;
         const newItems = currentItems.map((item) =>
-          item.wine.id === wineId ? { ...item, quantity } : item,
+          item.wine.id === wineId ? { ...item, quantity } : item
         );
+        const { totalItems, totalAmount } = calculateCartTotals(newItems);
 
-        // Recalcular totales
-        const totalItems = newItems.reduce(
-          (sum, item) => sum + item.quantity,
-          0,
-        );
-        const totalAmount = newItems.reduce(
-          (sum, item) => sum + item.priceAtTimeOfAdd * item.quantity,
-          0,
-        );
-
-        set({
-          items: newItems,
-          totalItems,
-          totalAmount,
-        });
+        set({ items: newItems, totalItems, totalAmount });
       },
 
       clearCart: () => {
@@ -173,7 +142,7 @@ export const useCartStore = create<CartStore>()(
       },
     }),
     {
-      name: "cart-storage", // Nombre para localStorage
+      name: "cart-storage",
       partialize: (state) => ({
         items: state.items,
         totalItems: state.totalItems,

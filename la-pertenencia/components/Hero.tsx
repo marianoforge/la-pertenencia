@@ -1,11 +1,9 @@
 import React from "react";
 import Image from "next/image";
 
-// Ya no necesitas esta variable - usa directamente className="text-dorado-light"
-
 const Hero = () => {
   return (
-    <div
+    <header
       className="w-full relative bg-white inline-flex flex-col justify-start items-center gap-2.5 fluid-hero-container max-[480px]:!px-0"
       id="hero"
       style={{
@@ -46,9 +44,10 @@ const Hero = () => {
           }}
         >
           <Image
-            alt="Logo"
+            alt="La Pertenencia - Logo"
             className="object-contain w-full h-full"
             height={240}
+            priority
             src="/images/logo-pertenencia.png"
             width={160}
           />
@@ -62,7 +61,7 @@ const Hero = () => {
             gap: "clamp(1.25rem, 4vw, 1.75rem)",
           }}
         >
-          <div
+          <h1
             className="w-full text-center text-dorado-light font-normal font-lora uppercase"
             data-aos="fade-up"
             data-aos-delay="400"
@@ -75,12 +74,12 @@ const Hero = () => {
             Donde el vino une,
             <br />
             nace la pertenencia.
-          </div>
+          </h1>
           <div
             className="w-full flex flex-col justify-start items-start"
             style={{ gap: "clamp(0.625rem, 2vw, 1rem)" }}
           >
-            <div
+            <blockquote
               className="w-full text-center text-white font-normal font-lora tracking-wide"
               style={{
                 fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
@@ -91,8 +90,8 @@ const Hero = () => {
               nuestro proyecto de vida. Un lugar donde nos rodeamos de buena
               gente, compartimos buena energía y, por supuesto, disfrutamos del
               buen vino.&quot;
-            </div>
-            <div
+            </blockquote>
+            <p
               className="w-full text-center text-white font-normal font-lora tracking-wide"
               style={{
                 fontSize: "clamp(0.875rem, 2.5vw, 1rem)",
@@ -103,7 +102,7 @@ const Hero = () => {
               solamente vender vinos, es compartir historias, es atesorar
               experiencias que nos conectan con lo que nos gusta y nos hace
               bien.
-            </div>
+            </p>
           </div>
         </div>
       </div>
@@ -126,7 +125,7 @@ const Hero = () => {
             gap: "clamp(1.25rem, 2.5vw, 1.75rem)",
           }}
         >
-          <div
+          <h1
             className="justify-start text-dorado-light font-normal font-lora uppercase"
             style={{
               fontSize: "clamp(1.5rem, 3vw, 2rem)",
@@ -137,12 +136,12 @@ const Hero = () => {
             Donde el vino une,
             <br />
             nace la pertenencia.
-          </div>
+          </h1>
           <div
             className="self-stretch flex flex-col justify-start items-start"
             style={{ gap: "clamp(0.625rem, 1.5vw, 1rem)" }}
           >
-            <div className="self-stretch justify-start">
+            <blockquote className="self-stretch justify-start">
               <span
                 className="text-white font-normal italic font-lora tracking-tight"
                 style={{
@@ -152,7 +151,7 @@ const Hero = () => {
               >
                 &quot;
               </span>
-              <span
+              <strong
                 className="text-white font-semibold font-lora italic tracking-tight"
                 style={{
                   fontSize: "clamp(1rem, 2vw, 1.25rem)",
@@ -160,7 +159,7 @@ const Hero = () => {
                 }}
               >
                 La Pertenencia es mucho más que un negocio:
-              </span>
+              </strong>
               <span
                 className="text-white font-normal font-lora italic tracking-wide"
                 style={{
@@ -173,8 +172,8 @@ const Hero = () => {
                 rodeamos de buena gente, compartimos buena energía y, por
                 supuesto, disfrutamos del buen vino.&quot;
               </span>
-            </div>
-            <div
+            </blockquote>
+            <p
               className="self-stretch justify-start text-white font-normal italic font-lora tracking-wide"
               style={{
                 fontSize: "clamp(1rem, 2vw, 1.25rem)",
@@ -185,7 +184,7 @@ const Hero = () => {
               solamente vender vinos, es compartir historias, es atesorar
               experiencias que nos conectan con lo que nos gusta y nos hace
               bien.
-            </div>
+            </p>
           </div>
         </div>
 
@@ -206,16 +205,17 @@ const Hero = () => {
             }}
           >
             <Image
-              alt="Logo"
+              alt="La Pertenencia - Logo"
               className="object-contain w-full h-full"
               height={640}
+              priority
               src="/images/logo-pertenencia.png"
               width={440}
             />
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

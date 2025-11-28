@@ -1,6 +1,5 @@
-import Image from "next/image";
-
-import { useCartStore } from "../stores/useCartStore";
+import { CartIcon } from "./ui/CartIcon";
+import { useCartStore } from "@/stores/useCartStore";
 
 const CartButton = () => {
   const { totalItems, toggleCart } = useCartStore();
@@ -12,13 +11,7 @@ const CartButton = () => {
         className="w-6 h-6 hover:opacity-75 transition-opacity"
         onClick={toggleCart}
       >
-        <Image
-          alt="Carrito de compras"
-          className="object-contain"
-          height={24}
-          src="/icons/Add carrito.svg"
-          width={24}
-        />
+        <CartIcon size={24} />
       </button>
 
       {/* Badge de cantidad */}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -6,7 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { Head } from "./head";
 
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "./Navbar";
 import Cart from "@/components/Cart";
 import CartNotification from "@/components/CartNotification";
 import WhatsAppFloatingButton from "@/components/WhatsAppFloatingButton";
@@ -44,169 +45,201 @@ export default function DefaultLayout({
           >
             <div className="w-full inline-flex justify-between items-start">
               {/* Logo */}
-              <div className="flex items-start">
-                <img
+              <div className="flex items-start relative w-24 h-24">
+                <Image
                   alt="La Pertenencia"
-                  className="w-24 object-contain"
+                  className="object-contain"
+                  fill
                   src="/images/logo-pertenencia.png"
                 />
               </div>
 
               {/* Productos */}
-              <div className="inline-flex flex-col justify-start items-start gap-2.5">
-                <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+              <nav
+                aria-label="Productos"
+                className="inline-flex flex-col justify-start items-start gap-2.5"
+              >
+                <h2 className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
                   Productos
-                </div>
-                <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/vinos"
-                  >
-                    Catalogo de Vinos
-                  </Link>
-                  <br />
-                  {/* <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/#regalos"
-                  >
-                    Regalos Empresariales
-                  </Link>
-                  <br /> */}
-                  <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/membresias"
-                  >
-                    Membresías
-                  </Link>
-                  <br />
-                  <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/crea-tu-vino"
-                  >
-                    Crea tu vino
-                  </Link>
-                  <br />
-                  <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/catas"
-                  >
-                    Catas y Maridajes
-                  </Link>
-                </div>
-              </div>
+                </h2>
+                <ul className="list-none text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  <li>
+                    <Link
+                      className="hover:text-yellow-700 transition-colors"
+                      href="/vinos"
+                    >
+                      Catalogo de Vinos
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="hover:text-yellow-700 transition-colors"
+                      href="/membresias"
+                    >
+                      Membresías
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="hover:text-yellow-700 transition-colors"
+                      href="/crea-tu-vino"
+                    >
+                      Crea tu vino
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="hover:text-yellow-700 transition-colors"
+                      href="/catas"
+                    >
+                      Catas y Maridajes
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
 
               {/* Ayuda */}
-              <div className="inline-flex flex-col justify-start items-start gap-2.5">
-                <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+              <nav
+                aria-label="Ayuda"
+                className="inline-flex flex-col justify-start items-start gap-2.5"
+              >
+                <h2 className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
                   Ayuda
-                </div>
-                <div className="justify-start text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
-                  <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/preguntas-frecuentes"
-                  >
-                    Preguntas Frecuentes
-                  </Link>
-                  <br />
-                  <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/terminos-y-condiciones"
-                  >
-                    Términos y Condiciones
-                  </Link>
-                  <br />
-                  <Link
-                    className="hover:text-yellow-700 transition-colors"
-                    href="/politica-de-privacidad"
-                  >
-                    Política de Privacidad
-                  </Link>
-                </div>
-              </div>
+                </h2>
+                <ul className="list-none text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  <li>
+                    <Link
+                      className="hover:text-yellow-700 transition-colors"
+                      href="/preguntas-frecuentes"
+                    >
+                      Preguntas Frecuentes
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="hover:text-yellow-700 transition-colors"
+                      href="/terminos-y-condiciones"
+                    >
+                      Términos y Condiciones
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="hover:text-yellow-700 transition-colors"
+                      href="/politica-de-privacidad"
+                    >
+                      Política de Privacidad
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
 
               {/* Contactos */}
-              <div className="inline-flex flex-col justify-start items-start gap-2.5">
-                <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
-                  contactos
-                </div>
+              <address className="inline-flex flex-col justify-start items-start gap-2.5 not-italic">
+                <h2 className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+                  Contactos
+                </h2>
                 <div className="inline-flex justify-start items-center gap-2.5">
-                  <div className="w-5 h-5 relative">
-                    <svg
-                      fill="none"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M3.33334 5.83333L10 10.8333L16.6667 5.83333M3.33334 5H16.6667C17.5872 5 18.3333 5.74619 18.3333 6.66667V13.3333C18.3333 14.2538 17.5872 15 16.6667 15H3.33334C2.41286 15 1.66667 14.2538 1.66667 13.3333V6.66667C1.66667 5.74619 2.41286 5 3.33334 5Z"
-                        stroke="#B45309"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.38"
-                      />
-                    </svg>
-                  </div>
-                  <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  <svg
+                    aria-hidden="true"
+                    className="w-5 h-5"
+                    fill="none"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.33334 5.83333L10 10.8333L16.6667 5.83333M3.33334 5H16.6667C17.5872 5 18.3333 5.74619 18.3333 6.66667V13.3333C18.3333 14.2538 17.5872 15 16.6667 15H3.33334C2.41286 15 1.66667 14.2538 1.66667 13.3333V6.66667C1.66667 5.74619 2.41286 5 3.33334 5Z"
+                      stroke="#B45309"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.38"
+                    />
+                  </svg>
+                  <a
+                    className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide hover:text-yellow-700 transition-colors"
+                    href="mailto:info@lapertenencia.com"
+                  >
                     info@lapertenencia.com
-                  </div>
+                  </a>
                 </div>
                 <div className="inline-flex justify-start items-center gap-2.5">
-                  <div className="w-4.5 h-4.5 relative">
-                    <img
-                      alt="WhatsApp"
-                      className="w-full h-full object-contain"
+                  <div className="relative w-4.5 h-4.5">
+                    <Image
+                      alt=""
+                      aria-hidden="true"
+                      className="object-contain"
+                      fill
                       src="/images/icon-wapp.svg"
                     />
                   </div>
-                  <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  <a
+                    className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide hover:text-yellow-700 transition-colors"
+                    href="tel:+5491161525562"
+                  >
                     +(54) 9 11 6152-5562
-                  </div>
+                  </a>
                 </div>
                 <div className="inline-flex justify-start items-center gap-2.5">
-                  <div className="w-5 h-5 relative">
-                    <img
-                      alt="Ubicación"
-                      className="w-full h-full object-contain"
+                  <div className="relative w-5 h-5">
+                    <Image
+                      alt=""
+                      aria-hidden="true"
+                      className="object-contain"
+                      fill
                       src="/icons/ICON_lugar.svg"
                     />
                   </div>
-                  <div className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
+                  <p className="text-black text-sm font-normal font-['Lora'] leading-loose tracking-wide">
                     Buenos Aires - Palermo - CABA
-                  </div>
+                  </p>
                 </div>
-              </div>
+              </address>
 
               {/* Seguinos en */}
-              <div className="inline-flex flex-col justify-start items-start gap-5">
-                <div className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
+              <nav
+                aria-label="Redes sociales"
+                className="inline-flex flex-col justify-start items-start gap-5"
+              >
+                <h2 className="justify-start text-yellow-700 text-xl font-normal font-['Lora'] uppercase leading-normal tracking-[5px]">
                   Seguinos en:
-                </div>
-                <div className="inline-flex justify-between items-center gap-4">
-                  <a
-                    className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
-                    href="https://facebook.com/lapertenenciaok"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    <img
-                      alt="Facebook"
-                      className="w-full h-full object-contain"
-                      src="/icons/ICO FB.svg"
-                    />
-                  </a>
-                  <a
-                    className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
-                    href="https://instagram.com/somoslapertenencia"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    <img
-                      alt="Instagram"
-                      className="w-full h-full object-contain"
-                      src="/icons/ICON IG.svg"
-                    />
-                  </a>
+                </h2>
+                <ul className="flex justify-between items-center gap-4 list-none">
+                  <li>
+                    <a
+                      aria-label="Visitar nuestro Facebook"
+                      className="block w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
+                      href="https://facebook.com/lapertenenciaok"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <Image
+                        alt=""
+                        aria-hidden="true"
+                        className="object-contain"
+                        fill
+                        src="/icons/ICO FB.svg"
+                      />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      aria-label="Visitar nuestro Instagram"
+                      className="block w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
+                      href="https://instagram.com/somoslapertenencia"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <Image
+                        alt=""
+                        aria-hidden="true"
+                        className="object-contain"
+                        fill
+                        src="/icons/ICON IG.svg"
+                      />
+                    </a>
+                  </li>
                   {/* <a
                     className="w-6 h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
                     href="https://x.com/lapertenencia"
@@ -231,8 +264,8 @@ export default function DefaultLayout({
                       src="/icons/ICON YT.svg"
                     />
                   </a> */}
-                </div>
-              </div>
+                </ul>
+              </nav>
             </div>
           </div>
 
@@ -249,10 +282,11 @@ export default function DefaultLayout({
             {/* Primera fila: Logo | Productos | Experiencias */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
               {/* Logo */}
-              <div className="flex justify-start sm:justify-start items-start">
-                <img
+              <div className="flex justify-start sm:justify-start items-start relative w-24 sm:w-20 md:w-24 h-24 sm:h-20 md:h-24">
+                <Image
                   alt="La Pertenencia"
-                  className="w-24 sm:w-20 md:w-24 object-contain"
+                  className="object-contain"
+                  fill
                   src="/images/logo-pertenencia.png"
                 />
               </div>
@@ -364,9 +398,10 @@ export default function DefaultLayout({
                 </div>
                 <div className="flex justify-start items-center gap-2.5">
                   <div className="w-4.5 h-4.5 relative">
-                    <img
+                    <Image
                       alt="WhatsApp"
-                      className="w-full h-full object-contain"
+                      className="object-contain"
+                      fill
                       src="/images/icon-wapp.svg"
                     />
                   </div>
@@ -376,9 +411,10 @@ export default function DefaultLayout({
                 </div>
                 <div className="flex justify-start items-center gap-2.5">
                   <div className="w-5 h-5 relative">
-                    <img
+                    <Image
                       alt="Ubicación"
-                      className="w-full h-full object-contain"
+                      className="object-contain"
+                      fill
                       src="/icons/ICON_lugar.svg"
                     />
                   </div>
@@ -421,9 +457,10 @@ export default function DefaultLayout({
               </div>
               <div className="flex justify-start items-center gap-2.5">
                 <div className="w-4.5 h-4.5 relative">
-                  <img
+                  <Image
                     alt="WhatsApp"
-                    className="w-full h-full object-contain"
+                    className="object-contain"
+                    fill
                     src="/images/icon-wapp.svg"
                   />
                 </div>
@@ -433,9 +470,10 @@ export default function DefaultLayout({
               </div>
               <div className="flex justify-start items-center gap-2.5">
                 <div className="w-5 h-5 relative">
-                  <img
+                  <Image
                     alt="Ubicación"
-                    className="w-full h-full object-contain"
+                    className="object-contain"
+                    fill
                     src="/icons/ICON_lugar.svg"
                   />
                 </div>
@@ -457,9 +495,10 @@ export default function DefaultLayout({
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <img
+                  <Image
                     alt="Facebook"
-                    className="w-full h-full object-contain"
+                    className="object-contain"
+                    fill
                     src="/icons/ICO FB.svg"
                   />
                 </a>
@@ -469,36 +508,13 @@ export default function DefaultLayout({
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  <img
+                  <Image
                     alt="Instagram"
-                    className="w-full h-full object-contain"
+                    className="object-contain"
+                    fill
                     src="/icons/ICON IG.svg"
                   />
                 </a>
-                {/* <a
-                  className="w-6 h-6 sm:w-5 sm:h-5 md:w-6 md:h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
-                  href="https://x.com/lapertenencia"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <img
-                    alt="X (Twitter)"
-                    className="w-full h-full object-contain"
-                    src="/icons/ICON X.svg"
-                  />
-                </a>
-                <a
-                  className="w-7 h-6 sm:w-6 sm:h-5 md:w-7 md:h-6 relative overflow-hidden hover:opacity-75 transition-opacity"
-                  href="https://youtube.com/@lapertenencia"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <img
-                    alt="YouTube"
-                    className="w-full h-full object-contain"
-                    src="/icons/ICON YT.svg"
-                  />
-                </a> */}
               </div>
             </div>
           </div>

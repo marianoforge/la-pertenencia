@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 import { Section, SectionHeader } from "./ui";
 
@@ -19,9 +20,10 @@ export default function MembresiasSection() {
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
           data-aos="fade-up"
         >
-          <img
+          <Image
             alt="Membresías - Background"
-            className="w-full h-full object-cover object-[87%_center] absolute inset-0"
+            className="object-cover object-[87%_center]"
+            fill
             src="/images/membresia_headerbg_new.png"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20" />
@@ -127,9 +129,10 @@ export default function MembresiasSection() {
             data-aos-delay="400"
           >
             <div className="w-full h-[442px] relative rounded-lg overflow-hidden">
-              <img
+              <Image
                 alt="Membresía - Cajas de vino"
-                className="w-full h-full object-cover"
+                className="object-cover"
+                fill
                 src="/images/membresia_cajas.png"
               />
             </div>

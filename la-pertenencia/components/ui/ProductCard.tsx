@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Button } from "./Button";
 import { QuantitySelector } from "./QuantitySelector";
+import { Divider } from "./Divider";
+import { PriceDisplay } from "./PriceDisplay";
+import { CartIcon } from "./CartIcon";
 
 import { cn } from "@/lib/utils";
+import { useAddToCart } from "@/hooks/useAddToCart";
 
 interface ProductCardProps {
   title: string;
@@ -26,23 +30,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
   className,
   onAddToCart,
 }) => {
-  const [quantity, setQuantity] = useState(1);
-
-  const handleAddToCart = () => {
-    if (onAddToCart) {
-      onAddToCart(quantity);
-    }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-      minimumFractionDigits: 0,
-    })
-      .format(price)
-      .replace("ARS", "$");
-  };
+  const { quantity, setQuantity, addToCart } = useAddToCart({
+    onSuccess: (_, qty) => {
+      if (onAddToCart) {
+        onAddToCart(qty);
+      }
+    },
+  });
 
   if (variant === "large") {
     return (
@@ -75,13 +69,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
               </div>
             </div>
           </div>
-          <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
+          <Divider variant="neutral" />
           <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5">
-            <div className="w-64 text-center justify-start text-neutral-900 text-3xl font-medium font-['Lora'] tracking-wider">
-              {formatPrice(price)}
-            </div>
+            <PriceDisplay price={price} className="w-64" />
           </div>
-          <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
+          <Divider variant="neutral" />
           <div className="self-stretch pt-4 pb-2 inline-flex justify-center items-center gap-4">
             <div className="flex-1 h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
             <QuantitySelector value={quantity} onChange={setQuantity} />
@@ -90,16 +82,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Button
             className="self-stretch pl-12 pr-10 py-2"
             variant="secondary"
-            onClick={handleAddToCart}
+            onClick={() => addToCart({} as any)}
           >
             <span className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase tracking-[8px]">
               agregar
             </span>
-            <div className="w-8 h-8 relative rounded-sm">
-              <div className="w-[2.48px] h-[2.48px] left-[11.96px] top-[20.94px] absolute bg-amber-300" />
-              <div className="w-[2.48px] h-[2.48px] left-[19.92px] top-[20.94px] absolute bg-amber-300" />
-              <div className="w-4 h-3 left-[7px] top-[7.50px] absolute bg-amber-300" />
-            </div>
+            <CartIcon size={24} variant="gold" />
           </Button>
         </div>
       </div>
@@ -134,13 +122,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           </div>
         </div>
-        <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
+        <Divider variant="neutral" />
         <div className="self-stretch py-[5px] inline-flex justify-center items-center gap-2.5">
-          <div className="w-64 text-center justify-start text-neutral-900 text-3xl font-medium font-['Lora'] tracking-wider">
-            {formatPrice(price)}
-          </div>
+          <PriceDisplay price={price} className="w-64" />
         </div>
-        <div className="self-stretch h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
+        <Divider variant="neutral" />
         <div className="self-stretch pt-4 pb-2 inline-flex justify-center items-center gap-4">
           <div className="flex-1 h-0 outline outline-[0.50px] outline-offset-[-0.25px] outline-neutral-400" />
           <QuantitySelector value={quantity} onChange={setQuantity} />
@@ -149,16 +135,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Button
           className="self-stretch pl-12 pr-10 py-2"
           variant="secondary"
-          onClick={handleAddToCart}
+          onClick={() => addToCart({} as any)}
         >
           <span className="justify-start text-dorado-light text-base font-medium font-['Lora'] uppercase tracking-[8px]">
             agregar
           </span>
-          <div className="w-8 h-8 relative rounded-sm">
-            <div className="w-[2.48px] h-[2.48px] left-[11.96px] top-[20.94px] absolute bg-amber-300" />
-            <div className="w-[2.48px] h-[2.48px] left-[19.92px] top-[20.94px] absolute bg-amber-300" />
-            <div className="w-4 h-3 left-[7px] top-[7.50px] absolute bg-amber-300" />
-          </div>
+          <CartIcon size={24} variant="gold" />
         </Button>
       </div>
     </div>

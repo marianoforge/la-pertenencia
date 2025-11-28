@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 import { Section, SectionHeader } from "./ui";
 
@@ -19,9 +20,10 @@ export default function CatasSection() {
           className="w-full max-w-[1300px] h-96 relative bg-neutral-900 rounded-lg overflow-hidden"
           data-aos="fade-up"
         >
-          <img
+          <Image
             alt="Catas y Maridajes - Background"
-            className="w-full h-full object-cover object-[88%_88%] absolute inset-0"
+            className="object-cover object-[88%_88%]"
+            fill
             src="/images/catas_hederbg_new.png"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/5 to-transparent" />
@@ -104,9 +106,10 @@ export default function CatasSection() {
             data-aos-delay="400"
           >
             <div className="w-full h-[462px] relative rounded-lg overflow-hidden">
-              <img
+              <Image
                 alt="Pato y Nana - Fundadoras de La Pertenencia"
-                className="w-full h-full object-cover"
+                className="object-cover"
+                fill
                 src="/images/pato_nana.png"
               />
             </div>

@@ -15,7 +15,6 @@ export default function IndexPage() {
       <Combos />
       <ImaginaTuVino />
       <NewsLetterForm />
-      {/* <Regalos /> */}
       <EspacioLaPertenencia />
       <CatasMaridajes />
       <MembresiaMensual />

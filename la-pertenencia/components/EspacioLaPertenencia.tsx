@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 import { Section, SectionHeader, Button } from "./ui";
 
@@ -12,10 +13,11 @@ const EspacioLaPertenencia = () => {
 
       <div className="w-full max-w-[1300px] pt-5 md:pt-12 pb-5 flex flex-col justify-center items-center gap-7 md:gap-10 sm:px-0">
         {/* Full width image */}
-        <div className="w-full relative rounded-lg overflow-hidden">
-          <img
+        <div className="w-full relative rounded-lg overflow-hidden h-64 sm:h-80 md:h-96 lg:h-[400px]">
+          <Image
             alt="Espacio La Pertenencia"
-            className="w-full h-64 sm:h-80 md:h-96 lg:h-[400px] object-cover"
+            className="object-cover"
+            fill
             src="/images/nuestro-lugar.png"
           />
         </div>

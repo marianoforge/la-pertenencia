@@ -5,6 +5,8 @@ import { Card } from "@heroui/card";
 import { Switch } from "@heroui/switch";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { extractNumbers } from "@/lib/adminHelpers";
+import { DEFAULT_SHIPPING_SETTINGS } from "@/lib/adminConstants";
 
 interface SiteSettings {
   shippingEnabled: boolean;
@@ -12,13 +14,12 @@ interface SiteSettings {
 }
 
 export default function OtrosAdminPanel() {
-  const [settings, setSettings] = useState<SiteSettings>({
-    shippingEnabled: true,
-    shippingCost: 500,
-  });
+  const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SHIPPING_SETTINGS);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [tempShippingCost, setTempShippingCost] = useState("500");
+  const [tempShippingCost, setTempShippingCost] = useState(
+    DEFAULT_SHIPPING_SETTINGS.shippingCost.toString()
+  );
 
   // Cargar configuración actual desde Firestore
   useEffect(() => {
@@ -32,10 +33,9 @@ export default function OtrosAdminPanel() {
 
       if (settingsDoc.exists()) {
         const data = settingsDoc.data() as SiteSettings;
-        // Asegurar que shippingCost siempre tenga un valor
         const settingsWithDefaults = {
-          shippingEnabled: data.shippingEnabled ?? true,
-          shippingCost: data.shippingCost ?? 500,
+          shippingEnabled: data.shippingEnabled ?? DEFAULT_SHIPPING_SETTINGS.shippingEnabled,
+          shippingCost: data.shippingCost ?? DEFAULT_SHIPPING_SETTINGS.shippingCost,
         };
         setSettings(settingsWithDefaults);
         setTempShippingCost(settingsWithDefaults.shippingCost.toString());
@@ -72,9 +72,7 @@ export default function OtrosAdminPanel() {
   };
 
   const handleShippingCostChange = (value: string) => {
-    // Only allow numbers
-    const numericValue = value.replace(/[^0-9]/g, "");
-    setTempShippingCost(numericValue);
+    setTempShippingCost(extractNumbers(value));
   };
 
   const handleSaveShippingCost = async () => {

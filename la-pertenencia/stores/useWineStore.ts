@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
-import { Wine, WineFilters } from "../types/wine";
+import { Wine, WineFilters } from "@/types/wine";
+import { INITIAL_WINE_FILTERS } from "./constants";
 
 interface WineStore {
   wines: Wine[];
@@ -22,20 +23,11 @@ interface WineStore {
   resetFilters: () => void;
 }
 
-const initialFilters: WineFilters = {
-  category: undefined,
-  region: undefined,
-  minPrice: undefined,
-  maxPrice: undefined,
-  featured: undefined,
-  search: undefined,
-};
-
-export const useWineStore = create<WineStore>((set, get) => ({
+export const useWineStore = create<WineStore>((set) => ({
   wines: [],
   loading: false,
   error: null,
-  filters: initialFilters,
+  filters: INITIAL_WINE_FILTERS,
   selectedWine: null,
 
   setWines: (wines) => set({ wines }),
@@ -56,7 +48,7 @@ export const useWineStore = create<WineStore>((set, get) => ({
   updateWine: (updatedWine) =>
     set((state) => ({
       wines: state.wines.map((wine) =>
-        wine.id === updatedWine.id ? updatedWine : wine,
+        wine.id === updatedWine.id ? updatedWine : wine
       ),
       selectedWine:
         state.selectedWine?.id === updatedWine.id
@@ -72,5 +64,5 @@ export const useWineStore = create<WineStore>((set, get) => ({
 
   clearError: () => set({ error: null }),
 
-  resetFilters: () => set({ filters: initialFilters }),
+  resetFilters: () => set({ filters: INITIAL_WINE_FILTERS }),
 }));

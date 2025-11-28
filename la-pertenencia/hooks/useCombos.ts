@@ -17,12 +17,10 @@ import {
 
 import { db } from "@/lib/firebase";
 import { Combo, CreateComboInput } from "@/types/combo";
-import { Wine } from "@/types/wine";
+import { QUERY_CONFIG } from "@/lib/constants";
 
-// Funciones para interactuar con Firestore
 const combosCollection = collection(db, "combos");
 
-// Obtener todos los combos
 export const getCombos = async (): Promise<Combo[]> => {
   try {
     const q = query(combosCollection, orderBy("createdAt", "desc"));
@@ -44,7 +42,6 @@ export const getCombos = async (): Promise<Combo[]> => {
   }
 };
 
-// Obtener combos destacados (para el carousel)
 export const getFeaturedCombos = async (): Promise<Combo[]> => {
   try {
     const q = query(
@@ -70,7 +67,6 @@ export const getFeaturedCombos = async (): Promise<Combo[]> => {
   }
 };
 
-// Obtener un combo por ID
 export const getCombo = async (id: string): Promise<Combo | null> => {
   try {
     const docRef = doc(db, "combos", id);
@@ -96,7 +92,6 @@ export const getCombo = async (id: string): Promise<Combo | null> => {
   }
 };
 
-// Crear un combo
 export const createCombo = async (
   comboData: CreateComboInput & { wines: any[] }
 ): Promise<Combo> => {
@@ -119,7 +114,6 @@ export const createCombo = async (
   }
 };
 
-// Actualizar un combo
 export const updateCombo = async (
   id: string,
   comboData: Partial<Combo>
@@ -143,7 +137,6 @@ export const updateCombo = async (
   }
 };
 
-// Eliminar un combo
 export const deleteCombo = async (id: string): Promise<void> => {
   try {
     const docRef = doc(db, "combos", id);
@@ -161,20 +154,18 @@ export const useCombos = () => {
   return useQuery({
     queryKey: ["combos"],
     queryFn: getCombos,
-    staleTime: 5 * 60 * 1000, // 5 minutos
+    staleTime: QUERY_CONFIG.STALE_TIME.LONG,
   });
 };
 
-// Hook para obtener combos destacados
 export const useFeaturedCombos = () => {
   return useQuery({
     queryKey: ["combos", "featured"],
     queryFn: getFeaturedCombos,
-    staleTime: 5 * 60 * 1000, // 5 minutos
+    staleTime: QUERY_CONFIG.STALE_TIME.LONG,
   });
 };
 
-// Hook para obtener un combo específico
 export const useCombo = (id: string) => {
   return useQuery({
     queryKey: ["combo", id],
@@ -183,17 +174,13 @@ export const useCombo = (id: string) => {
   });
 };
 
-// Mutation hooks
 export function useCreateCombo() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createCombo,
     onSuccess: (newCombo) => {
-      // Invalidar queries de combos para refrescar la lista
       queryClient.invalidateQueries({ queryKey: ["combos"] });
-
-      // Agregar el nuevo combo al cache
       queryClient.setQueryData(["combo", newCombo.id], newCombo);
 
       console.log("Combo created successfully:", newCombo.name);
@@ -231,10 +218,7 @@ export function useDeleteCombo() {
   return useMutation({
     mutationFn: deleteCombo,
     onSuccess: (_, deletedId) => {
-      // Invalidar queries de combos
       queryClient.invalidateQueries({ queryKey: ["combos"] });
-
-      // Remover el combo del cache
       queryClient.removeQueries({ queryKey: ["combo", deletedId] });
 
       console.log("Combo deleted successfully");

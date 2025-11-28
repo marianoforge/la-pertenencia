@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { WineFilters } from "@/types/wine";
+import { INITIAL_WINE_FILTERS } from "./constants";
 
 interface FilterState {
   isOpen: boolean;
@@ -15,18 +16,9 @@ interface FilterState {
   clearFilters: () => void;
 }
 
-const initialFilters: WineFilters = {
-  category: undefined,
-  region: undefined,
-  minPrice: undefined,
-  maxPrice: undefined,
-  featured: undefined,
-  search: undefined,
-};
-
 export const useFilterStore = create<FilterState>((set, get) => ({
   isOpen: false,
-  filters: initialFilters,
+  filters: INITIAL_WINE_FILTERS,
   sortBy: "relevance",
 
   toggleFilters: () => set((state) => ({ isOpen: !state.isOpen })),
@@ -37,5 +29,5 @@ export const useFilterStore = create<FilterState>((set, get) => ({
 
   updateSort: (sortBy: string) => set({ sortBy }),
 
-  clearFilters: () => set({ filters: initialFilters }),
+  clearFilters: () => set({ filters: INITIAL_WINE_FILTERS }),
 }));

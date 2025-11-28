@@ -1,5 +1,6 @@
 import React from "react";
 import NextLink from "next/link";
+import Image from "next/image";
 
 import { Section, SectionHeader, EventCard, Button } from "./ui";
 
@@ -74,9 +75,10 @@ const CatasMaridajes = () => {
 
         <div className="w-full lg:w-[510px] h-12 lg:h-full flex flex-col justify-between items-start gap-5 lg:gap-0">
           <div className="w-full hidden lg:flex flex-1 lg:flex-grow relative rounded-lg overflow-hidden">
-            <img
+            <Image
               alt="Maridaje eventos"
-              className="w-full h-full object-cover rounded-lg"
+              className="object-cover rounded-lg"
+              fill
               src="/images/maridajeeventos.png"
             />
           </div>

@@ -5,9 +5,7 @@ import {
   CreateWineInput,
   UpdateWineInput,
   WineFilters,
-} from "../types/wine";
-
-// Importar funciones de Firebase
+} from "@/types/wine";
 import {
   getAllWines,
   getWineById,
@@ -17,13 +15,12 @@ import {
   getWinesByCategory,
   searchWinesByName,
 } from "@/lib/firestore";
+import { QUERY_CONFIG } from "@/lib/constants";
 
-// Función helper para aplicar filtros localmente
 function applyFilters(wines: any[], filters?: WineFilters): any[] {
   if (!filters) return wines;
 
   return wines.filter((wine) => {
-    // Filtro por búsqueda de texto
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
       const matchesMarca = wine.marca?.toLowerCase().includes(searchLower);
@@ -43,32 +40,26 @@ function applyFilters(wines: any[], filters?: WineFilters): any[] {
       }
     }
 
-    // Filtro por categoría (usando tipo)
     if (filters.category && filters.category !== "all") {
       if (wine.tipo !== filters.category) return false;
     }
 
-    // Filtro por región
     if (filters.region && filters.region !== "all") {
       if (wine.region !== filters.region) return false;
     }
 
-    // Filtro por bodega
     if (filters.bodega && filters.bodega !== "all") {
       if (wine.bodega !== filters.bodega) return false;
     }
 
-    // Filtro por marca
     if (filters.marca && filters.marca !== "all") {
       if (wine.marca !== filters.marca) return false;
     }
 
-    // Filtro por varietal
     if (filters.varietal && filters.varietal !== "all") {
       if (wine.varietal !== filters.varietal) return false;
     }
 
-    // Filtro por rango de precios
     if (filters.minPrice !== undefined && wine.price < filters.minPrice) {
       return false;
     }
@@ -76,7 +67,6 @@ function applyFilters(wines: any[], filters?: WineFilters): any[] {
       return false;
     }
 
-    // Filtro por vinos destacados
     if (filters.featured && !wine.featured) {
       return false;
     }
@@ -85,25 +75,20 @@ function applyFilters(wines: any[], filters?: WineFilters): any[] {
   });
 }
 
-// Fetch functions using Firebase
 async function fetchWines(filters?: WineFilters): Promise<Wine[]> {
   try {
     let wines: any[];
 
-    // Si hay filtro de categoría específica, usar función optimizada
     if (filters?.category && filters.category !== "all") {
       wines = await getWinesByCategory(filters.category);
     }
-    // Si hay búsqueda de texto, usar función de búsqueda
     else if (filters?.search) {
       wines = await searchWinesByName(filters.search);
     }
-    // Sino, obtener todos los vinos
     else {
       wines = await getAllWines();
     }
 
-    // Aplicar filtros adicionales localmente
     return applyFilters(wines, filters) as Wine[];
   } catch (error) {
     console.error("Error fetching wines:", error);
@@ -161,7 +146,6 @@ async function updateWine(wineData: UpdateWineInput): Promise<Wine> {
       throw new Error("Failed to update wine");
     }
 
-    // Obtener el vino actualizado
     const updatedWine = await getWineById(wineData.id);
 
     if (!updatedWine) {
@@ -188,40 +172,34 @@ async function deleteWine(id: string): Promise<void> {
   }
 }
 
-// Query hooks
 export function useWines(filters?: WineFilters) {
   return useQuery({
     queryKey: ["wines", filters],
     queryFn: () => fetchWines(filters),
-    staleTime: 2 * 60 * 1000, // 2 minutos (menos tiempo para datos en tiempo real)
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    staleTime: QUERY_CONFIG.STALE_TIME.MEDIUM,
+    retry: QUERY_CONFIG.RETRY.DEFAULT,
+    retryDelay: QUERY_CONFIG.RETRY_DELAY,
   });
 }
 
-// Agregar nuevo hook para obtener un vino individual
 export const useWine = (id: string) => {
   return useQuery({
     queryKey: ["wine", id],
     queryFn: () => fetchWineById(id),
-    enabled: !!id && id !== "undefined", // Solo ejecutar si hay un ID válido
-    staleTime: 2 * 60 * 1000, // 2 minutos
-    retry: 2, // Reducir reintentos de 3 a 2
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    enabled: !!id && id !== "undefined",
+    staleTime: QUERY_CONFIG.STALE_TIME.MEDIUM,
+    retry: QUERY_CONFIG.RETRY.SHORT,
+    retryDelay: QUERY_CONFIG.RETRY_DELAY,
   });
 };
 
-// Mutation hooks
 export function useCreateWine() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createWine,
     onSuccess: (newWine) => {
-      // Invalidar queries de vinos para refrescar la lista
       queryClient.invalidateQueries({ queryKey: ["wines"] });
-
-      // Agregar el nuevo vino al cache
       queryClient.setQueryData(["wine", newWine.id], newWine);
 
       console.log("Wine created successfully:", newWine.marca);
@@ -238,10 +216,7 @@ export function useUpdateWine() {
   return useMutation({
     mutationFn: updateWine,
     onSuccess: (updatedWine) => {
-      // Invalidar queries de vinos para refrescar la lista
       queryClient.invalidateQueries({ queryKey: ["wines"] });
-
-      // Actualizar el vino específico en cache
       queryClient.setQueryData(["wine", updatedWine.id], updatedWine);
 
       console.log("Wine updated successfully:", updatedWine.marca);
@@ -258,10 +233,7 @@ export function useDeleteWine() {
   return useMutation({
     mutationFn: deleteWine,
     onSuccess: (_, deletedId) => {
-      // Invalidar queries de vinos para refrescar la lista
       queryClient.invalidateQueries({ queryKey: ["wines"] });
-
-      // Remover el vino eliminado del cache
       queryClient.removeQueries({ queryKey: ["wine", deletedId] });
 
       console.log("Wine deleted successfully");
@@ -272,22 +244,20 @@ export function useDeleteWine() {
   });
 }
 
-// Hook adicional para obtener vinos por categoría optimizado
 export function useWinesByCategory(category: string) {
   return useQuery({
     queryKey: ["wines", "category", category],
     queryFn: () => getWinesByCategory(category),
     enabled: !!category && category !== "all",
-    staleTime: 3 * 60 * 1000, // 3 minutos
+    staleTime: QUERY_CONFIG.STALE_TIME.LONG,
   });
 }
 
-// Hook adicional para búsqueda de vinos
 export function useSearchWines(searchTerm: string) {
   return useQuery({
     queryKey: ["wines", "search", searchTerm],
     queryFn: () => searchWinesByName(searchTerm),
     enabled: !!searchTerm && searchTerm.length >= 2,
-    staleTime: 1 * 60 * 1000, // 1 minuto para búsquedas
+    staleTime: QUERY_CONFIG.STALE_TIME.SHORT,
   });
 }

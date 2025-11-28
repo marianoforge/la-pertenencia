@@ -1,9 +1,12 @@
-import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { Wine } from "@/types/wine";
-import { useCartStore } from "@/stores/useCartStore";
+import { Divider } from "@/components/ui/Divider";
+import { PriceDisplay } from "@/components/ui/PriceDisplay";
+import { AddToCartButton } from "@/components/ui/AddToCartButton";
+import { useAddToCart } from "@/hooks/useAddToCart";
+import { getValidImageUrl, getWineImageAlt } from "@/lib/imageUtils";
 
 interface WineGridCardProps {
   wine: Wine;
@@ -11,51 +14,40 @@ interface WineGridCardProps {
 }
 
 const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
-  const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCartStore();
   const router = useRouter();
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click navigation
-
-    // Add to cart store
-    addItem(wine, quantity);
-
-    // Reset quantity to 1 for next add
-    setQuantity(1);
-
-    // Call parent callback if provided
-    if (onAddToCart) {
-      onAddToCart(wine, quantity);
-    }
-  };
+  
+  const { 
+    quantity, 
+    increaseQuantity: increase, 
+    decreaseQuantity: decrease, 
+    addToCart 
+  } = useAddToCart({
+    onSuccess: (item, qty) => {
+      if (onAddToCart) {
+        onAddToCart(item as Wine, qty);
+      }
+    },
+  });
 
   const handleCardClick = () => {
     router.push(`/vinos/${wine.id}`);
   };
 
-  const increaseQuantity = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click navigation
-    if (quantity < wine.stock) {
-      setQuantity((prev) => prev + 1);
-    }
+  const handleAddToCart = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    addToCart(wine);
   };
 
-  const decreaseQuantity = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click navigation
-    if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
-    }
+  const handleQuantityChange = (
+    e: React.MouseEvent, 
+    action: () => void
+  ) => {
+    e.stopPropagation();
+    action();
   };
 
-  // Usar placeholder si no hay imagen en la DB o es inválida
-  const isValidImage =
-    wine.image &&
-    wine.image.trim() !== "" &&
-    wine.image !== "/images/wine-placeholder.jpg" &&
-    !wine.image.includes("placehold.co");
-
-  const imageUrl = isValidImage ? wine.image : "/images/wine-placeholder.svg";
+  const imageUrl = getValidImageUrl(wine.image);
+  const imageAlt = getWineImageAlt(wine.marca, wine.winery, wine.vintage);
 
   return (
     <div
@@ -73,7 +65,7 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
       {/* Wine Image */}
       <div className="w-full h-48 md:h-56 lg:h-64 bg-gradient-to-l from-white to-zinc-100/50 flex items-center justify-center relative">
         <Image
-          alt={`${wine.marca} - ${wine.winery} ${wine.vintage}`}
+          alt={imageAlt}
           className="max-w-full max-h-full object-contain"
           height={200}
           priority={false}
@@ -99,17 +91,18 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-0 border-b border-neutral-400 mb-3 md:mb-4" />
+        <Divider variant="neutral" className="mb-3 md:mb-4" />
 
         {/* Price */}
         <div className="text-center mb-3 md:mb-4">
-          <span className="text-xl md:text-2xl lg:text-3xl font-medium font-['Lora'] tracking-wider text-neutral-900">
-            $ {wine.price.toLocaleString()}
-          </span>
+          <PriceDisplay 
+            price={wine.price} 
+            className="text-xl md:text-2xl lg:text-3xl"
+          />
         </div>
 
         {/* Divider */}
-        <div className="w-full h-0 border-b border-neutral-400 mb-4 md:mb-4" />
+        <Divider variant="neutral" className="mb-4 md:mb-4" />
 
         {/* Description */}
         <div className="min-h-16 max-h-16 text-center mb-4 md:mb-6">
@@ -128,12 +121,12 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
           </div>
 
           <div className="flex justify-center items-center gap-2 md:gap-4">
-            <div className="flex-1 h-0 border-b border-neutral-400" />
+            <Divider variant="neutral" className="flex-1" />
             <div className="flex justify-center items-center gap-1.5 md:gap-2.5">
               <button
                 className="w-6 h-6 md:w-7 md:h-7 bg-neutral-900 rounded-[3px] border border-amber-300 flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
                 disabled={quantity <= 1}
-                onClick={decreaseQuantity}
+                onClick={(e) => handleQuantityChange(e, decrease)}
               >
                 <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
                   -
@@ -147,38 +140,24 @@ const WineGridCard = ({ wine, onAddToCart }: WineGridCardProps) => {
               <button
                 className="w-6 h-6 md:w-7 md:h-7 bg-neutral-900 rounded-[3px] border border-amber-300 flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
                 disabled={quantity >= wine.stock}
-                onClick={increaseQuantity}
+                onClick={(e) => handleQuantityChange(e, () => increase(wine.stock))}
               >
                 <span className="text-dorado-light text-sm md:text-base font-bold font-['Lora']">
                   +
                 </span>
               </button>
             </div>
-            <div className="flex-1 h-0 border-b border-neutral-400" />
+            <Divider variant="neutral" className="flex-1" />
           </div>
         </div>
 
         {/* Add to Cart Button */}
-        <button
-          className="w-full px-3 md:px-4 py-2 bg-neutral-900 rounded-sm border border-amber-300 flex justify-center items-center gap-2 md:gap-3 cursor-pointer hover:bg-neutral-800 transition-colors disabled:opacity-50"
-          disabled={wine.stock === 0}
+        <AddToCartButton
+          className="w-full px-3 md:px-4 py-2 text-xs md:text-base tracking-[4px] md:tracking-[8px]"
+          isOutOfStock={wine.stock === 0}
+          size="md"
           onClick={handleAddToCart}
-        >
-          <span className="text-dorado-light text-xs md:text-base font-medium font-['Lora'] uppercase tracking-[4px] md:tracking-[8px]">
-            {wine.stock === 0 ? "agotado" : "agregar"}
-          </span>
-          <Image
-            alt="Agregar al carrito"
-            className="object-contain"
-            height={20}
-            src="/icons/Add carrito.svg"
-            style={{
-              filter:
-                "brightness(0) saturate(100%) invert(71%) sepia(83%) saturate(1392%) hue-rotate(4deg) brightness(103%) contrast(103%)",
-            }}
-            width={20}
-          />
-        </button>
+        />
       </div>
     </div>
   );
